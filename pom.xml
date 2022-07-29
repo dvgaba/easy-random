@@ -83,6 +83,13 @@
                 <role>Core developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>dvgaba</id>
+            <url>https://github.com/dvgaba</url>
+            <roles>
+                <role>Core developer</role>
+            </roles>
+        </developer>
     </developers>
 
     <dependencyManagement>
