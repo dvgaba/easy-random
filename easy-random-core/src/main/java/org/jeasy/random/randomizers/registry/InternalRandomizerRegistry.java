@@ -106,6 +106,8 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(UUID.class, new UUIDRandomizer(seed));
         // issue #280: skip fields of type Class
         randomizers.put(Class.class, new SkipRandomizer());
+        // issue #280: skip fields of type Class
+        randomizers.put(Exception.class, new SkipRandomizer());
     }
 
     @Override

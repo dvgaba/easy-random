@@ -116,7 +116,7 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     @Override
     public BigDecimal getRandomValue() {
         Double delegateRandomValue = delegate.getRandomValue();
-        BigDecimal randomValue = new BigDecimal(delegateRandomValue);
+        BigDecimal randomValue = BigDecimal.valueOf(delegateRandomValue);
         if (scale != null) {
             randomValue = randomValue.setScale(this.scale, this.roundingMode);
         }

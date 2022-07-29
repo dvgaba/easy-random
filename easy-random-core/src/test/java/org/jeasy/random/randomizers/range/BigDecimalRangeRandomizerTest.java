@@ -77,7 +77,7 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
 
-        then(bigDecimal).isEqualTo(new BigDecimal("7.46393298637489266411648713983595371246337890625"));
+        then(bigDecimal).isEqualTo(new BigDecimal("7.463932986374893"));
     }
 
     @Test

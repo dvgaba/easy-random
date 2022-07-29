@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -43,7 +44,7 @@ public class ChainedSettersSupportTest {
 
 		// then
 		assertThat(chainedSetterBean.getName()).isNotEmpty();
-		assertThat(chainedSetterBean.getIndex()).isNotEqualTo(0);
+		assertThat(chainedSetterBean.getIndex()).isNotZero();
 	}
 
 	@Test
@@ -67,7 +68,7 @@ public class ChainedSettersSupportTest {
 
 		// then
 		assertFalse(((BaseClass) value).field.isEmpty());
-		assertTrue(value.field != 0);
+		assertNotEquals(value.field ,0);
 	}
 
 	@Test
@@ -112,7 +113,7 @@ public class ChainedSettersSupportTest {
 
 		// then
 		assertNotNull(value.getField());
-		assertTrue(value.getF() != 0);
+		assertNotEquals(0, value.getF() );
 	}
 
 }

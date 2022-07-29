@@ -234,8 +234,30 @@ class EasyRandomTest {
     void fieldsOfTypeClassShouldBeSkipped() {
         try {
             TestBean testBean = easyRandom.nextObject(TestBean.class);
-            assertThat(testBean.getException()).isNotNull();
+            assertThat(testBean.getException()).isNull();
             assertThat(testBean.getClazz()).isNull();
+        } catch (Exception e) {
+            fail("Should skip fields of type Class");
+        }
+    }
+
+    @Test
+    void typeRecordShouldBePopulated() {
+        try {
+            TestRecord testBean = easyRandom.nextObject(TestRecord.class);
+            assertThat(testBean).isNotNull();
+            assertThat(testBean.id()).isNotNull();
+        } catch (Exception e) {
+            fail("Should skip fields of type Class");
+        }
+    }
+
+    @Test
+    void fieldsOfTypeRecordShouldBePopulated() {
+        try {
+            TestBeanWithRecord testBean = easyRandom.nextObject(TestBeanWithRecord.class);
+            assertThat(testBean.getTestRecord()).isNotNull();
+            assertThat(testBean.getTestRecord().id()).isNotNull();
         } catch (Exception e) {
             fail("Should skip fields of type Class");
         }

@@ -100,6 +100,10 @@ public class EasyRandom extends Random {
         return doPopulateBean(type, new RandomizationContext(type, parameters));
     }
 
+    private <T> boolean isRecord(final Class<T> type) {
+        return type.isRecord();
+    }
+
     /**
      * Generate a stream of random instances of the given type.
      *
@@ -120,6 +124,9 @@ public class EasyRandom extends Random {
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
         if (exclusionPolicy.shouldBeExcluded(type, context)) {
             return null;
+        }
+        if (isRecord(type)) {
+            return new RecordFactory().createInstance(type, context);
         }
 
         T result;

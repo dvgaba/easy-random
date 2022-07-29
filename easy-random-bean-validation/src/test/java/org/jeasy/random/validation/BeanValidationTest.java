@@ -117,17 +117,17 @@ class BeanValidationTest {
 
         assertThat(bean.getFutureOrPresent()).isAfterOrEqualTo(new Date());// @FutureOrPresent Date eventDate;
 
-        assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
+        assertThat(bean.getPositive()).isPositive();// @Positive int positive;
 
-        assertThat(bean.getPositiveOrZero()).isGreaterThanOrEqualTo(0);// @PositiveOrZero int positiveOrZero;
+        assertThat(bean.getPositiveOrZero()).isNotNegative();// @PositiveOrZero int positiveOrZero;
 
         assertThat(bean.getNegative()).isLessThan(0);// @Negative int negative;
 
-        assertThat(bean.getNegativeOrZero()).isLessThanOrEqualTo(0);// @NegativeOrZero int negativeOrZero;
+        assertThat(bean.getNegativeOrZero()).isNotPositive();// @NegativeOrZero int negativeOrZero;
 
-        assertThat(bean.getPositiveLong()).isGreaterThan(0);// @Positive Long positive;
+        assertThat(bean.getPositiveLong()).isPositive();// @Positive Long positive;
 
-        assertThat(bean.getPositiveOrZeroLong()).isGreaterThanOrEqualTo(0);// @PositiveOrZero Long positiveOrZero;
+        assertThat(bean.getPositiveOrZeroLong()).isNotNegative();// @PositiveOrZero Long positiveOrZero;
 
         assertThat(bean.getNegativeLong()).isLessThan(0);// @Negative Long negative;
 
@@ -188,17 +188,17 @@ class BeanValidationTest {
 
         assertThat(bean.getFutureOrPresent()).isAfterOrEqualTo(new Date());// @FutureOrPresent Date eventDate;
 
-        assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
+        assertThat(bean.getPositive()).isPositive();// @Positive int positive;
 
-        assertThat(bean.getPositiveOrZero()).isGreaterThanOrEqualTo(0);// @PositiveOrZero int positiveOrZero;
+        assertThat(bean.getPositiveOrZero()).isNotNegative();// @PositiveOrZero int positiveOrZero;
 
         assertThat(bean.getNegative()).isLessThan(0);// @Negative int negative;
 
         assertThat(bean.getNegativeOrZero()).isLessThanOrEqualTo(0);// @NegativeOrZero int negativeOrZero;
 
-        assertThat(bean.getPositiveLong()).isGreaterThan(0);// @Positive Long positive;
+        assertThat(bean.getPositiveLong()).isPositive();// @Positive Long positive;
 
-        assertThat(bean.getPositiveOrZeroLong()).isGreaterThanOrEqualTo(0);// @PositiveOrZero Long positiveOrZero;
+        assertThat(bean.getPositiveOrZeroLong()).isNotNegative();// @PositiveOrZero Long positiveOrZero;
 
         assertThat(bean.getNegativeLong()).isLessThan(0);// @Negative Long negative;
 
@@ -254,9 +254,12 @@ class BeanValidationTest {
         // assertThat(bean.getEventDate()).isEqualTo("2017-07-22T13:20:35.628"); // same for eventLocalDateTime
         assertThat(bean.getMaxQuantity()).isEqualTo(-2055951745);
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
-        assertThat(bean.getMaxDiscount()).isEqualTo(new BigDecimal(1.2786858993971550457757757612853311002254486083984375));
-        assertThat(bean.getMinDiscount()).isEqualTo(new BigDecimal(7662282876638370609146101740543801632384371011755725427644785896281033154465107481014236865090602870006608143292003443098160947481248487711461114361337135608579588927391230902925850523644737673724379044725003237691291118781433336121334962263919251188630152674215174880065707256545268445171714648124229156864D));
-        assertThat(bean.getDiscount()).isEqualTo(new BigDecimal(0.182723708049134681008496272625052370131015777587890625));
+        assertThat(bean.getMaxDiscount().doubleValue()).isEqualTo(new BigDecimal(1.278685899397155).doubleValue());
+        assertThat(bean.getMinDiscount().doubleValue()).isEqualTo(
+            new BigDecimal(
+                7.66228287663837E306).doubleValue()
+        );
+        assertThat(bean.getDiscount().doubleValue()).isEqualTo(new BigDecimal(0.18272370804913468).doubleValue());
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
         assertThat(bean.getBriefMessage()).isEqualTo("tg");
         assertThat(bean.getRegexString()).isEqualTo("vuna");
