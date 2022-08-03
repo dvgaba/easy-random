@@ -11,7 +11,7 @@
 [![Build Status](https://github.com/dvgaba/easy-random/actions/workflows/maven.yml/badge.svg)](https://github.com/dvgaba/easy-random/actions/workflows/maven.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-random-core/badge.svg?style=flat)](https://repo1.maven.org/maven2/org/jeasy/easy-random-core/5.0.0/)
 [![Javadocs](http://www.javadoc.io/badge/org.jeasy/easy-random-core.svg)](http://www.javadoc.io/doc/org.jeasy/easy-random-core)
-[![Project status](https://img.shields.io/badge/Project%20status-Maintenance-orange.svg)](https://img.shields.io/badge/Project%20status-Maintenance-orange.svg)
+[![Project status](https://img.shields.io/badge/Project%20status-active-darkgreen.svg)](https://img.shields.io/badge/Project%20status-active-darkgreen.svg)
 
 </div>
 
@@ -22,7 +22,7 @@
 Active
 
 ## Latest news
-
+* 8/3/2022: Added support to JDK 16 and Java Record and minor bug fixes
 * 15/11/2020: Easy Random v5.0.0 is out and is now based on Java 11. Feature wise, this release is the same as v4.3.0. Please check the [release notes](https://github.com/j-easy/easy-random/releases/tag/easy-random-5.0.0) for more details.
 * 07/11/2020: Easy Random v4.3.0 is now released with support for generic types and fluent setters! You can find all details in the [change log](https://github.com/j-easy/easy-random/releases/tag/easy-random-4.3.0).
 
