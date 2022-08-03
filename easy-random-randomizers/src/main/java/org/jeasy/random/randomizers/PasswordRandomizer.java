@@ -23,13 +23,15 @@
  */
 package org.jeasy.random.randomizers;
 
+import io.github.serpro69.kfaker.Faker;
 import org.jeasy.random.api.Randomizer;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
  * A {@link Randomizer} that generates random passwords.
- * 
+ *
  * @author https://github.com/JJ1216
  */
 public class PasswordRandomizer extends FakerBasedRandomizer<String> {
@@ -109,7 +111,15 @@ public class PasswordRandomizer extends FakerBasedRandomizer<String> {
 
 	@Override
 	public String getRandomValue() {
-		return faker.internet().password(min, max, includeUppercase, includeSpecial);
+		return faker.getRandom().randomString(
+			min,
+			max,
+			locale,
+			includeUppercase,
+			includeSpecial,
+			includeSpecial,
+			includeSpecial
+		);
 	}
 
 }

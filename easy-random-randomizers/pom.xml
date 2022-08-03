@@ -54,8 +54,8 @@
             <artifactId>easy-random-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
+            <groupId>io.github.serpro69</groupId>
+            <artifactId>kotlin-faker</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
