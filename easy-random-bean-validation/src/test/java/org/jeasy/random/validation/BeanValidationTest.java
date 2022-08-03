@@ -262,12 +262,12 @@ class BeanValidationTest {
         assertThat(bean.getDiscount().doubleValue()).isEqualTo(new BigDecimal(0.18272370804913468).doubleValue());
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
         assertThat(bean.getBriefMessage()).isEqualTo("tg");
-        assertThat(bean.getRegexString()).isEqualTo("vuna");
+        assertThat(bean.getRegexString()).isEqualTo("guys");
         assertThat(bean.getPositive()).isEqualTo(91531902);
         assertThat(bean.getPositiveOrZero()).isEqualTo(91531901);
         assertThat(bean.getNegative()).isEqualTo(-2055951746);
         assertThat(bean.getNegativeOrZero()).isEqualTo(-2055951746);
-        assertThat(bean.getEmail()).isEqualTo("celine.schoen@hotmail.com");
+        assertThat(bean.getEmail()).isEqualTo("harris.bahringer@yahoo.com");
         assertThat(bean.getNotBlank()).isEqualTo("tg");
     }
 
