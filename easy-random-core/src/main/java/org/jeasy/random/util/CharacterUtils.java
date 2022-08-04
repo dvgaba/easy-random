@@ -75,7 +75,7 @@ public final class CharacterUtils {
 
     private static boolean isPrintable(char character) {
         Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
-        return (!Character.isISOControl(character)) && block != null && block != Character.UnicodeBlock.SPECIALS;
+        return !Character.isISOControl(character) && !Character.UnicodeBlock.SPECIALS.equals(block);
     }
 
 }

@@ -447,7 +447,7 @@ public final class ReflectionUtils {
      */
     public static boolean isAnnotationPresent(Field field, Class<? extends Annotation> annotationType) {
         final Optional<Method> readMethod = getReadMethod(field);
-        return field.isAnnotationPresent(annotationType) || readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType);
+        return field.isAnnotationPresent(annotationType) || (readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType));
     }
 
     /**
