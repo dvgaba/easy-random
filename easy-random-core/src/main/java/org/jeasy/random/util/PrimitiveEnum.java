@@ -39,8 +39,8 @@ enum PrimitiveEnum {
     BOOLEAN(Boolean.TYPE, Boolean.class),
     CHARACTER(Character.TYPE, Character.class);
 
-    private Class<?> type;
-    private Class<?> clazz;
+    private final Class<?> type;
+    private final Class<?> clazz;
 
     PrimitiveEnum(Class<?> type, Class<?> clazz) {
         this.type = type;
