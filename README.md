@@ -10,7 +10,7 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![Build Status](https://github.com/dvgaba/easy-random/actions/workflows/maven.yml/badge.svg)](https://github.com/dvgaba/easy-random/actions/workflows/maven.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.dvgaba/easy-random-core/badge.svg?style=flat)](https://repo1.maven.org/maven2/io/github/dvgaba/easy-random-core/6.0.2/)
-[![Javadocs](http://www.javadoc.io/badge/org.jeasy/easy-random-core.svg)](http://www.javadoc.io/doc/org.jeasy/easy-random-core)
+[![Javadocs](https://www.javadoc.io/badge/io.github.dvgaba/easy-random-core.svg)](https://www.javadoc.io/doc/io.github.dvgaba/easy-random-core)
 [![Project status](https://img.shields.io/badge/Project%20status-active-darkgreen.svg)](https://img.shields.io/badge/Project%20status-active-darkgreen.svg)
 
 </div>
