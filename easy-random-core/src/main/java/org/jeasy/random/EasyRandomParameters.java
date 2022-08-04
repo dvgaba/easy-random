@@ -35,7 +35,6 @@ import java.util.*;
 import java.util.function.Predicate;
 
 import static java.lang.String.format;
-import static java.time.ZonedDateTime.of;
 
 /**
  * Parameters of an {@link EasyRandom} instance.
@@ -82,7 +81,7 @@ public class EasyRandomParameters {
     /**
      * Reference date around which random dates will be generated.
      */
-    private static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
+    private static final ZonedDateTime REFERENCE_DATE = ZonedDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
 
     /**
      * Default dates range.

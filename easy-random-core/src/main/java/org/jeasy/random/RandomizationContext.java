@@ -40,9 +40,9 @@ class RandomizationContext implements RandomizerContext {
 
     private final EasyRandomParameters parameters;
 
-    private final Map<Class<?>, List<Object>> populatedBeans;
+    private final IdentityHashMap<Class<?>, List<Object>> populatedBeans;
 
-    private final Stack<RandomizationContextStackItem> stack;
+    private final Deque<RandomizationContextStackItem> stack;
 
     private final Class<?> type;
 
@@ -53,7 +53,7 @@ class RandomizationContext implements RandomizerContext {
     RandomizationContext(final Class<?> type, final EasyRandomParameters parameters) {
         this.type = type;
         populatedBeans = new IdentityHashMap<>();
-        stack = new Stack<>();
+        stack = new ArrayDeque<>();
         this.parameters = parameters;
         this.random = new Random(parameters.getSeed());
     }
@@ -100,7 +100,13 @@ class RandomizationContext implements RandomizerContext {
     }
 
     private List<String> getStackedFieldNames() {
-        return stack.stream().map(i -> i.getField().getName()).collect(toList());
+
+        List<String> collect = new ArrayList<>();
+        Iterator<RandomizationContextStackItem> it = stack.descendingIterator();
+        while(it.hasNext()) {
+            collect.add(it.next().getField().getName());
+        }
+        return collect;
     }
 
     private List<String> toLowerCase(final List<String> strings) {
@@ -120,11 +126,11 @@ class RandomizationContext implements RandomizerContext {
 
     @Override
     public Object getCurrentObject() {
-        if (stack.empty()) {
+        if (stack.isEmpty()) {
             return rootObject;
         }
         else {
-            return stack.lastElement().getObject();
+            return stack.peek().getObject();
         }
     }
 
