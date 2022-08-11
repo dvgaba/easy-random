@@ -23,7 +23,7 @@
  */
 package org.jeasy.random.randomizers;
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import org.jeasy.random.api.Randomizer;
 
 import java.util.Locale;
