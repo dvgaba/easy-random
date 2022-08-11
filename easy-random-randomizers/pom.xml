@@ -3,7 +3,7 @@
     <parent>
         <artifactId>easy-random</artifactId>
         <groupId>io.github.dvgaba</groupId>
-        <version>6.0.2</version>
+        <version>6.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -54,29 +54,10 @@
             <artifactId>easy-random-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                     <artifactId>snakeyaml</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.velocity</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
