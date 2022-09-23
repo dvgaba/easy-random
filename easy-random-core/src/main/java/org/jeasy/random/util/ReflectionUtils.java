@@ -26,7 +26,6 @@ package org.jeasy.random.util;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Locale.ENGLISH;
-import static java.util.stream.Collectors.toList;
 import static org.jeasy.random.util.ConversionUtils.convertArguments;
 
 import java.lang.annotation.Annotation;
@@ -203,7 +202,7 @@ public final class ReflectionUtils {
         if (fieldValue == null) {
             return false;
         }
-        if (fieldType.equals(boolean.class) && (boolean) fieldValue == false) {
+        if (fieldType.equals(boolean.class) && !((boolean) fieldValue)) {
             return true;
         }
         if (fieldType.equals(byte.class) && (byte) fieldValue == (byte) 0) {
@@ -374,11 +373,7 @@ public final class ReflectionUtils {
      * @return true if the type is parameterized, false otherwise
      */
     public static boolean isParameterizedType(final Type type) {
-        return (
-            type != null &&
-            type instanceof ParameterizedType &&
-            ((ParameterizedType) type).getActualTypeArguments().length > 0
-        );
+        return (type instanceof ParameterizedType && ((ParameterizedType) type).getActualTypeArguments().length > 0);
     }
 
     /**
@@ -420,8 +415,8 @@ public final class ReflectionUtils {
      * @return a list of types having the same parameterized types as the given type
      */
     public static List<Class<?>> filterSameParameterizedTypes(final List<Class<?>> types, final Type type) {
-        if (type instanceof ParameterizedType) {
-            Type[] fieldArugmentTypes = ((ParameterizedType) type).getActualTypeArguments();
+        if (type instanceof ParameterizedType parameterizedType) {
+            Type[] fieldArugmentTypes = parameterizedType.getActualTypeArguments();
             List<Class<?>> typesWithSameParameterizedTypes = new ArrayList<>();
             for (Class<?> currentConcreteType : types) {
                 List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteType);
@@ -430,7 +425,7 @@ public final class ReflectionUtils {
                         .stream()
                         .filter(currentTypeArguments -> Arrays.equals(fieldArugmentTypes, currentTypeArguments))
                         .map(currentTypeArguments -> currentConcreteType)
-                        .collect(toList())
+                        .toList()
                 );
             }
             return typesWithSameParameterizedTypes;
@@ -598,8 +593,8 @@ public final class ReflectionUtils {
         List<Type[]> actualTypeArguments = new ArrayList<>();
         Type[] genericInterfaceTypes = type.getGenericInterfaces();
         for (Type currentGenericInterfaceType : genericInterfaceTypes) {
-            if (currentGenericInterfaceType instanceof ParameterizedType) {
-                actualTypeArguments.add(((ParameterizedType) currentGenericInterfaceType).getActualTypeArguments());
+            if (currentGenericInterfaceType instanceof ParameterizedType parameterizedType) {
+                actualTypeArguments.add((parameterizedType).getActualTypeArguments());
             }
         }
         return actualTypeArguments;

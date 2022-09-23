@@ -46,7 +46,6 @@ import java.lang.reflect.Method;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.ContextAwareRandomizer;
@@ -117,7 +116,7 @@ public class ProtobufMessageRandomizer implements ContextAwareRandomizer<Message
             .getFields()
             .stream()
             .filter(field -> field.getContainingOneof() == null)
-            .collect(Collectors.toList());
+            .toList();
         for (FieldDescriptor fieldDescriptor : plainFields) {
             populateField(fieldDescriptor, builder);
         }

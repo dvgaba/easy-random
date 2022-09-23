@@ -9,6 +9,7 @@ import org.jeasy.random.api.RandomizerContext;
 
 public class ProtobufExclusionPolicy extends DefaultExclusionPolicy {
 
+    @Override
     public boolean shouldBeExcluded(final Field field, final RandomizerContext context, Object object) {
         if (!(object instanceof FieldDescriptor)) {
             throw new IllegalArgumentException("3rd parameter must be of FieldDescriptor");

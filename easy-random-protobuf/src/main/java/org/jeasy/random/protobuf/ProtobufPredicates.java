@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class ProtobufPredicates {
 
-    private static EnumMap protoToJavaTypeMap = new EnumMap(FieldDescriptor.Type.class);
+    private static EnumMap<Type, Class<?>> protoToJavaTypeMap = new EnumMap<>(FieldDescriptor.Type.class);
 
     static {
         protoToJavaTypeMap.put(Type.INT32, Int32Value.class);
@@ -37,11 +37,8 @@ public class ProtobufPredicates {
     }
 
     public static BiPredicate<Field, Object> named(final String name) {
-        System.out.println(name);
         final Pattern pattern = Pattern.compile(name + "_");
-        return (field, fieldDescriptor) -> {
-            return pattern.matcher(field.getName()).matches();
-        };
+        return (field, fieldDescriptor) -> pattern.matcher(field.getName()).matches();
     }
 
     public static BiPredicate<Field, Object> ofProtobufType(Class<?> type) {
@@ -58,8 +55,6 @@ public class ProtobufPredicates {
     }
 
     public static Predicate<Class<?>> ofType(Class<?> type) {
-        return clz -> {
-            return clz.equals(type);
-        };
+        return clz -> clz.equals(type);
     }
 }
