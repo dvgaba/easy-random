@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>9</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.github.dvgaba</groupId>
   <artifactId>easy-random</artifactId>
+  <version>6.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <build>
     <extensions>
@@ -94,6 +104,7 @@
     <system>Github Actions</system>
     <url>https://github.com/j-easy/easy-random/actions</url>
   </ciManagement>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -165,11 +176,12 @@
     </dependencies>
   </dependencyManagement>
   <description>Easy Random is a library to generate random Java beans</description>
+
   <developers>
     <developer>
-      <email>mahmoud.benhassine@icloud.com</email>
       <id>benas</id>
       <name>Mahmoud Ben Hassine</name>
+      <email>mahmoud.benhassine@icloud.com</email>
       <roles>
         <role>Lead developer</role>
       </roles>
@@ -199,7 +211,7 @@
       <url>https://maven.pkg.github.com/dvgaba/easy-random</url>
     </repository>
   </distributionManagement>
-  <groupId>io.github.dvgaba</groupId>
+
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/j-easy/easy-random/issues</url>
@@ -212,24 +224,13 @@
     </license>
   </licenses>
 
-  <modelVersion>4.0.0</modelVersion>
-
   <modules>
     <module>easy-random-core</module>
     <module>easy-random-bean-validation</module>
     <module>easy-random-randomizers</module>
     <module>easy-random-protobuf</module>
   </modules>
-
   <name>Easy Random</name>
-
-  <packaging>pom</packaging>
-
-  <parent>
-    <artifactId>oss-parent</artifactId>
-    <groupId>org.sonatype.oss</groupId>
-    <version>9</version>
-  </parent>
 
   <profiles>
     <profile>
@@ -299,9 +300,7 @@
         </snapshotRepository>
       </distributionManagement>
       <id>repo1</id>
-
     </profile>
-
     <profile>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -309,7 +308,6 @@
       <build>
       </build>
       <id>default</id>
-
     </profile>
   </profiles>
 
@@ -324,9 +322,8 @@
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-    <maven-license-plugin.version>4.1</maven-license-plugin.version>
     <maven-license-plugin.version>3.0</maven-license-plugin.version>
-
+    <maven-license-plugin.version>4.1</maven-license-plugin.version>
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -351,7 +348,5 @@
     <tag>HEAD</tag>
     <url>git@github.com:j-easy/easy-random.git</url>
   </scm>
-
   <url>https://github.com/j-easy/easy-random</url>
-  <version>6.1.0-SNAPSHOT</version>
 </project>
