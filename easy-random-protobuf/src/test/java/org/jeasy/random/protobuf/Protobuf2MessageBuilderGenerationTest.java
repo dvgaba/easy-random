@@ -108,7 +108,7 @@ class Protobuf2MessageBuilderGenerationTest {
                 assertThat(embeddedMessage.getEnumField()).isEqualTo(Proto2Enum.THIRD_VALUE);
             });
         assertThat(protoBuilderInstance.getOneofFieldCase().getNumber())
-            .isNotEqualTo(Proto2Message.OneofFieldCase.ONEOFFIELD_NOT_SET);
+            .isNotEqualTo(Proto2Message.OneofFieldCase.ONEOFFIELD_NOT_SET.getNumber());
         assertThat(protoBuilderInstance.getMapFieldMap())
             .hasSize(4)
             .containsEntry(

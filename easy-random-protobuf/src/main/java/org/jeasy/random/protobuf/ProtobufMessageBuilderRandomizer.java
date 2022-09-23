@@ -34,7 +34,6 @@ import org.jeasy.random.api.RandomizerContext;
 public class ProtobufMessageBuilderRandomizer implements ContextAwareRandomizer<Builder> {
 
     private final ProtobufMessageRandomizer protobufMessageRandomizer;
-    private RandomizerContext context;
 
     public ProtobufMessageBuilderRandomizer(
         Class<Message.Builder> messageBuilderClass,
@@ -65,7 +64,6 @@ public class ProtobufMessageBuilderRandomizer implements ContextAwareRandomizer<
 
     @Override
     public void setRandomizerContext(RandomizerContext context) {
-        this.context = context;
         protobufMessageRandomizer.setRandomizerContext(context);
     }
 }
