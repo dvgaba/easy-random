@@ -21,39 +21,51 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random.api;
+package org.jeasy.random.protobuf;
 
+import com.google.protobuf.Message;
 import java.lang.reflect.Field;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.annotation.Priority;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerRegistry;
 
 /**
- * Interface for a registry of {@link Randomizer}s.
+ * A registry of randomizers for Protobuf messages.
  *
- * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-public interface RandomizerRegistry {
+@Priority(-2)
+public class ProtobufRandomizerRegistry implements RandomizerRegistry {
 
-  /**
-   * Initialize the registry.
-   *
-   * @param parameters of the {@link EasyRandom} instance being configured
-   */
-  void init(EasyRandomParameters parameters);
+    private EasyRandom easyRandom;
+    private EasyRandomParameters parameters;
 
-  /**
-   * Retrieves a randomizer for the given field.
-   *
-   * @param field the field for which a randomizer was registered
-   * @return the randomizer registered for the given field
-   */
-  Randomizer<?> getRandomizer(final Field field);
+    @Override
+    public void init(EasyRandomParameters parameters) {
+        this.parameters = parameters;
+    }
 
-  /**
-   * Retrieves a randomizer for a given type.
-   *
-   * @param type the type for which a randomizer was registered
-   * @return the randomizer registered for the given type.
-   */
-  Randomizer<?> getRandomizer(final Class<?> type);
+    @Override
+    public Randomizer<?> getRandomizer(Field field) {
+        return null;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Randomizer<?> getRandomizer(Class<?> type) {
+        if (Message.class.isAssignableFrom(type)) {
+            if (easyRandom == null) {
+                easyRandom = new EasyRandom(parameters);
+            }
+            return new ProtobufMessageRandomizer((Class<Message>) type, easyRandom, parameters);
+        }
+        if (Message.Builder.class.isAssignableFrom(type)) {
+            if (easyRandom == null) {
+                easyRandom = new EasyRandom(parameters);
+            }
+            return new ProtobufMessageBuilderRandomizer((Class<Message.Builder>) type, easyRandom, parameters);
+        }
+        return null;
+    }
 }

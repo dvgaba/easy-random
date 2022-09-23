@@ -83,11 +83,11 @@ class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
                 { new Ipv6AddressRandomizer(SEED), "b3f4:4994:c9e8:b21a:c493:e923:f711:1115" },
                 { new IsbnRandomizer(SEED), "9781786075390" },
                 { new LastNameRandomizer(SEED), "Durgan" },
-                { new LatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "17135654" },
-                { new LongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "34271308" },
+                { new LatitudeRandomizer(SEED), "40.17135654" },
+                { new LongitudeRandomizer(SEED), "80.34271308" },
                 { new MacAddressRandomizer(SEED), "b3:f4:49:94:c9:e8" },
                 { new ParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
-                { new PhoneNumberRandomizer(SEED), "069.574.7539 x6257" },
+                { new PhoneNumberRandomizer(SEED), "1-352-773-9574" },
                 { new RegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "8UYSMT" },
                 { new SentenceRandomizer(SEED), "Dolor totam assumenda eius autem." },
                 { new StateRandomizer(SEED), "North Carolina" },
@@ -119,8 +119,8 @@ class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
                 { new Ipv6AddressRandomizer(SEED, LOCALE), "b3f4:4994:c9e8:b21a:c493:e923:f711:1115" },
                 { new IsbnRandomizer(SEED, LOCALE), "9781786075390" },
                 { new LastNameRandomizer(SEED, LOCALE), "Faure" },
-                { new LatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "17135654" }, // should really be "40.171357", seems like a bug in java-faker
-                { new LongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "34271308" }, // should really be "80.342713", seems like a bug in java-faker
+                { new LatitudeRandomizer(SEED, LOCALE), "40,17135654" }, // should really be "40.171357", seems like a bug in java-faker
+                { new LongitudeRandomizer(SEED, LOCALE), "80,34271308" }, // should really be "80.342713", seems like a bug in java-faker
                 { new MacAddressRandomizer(SEED, LOCALE), "b3:f4:49:94:c9:e8" },
                 { new ParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { new PhoneNumberRandomizer(SEED, LOCALE), "03 06 95 74 75" },

@@ -21,39 +21,33 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random.api;
+package org.jeasy.random.protobuf;
 
-import java.lang.reflect.Field;
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
+import com.google.protobuf.ByteString;
+import java.util.Random;
+import org.jeasy.random.api.Randomizer;
 
-/**
- * Interface for a registry of {@link Randomizer}s.
- *
- * @author Rémi Alvergnat (toilal.dev@gmail.com)
- */
-public interface RandomizerRegistry {
+/** Generate a random Protobuf {@link ByteString}. */
+public class ByteStringRandomizer implements Randomizer<ByteString> {
 
-  /**
-   * Initialize the registry.
-   *
-   * @param parameters of the {@link EasyRandom} instance being configured
-   */
-  void init(EasyRandomParameters parameters);
+  private final Random random;
 
-  /**
-   * Retrieves a randomizer for the given field.
-   *
-   * @param field the field for which a randomizer was registered
-   * @return the randomizer registered for the given field
-   */
-  Randomizer<?> getRandomizer(final Field field);
+  public ByteStringRandomizer() {
+    this.random = new Random();
+  }
 
-  /**
-   * Retrieves a randomizer for a given type.
-   *
-   * @param type the type for which a randomizer was registered
-   * @return the randomizer registered for the given type.
-   */
-  Randomizer<?> getRandomizer(final Class<?> type);
+  public ByteStringRandomizer(long seed) {
+    this.random = new Random(seed);
+  }
+
+  @Override
+  public ByteString getRandomValue() {
+    byte[] bytes = new byte[32];
+    random.nextBytes(bytes);
+    return ByteString.copyFrom(bytes);
+  }
+
+  public String toString() {
+    return this.getClass().getSimpleName();
+  }
 }

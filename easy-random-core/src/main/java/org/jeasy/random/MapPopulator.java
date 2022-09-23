@@ -23,8 +23,10 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.ObjectFactory;
-import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
+import static org.jeasy.random.util.ReflectionUtils.getEmptyImplementationForMapInterface;
+import static org.jeasy.random.util.ReflectionUtils.isInterface;
+import static org.jeasy.random.util.ReflectionUtils.isParameterizedType;
+import static org.jeasy.random.util.ReflectionUtils.isPopulatable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -32,8 +34,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.EnumMap;
 import java.util.Map;
-
-import static org.jeasy.random.util.ReflectionUtils.*;
+import org.jeasy.random.api.ObjectFactory;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 /**
  * Random map populator.
@@ -42,62 +44,68 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  */
 class MapPopulator {
 
-    private final EasyRandom easyRandom;
+  private final EasyRandom easyRandom;
 
-    private final ObjectFactory objectFactory;
+  private final ObjectFactory objectFactory;
 
-    MapPopulator(final EasyRandom easyRandom, final ObjectFactory objectFactory) {
-        this.easyRandom = easyRandom;
-        this.objectFactory = objectFactory;
-    }
+  MapPopulator(final EasyRandom easyRandom, final ObjectFactory objectFactory) {
+    this.easyRandom = easyRandom;
+    this.objectFactory = objectFactory;
+  }
 
-    @SuppressWarnings("unchecked")
-    Map<?, ?> getRandomMap(final Field field, final RandomizationContext context) {
-        int randomSize = getRandomMapSize(context.getParameters());
-        Class<?> fieldType = field.getType();
-        Type fieldGenericType = field.getGenericType();
-        Map<Object, Object> map;
+  @SuppressWarnings("unchecked")
+  Map<?, ?> getRandomMap(final Field field, final RandomizationContext context) {
+    int randomSize = getRandomMapSize(context.getParameters());
+    Class<?> fieldType = field.getType();
+    Type fieldGenericType = field.getGenericType();
+    Map<Object, Object> map;
 
-        if (isInterface(fieldType)) {
-            map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
+    if (isInterface(fieldType)) {
+      map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
+    } else {
+      try {
+        map = (Map<Object, Object>) fieldType.getDeclaredConstructor().newInstance();
+      } catch (InstantiationException
+          | IllegalAccessException
+          | NoSuchMethodException
+          | InvocationTargetException e) {
+        // Creating EnumMap with objenesis by-passes the constructor with keyType which leads to CCE
+        // at insertion time
+        if (fieldType.isAssignableFrom(EnumMap.class)) {
+          if (isParameterizedType(fieldGenericType)) {
+            Type type = ((ParameterizedType) fieldGenericType).getActualTypeArguments()[0];
+            map = new EnumMap((Class<?>) type);
+          } else {
+            return null;
+          }
         } else {
-            try {
-                map = (Map<Object, Object>) fieldType.getDeclaredConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                // Creating EnumMap with objenesis by-passes the constructor with keyType which leads to CCE at insertion time
-                if (fieldType.isAssignableFrom(EnumMap.class)) {
-                    if (isParameterizedType(fieldGenericType)) {
-                        Type type = ((ParameterizedType) fieldGenericType).getActualTypeArguments()[0];
-                        map = new EnumMap((Class<?>)type);
-                    } else {
-                        return null;
-                    }
-                } else {
-                    map = (Map<Object, Object>) objectFactory.createInstance(fieldType, context);
-                }
-            }
+          map = (Map<Object, Object>) objectFactory.createInstance(fieldType, context);
         }
-
-        if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
-            ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
-            Type keyType = parameterizedType.getActualTypeArguments()[0];
-            Type valueType = parameterizedType.getActualTypeArguments()[1];
-            if (isPopulatable(keyType) && isPopulatable(valueType)) {
-                for (int index = 0; index < randomSize; index++) {
-                    Object randomKey = easyRandom.doPopulateBean((Class<?>) keyType, context);
-                    Object randomValue = easyRandom.doPopulateBean((Class<?>) valueType, context);
-                    if(randomKey != null) {
-                        map.put(randomKey, randomValue);
-                    }
-                }
-            }
-        }
-        return map;
+      }
     }
 
-    private int getRandomMapSize(EasyRandomParameters parameters) {
-        EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
-        return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), parameters.getSeed()).getRandomValue();
+    if (isParameterizedType(
+        fieldGenericType)) { // populate only parameterized types, raw types will be empty
+      ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
+      Type keyType = parameterizedType.getActualTypeArguments()[0];
+      Type valueType = parameterizedType.getActualTypeArguments()[1];
+      if (isPopulatable(keyType) && isPopulatable(valueType)) {
+        for (int index = 0; index < randomSize; index++) {
+          Object randomKey = easyRandom.doPopulateBean((Class<?>) keyType, context);
+          Object randomValue = easyRandom.doPopulateBean((Class<?>) valueType, context);
+          if (randomKey != null) {
+            map.put(randomKey, randomValue);
+          }
+        }
+      }
     }
+    return map;
+  }
 
+  private int getRandomMapSize(EasyRandomParameters parameters) {
+    EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
+    return new IntegerRangeRandomizer(
+            collectionSizeRange.getMin(), collectionSizeRange.getMax(), parameters.getSeed())
+        .getRandomValue();
+  }
 }

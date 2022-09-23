@@ -23,14 +23,14 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.ExclusionPolicy;
-import org.jeasy.random.api.RandomizerContext;
+import static org.jeasy.random.util.ReflectionUtils.isStatic;
 
 import java.lang.reflect.Field;
 import java.util.Set;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
-
-import static org.jeasy.random.util.ReflectionUtils.*;
+import org.jeasy.random.api.ExclusionPolicy;
+import org.jeasy.random.api.RandomizerContext;
 
 /**
  * Component that encapsulates the logic of field/type exclusion in a given randomization context.
@@ -40,40 +40,42 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  */
 public class DefaultExclusionPolicy implements ExclusionPolicy {
 
-    /**
-     * Given the current randomization context, should the field be excluded from being populated ?
-     *
-     * @param field the field to check
-     * @param context the current randomization context
-     * @return true if the field should be excluded, false otherwise
-     */
-    public boolean shouldBeExcluded(final Field field, final RandomizerContext context) {
-        if (isStatic(field)) {
-            return true;
-        }
-        Set<Predicate<Field>> fieldExclusionPredicates = context.getParameters().getFieldExclusionPredicates();
-        for (Predicate<Field> fieldExclusionPredicate : fieldExclusionPredicates) {
-            if (fieldExclusionPredicate.test(field)) {
-                return true;
-            }
-        }
-        return false;
+  /**
+   * Given the current randomization context, should the field be excluded from being populated ?
+   *
+   * @param field the field to check
+   * @param context the current randomization context
+   * @return true if the field should be excluded, false otherwise
+   */
+  public boolean shouldBeExcluded(final Field field, final RandomizerContext context) {
+    if (isStatic(field)) {
+      return true;
     }
+    Set<BiPredicate<Field, Object>> fieldExclusionPredicates =
+        context.getParameters().getFieldExclusionPredicates();
+    for (BiPredicate<Field, Object> fieldExclusionPredicate : fieldExclusionPredicates) {
+      if (fieldExclusionPredicate.test(field, null)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-    /**
-     * Given the current randomization context, should the type be excluded from being populated ?
-     *
-     * @param type the type to check
-     * @param context the current randomization context
-     * @return true if the type should be excluded, false otherwise
-     */
-    public boolean shouldBeExcluded(final Class<?> type, final RandomizerContext context) {
-        Set<Predicate<Class<?>>> typeExclusionPredicates = context.getParameters().getTypeExclusionPredicates();
-        for (Predicate<Class<?>> typeExclusionPredicate : typeExclusionPredicates) {
-            if (typeExclusionPredicate.test(type)) {
-                return true;
-            }
-        }
-        return false;
+  /**
+   * Given the current randomization context, should the type be excluded from being populated ?
+   *
+   * @param type the type to check
+   * @param context the current randomization context
+   * @return true if the type should be excluded, false otherwise
+   */
+  public boolean shouldBeExcluded(final Class<?> type, final RandomizerContext context) {
+    Set<Predicate<Class<?>>> typeExclusionPredicates =
+        context.getParameters().getTypeExclusionPredicates();
+    for (Predicate<Class<?>> typeExclusionPredicate : typeExclusionPredicates) {
+      if (typeExclusionPredicate.test(type)) {
+        return true;
+      }
     }
+    return false;
+  }
 }

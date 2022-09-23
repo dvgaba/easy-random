@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+option java_package = "org.jeasy.random.protobuf.testing.proto3";
+option java_multiple_files = true;
+
+message Proto3Message {
+  reserved 99;
+  reserved "reservedField";
+
+  double doubleField = 1;
+  float floatField = 2;
+  int32 int32Field = 3;
+  int64 int64Field = 4;
+  uint32 uint32Field = 5;
+  uint64 uint64Field = 6;
+  sint32 sint32Field = 7;
+  sint64 sint64Field = 8;
+  fixed32 fixed32Field = 9;
+  fixed64 fixed64Field = 10;
+  sfixed32 sfixed32Field = 11;
+  sfixed64 sfixed64Field = 12;
+  bool boolField = 13;
+  string stringField = 14;
+  bytes bytesField = 15;
+  Proto3Enum enumField = 16;
+  google.protobuf.StringValue stringValueField = 17;
+  repeated string repeatedStringField = 18;
+  EmbeddedProto3Message embeddedMessage = 19;
+  map<string, Proto3Enum> mapField = 20;
+
+  oneof oneofField {
+    double firstChoice = 30;
+    string secondChoice = 31;
+    Proto3Enum thirdChoice = 32;
+    EmbeddedProto3Message forthChoice = 33;
+  }
+}
+
+enum Proto3Enum {
+  UNKNOWN = 0;
+  FIRST_VALUE = 1;
+  SECOND_VALUE = 2;
+}
+
+message EmbeddedProto3Message {
+  string stringField = 1;
+  Proto3Enum enumField = 2;
+}
