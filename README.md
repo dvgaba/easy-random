@@ -9,7 +9,7 @@
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![Build Status](https://github.com/dvgaba/easy-random/actions/workflows/maven.yml/badge.svg)](https://github.com/dvgaba/easy-random/actions/workflows/maven.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.dvgaba/easy-random-core/badge.svg?style=flat)](https://repo1.maven.org/maven2/io/github/dvgaba/easy-random-core/6.0.2/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.dvgaba/easy-random-core/badge.svg?style=flat)](https://repo1.maven.org/maven2/io/github/dvgaba/easy-random-core/6.1.0/)
 [![Javadocs](https://www.javadoc.io/badge/io.github.dvgaba/easy-random-core.svg)](https://www.javadoc.io/doc/io.github.dvgaba/easy-random-core)
 [![Project status](https://img.shields.io/badge/Project%20status-active-darkgreen.svg)](https://img.shields.io/badge/Project%20status-active-darkgreen.svg)
 
@@ -22,6 +22,7 @@
 Active
 
 ## Latest news
+* 9/22/2022 Added support to generate random protobuf data, this is based on [murdos/easy-random-protobuf](https://github.com/murdos/easy-random-protobuf)
 * 8/10/2022 Added a fork with JDK 11 support [easy-random-jdk11](https://github.com/dvgaba/easy-random-jdk11) package is available in maven centeral. 
 * 8/3/2022: Added support to JDK 16 and Java Record and minor bug fixes
 * 15/11/2020: Easy Random v5.0.0 is out and is now based on Java 11. Feature wise, this release is the same as v4.3.0. Please check the [release notes](https://github.com/j-easy/easy-random/releases/tag/easy-random-5.0.0) for more details.
