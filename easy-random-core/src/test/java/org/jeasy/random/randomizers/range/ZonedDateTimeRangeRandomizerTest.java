@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.ZonedDateTime;
-
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,7 +67,8 @@ class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Zoned
 
     @Test
     void whenSpecifiedMinZonedDateTimeIsAfterMaxZonedDateTime_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new ZonedDateTimeRangeRandomizer(maxZonedDateTime, minZonedDateTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new ZonedDateTimeRangeRandomizer(maxZonedDateTime, minZonedDateTime))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -94,5 +94,4 @@ class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Zoned
         // Then
         assertThat(randomValue).isAfterOrEqualTo(minZonedDateTime);
     }
-
 }

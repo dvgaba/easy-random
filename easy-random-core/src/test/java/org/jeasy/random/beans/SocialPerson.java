@@ -29,8 +29,7 @@ public class SocialPerson extends Person {
 
     private Set<Person> friends;
 
-    public SocialPerson() {
-    }
+    public SocialPerson() {}
 
     public Set<Person> getFriends() {
         return friends;

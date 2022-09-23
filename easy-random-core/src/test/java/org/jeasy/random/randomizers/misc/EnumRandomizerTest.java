@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.EnumRandomizerTest.Gender.FEMALE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import org.junit.jupiter.api.Test;
+import static org.jeasy.random.randomizers.misc.EnumRandomizerTest.Gender.FEMALE;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.api.Test;
 
 class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gender> {
 
@@ -44,7 +43,8 @@ class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gende
     }
 
     public enum Gender {
-        MALE, FEMALE
+        MALE,
+        FEMALE,
     }
 
     @Test
@@ -57,7 +57,8 @@ class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gende
 
     @Test
     void should_throw_an_exception_when_all_values_are_excluded() {
-        assertThatThrownBy(() -> new EnumRandomizer<>(Gender.class, Gender.values())).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new EnumRandomizer<>(Gender.class, Gender.values()))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     public enum Empty {}

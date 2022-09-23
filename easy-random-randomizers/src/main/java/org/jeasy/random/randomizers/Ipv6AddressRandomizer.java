@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random IPv6 addresses.
@@ -37,8 +36,7 @@ public class Ipv6AddressRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link Ipv6AddressRandomizer}.
      */
-    public Ipv6AddressRandomizer() {
-    }
+    public Ipv6AddressRandomizer() {}
 
     /**
      * Create a new {@link Ipv6AddressRandomizer}.
@@ -66,5 +64,4 @@ public class Ipv6AddressRandomizer extends FakerBasedRandomizer<String> {
     public String getRandomValue() {
         return faker.internet().ipV6Address();
     }
-
 }

@@ -24,6 +24,7 @@
 package org.jeasy.random.beans;
 
 public abstract class BoundedBaseClass<T extends BoundedBaseClass.SomeInterface> {
+
     private final T x;
 
     public BoundedBaseClass(T x) {
@@ -34,9 +35,10 @@ public abstract class BoundedBaseClass<T extends BoundedBaseClass.SomeInterface>
         return x;
     }
 
-    public interface SomeInterface { }
+    public interface SomeInterface {}
 
     public static class IntWrapper implements SomeInterface {
+
         private final int value;
 
         public IntWrapper(int value) {

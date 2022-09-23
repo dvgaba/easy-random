@@ -23,15 +23,14 @@
  */
 package org.jeasy.random.randomizers.time.internal;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.jeasy.random.randomizers.time.DayRandomizer.MAX_DAY;
 import static org.jeasy.random.randomizers.time.DayRandomizer.MIN_DAY;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.jeasy.random.randomizers.time.DayRandomizer;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class DayRandomizerTest extends AbstractRandomizerTest<Integer> {
 

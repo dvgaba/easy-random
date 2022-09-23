@@ -29,10 +29,9 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.beans.Street;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.beans.Street;
 
 class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
 
@@ -72,7 +71,7 @@ class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         IntegerRangeRandomizer integerRangeRandomizer = new IntegerRangeRandomizer(min, max, SEED);
-        
+
         // when
         Integer i = integerRangeRandomizer.getRandomValue();
 
@@ -86,7 +85,7 @@ class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
     @Test
     void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizePrimitiveIntegerType() {
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(int.class, new IntegerRangeRandomizer(min, max));
+            .randomize(int.class, new IntegerRangeRandomizer(min, max));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         int integer = easyRandom.nextObject(int.class);
@@ -95,7 +94,8 @@ class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
 
     @Test
     void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeWrapperIntegerType() {
-        EasyRandomParameters parameters = new EasyRandomParameters().randomize(Integer.class, new IntegerRangeRandomizer(min, max));
+        EasyRandomParameters parameters = new EasyRandomParameters()
+            .randomize(Integer.class, new IntegerRangeRandomizer(min, max));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         Integer integer = easyRandom.nextObject(Integer.class);
@@ -104,11 +104,11 @@ class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
 
     @Test
     void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeNonIntegerType() {
-        EasyRandomParameters parameters = new EasyRandomParameters().randomize(Integer.class, new IntegerRangeRandomizer(min, max));
+        EasyRandomParameters parameters = new EasyRandomParameters()
+            .randomize(Integer.class, new IntegerRangeRandomizer(min, max));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         Street street = easyRandom.nextObject(Street.class);
         assertThat(street.getNumber()).isBetween(min, max);
     }
-
 }

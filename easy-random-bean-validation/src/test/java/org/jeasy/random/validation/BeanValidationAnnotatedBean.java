@@ -23,11 +23,11 @@
  */
 package org.jeasy.random.validation;
 
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
+import javax.validation.constraints.*;
 
 class BeanValidationAnnotatedBean {
 
@@ -137,8 +137,7 @@ class BeanValidationAnnotatedBean {
     @Pattern(regexp = "[a-z]{4}")
     private String regexString;
 
-    public BeanValidationAnnotatedBean() {
-    }
+    public BeanValidationAnnotatedBean() {}
 
     public boolean isUnsupported() {
         return this.unsupported;

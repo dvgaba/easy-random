@@ -23,14 +23,13 @@
  */
 package org.jeasy.random.randomizers.text;
 
-import org.jeasy.random.randomizers.AbstractRandomizer;
+import static org.jeasy.random.util.CharacterUtils.collectPrintableCharactersOf;
+import static org.jeasy.random.util.CharacterUtils.filterLetters;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import static org.jeasy.random.util.CharacterUtils.collectPrintableCharactersOf;
-import static org.jeasy.random.util.CharacterUtils.filterLetters;
+import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link Character}.

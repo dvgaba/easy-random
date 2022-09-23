@@ -55,5 +55,4 @@ public abstract class AbstractRangeRandomizer<T> extends AbstractRandomizer<T> {
     protected abstract T getDefaultMinValue();
 
     protected abstract T getDefaultMaxValue();
-
 }

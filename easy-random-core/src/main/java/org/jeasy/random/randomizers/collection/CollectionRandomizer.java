@@ -23,12 +23,11 @@
  */
 package org.jeasy.random.randomizers.collection;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.number.ByteRandomizer;
+import static java.lang.Math.abs;
 
 import java.util.Collection;
-
-import static java.lang.Math.abs;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.number.ByteRandomizer;
 
 /**
  * A base class for collection randomizers.
@@ -64,5 +63,4 @@ abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
     T getRandomElement() {
         return delegate.getRandomValue();
     }
-
 }

@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random ISBNs.
@@ -37,8 +36,7 @@ public class IsbnRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link IsbnRandomizer}.
      */
-    public IsbnRandomizer() {
-    }
+    public IsbnRandomizer() {}
 
     /**
      * Create a new {@link IsbnRandomizer}.

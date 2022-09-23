@@ -23,14 +23,14 @@
  */
 package org.jeasy.random.randomizers.time.internal;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.jeasy.random.randomizers.time.NanoSecondRandomizer.MAX_NANO_SECOND;
+import static org.jeasy.random.randomizers.time.NanoSecondRandomizer.MIN_NANO_SECOND;
+
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.jeasy.random.randomizers.time.NanoSecondRandomizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.jeasy.random.randomizers.time.NanoSecondRandomizer.MAX_NANO_SECOND;
-import static org.jeasy.random.randomizers.time.NanoSecondRandomizer.MIN_NANO_SECOND;
 
 class NanoSecondRandomizerTest extends AbstractRandomizerTest<Integer> {
 

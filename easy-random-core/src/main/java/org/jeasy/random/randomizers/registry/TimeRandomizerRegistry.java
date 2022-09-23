@@ -23,20 +23,7 @@
  */
 package org.jeasy.random.randomizers.registry;
 
-import org.jeasy.random.annotation.Priority;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerRegistry;
-import org.jeasy.random.randomizers.range.InstantRangeRandomizer;
-import org.jeasy.random.randomizers.range.LocalDateRangeRandomizer;
-import org.jeasy.random.randomizers.range.LocalDateTimeRangeRandomizer;
-import org.jeasy.random.randomizers.range.LocalTimeRangeRandomizer;
-import org.jeasy.random.randomizers.range.ZonedDateTimeRangeRandomizer;
-import org.jeasy.random.randomizers.range.OffsetDateTimeRangeRandomizer;
-import org.jeasy.random.randomizers.range.OffsetTimeRangeRandomizer;
-import org.jeasy.random.randomizers.range.YearMonthRangeRandomizer;
-import org.jeasy.random.randomizers.range.YearRangeRandomizer;
-import org.jeasy.random.randomizers.time.*;
+import static java.time.LocalDateTime.of;
 
 import java.lang.reflect.Field;
 import java.time.*;
@@ -44,8 +31,20 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-
-import static java.time.LocalDateTime.of;
+import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.annotation.Priority;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.randomizers.range.InstantRangeRandomizer;
+import org.jeasy.random.randomizers.range.LocalDateRangeRandomizer;
+import org.jeasy.random.randomizers.range.LocalDateTimeRangeRandomizer;
+import org.jeasy.random.randomizers.range.LocalTimeRangeRandomizer;
+import org.jeasy.random.randomizers.range.OffsetDateTimeRangeRandomizer;
+import org.jeasy.random.randomizers.range.OffsetTimeRangeRandomizer;
+import org.jeasy.random.randomizers.range.YearMonthRangeRandomizer;
+import org.jeasy.random.randomizers.range.YearRangeRandomizer;
+import org.jeasy.random.randomizers.range.ZonedDateTimeRangeRandomizer;
+import org.jeasy.random.randomizers.time.*;
 
 /**
  * A registry of randomizers for Java 8 JSR 310 types.
@@ -66,22 +65,55 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         LocalTime maxTime = parameters.getTimeRange().getMax();
         randomizers.put(Duration.class, new DurationRandomizer(seed));
         randomizers.put(GregorianCalendar.class, new GregorianCalendarRandomizer(seed));
-        randomizers.put(Instant.class, new InstantRangeRandomizer(minDate.atStartOfDay(ZoneId.systemDefault()).toInstant(), maxDate.atStartOfDay(ZoneId.systemDefault()).toInstant(), seed));
+        randomizers.put(
+            Instant.class,
+            new InstantRangeRandomizer(
+                minDate.atStartOfDay(ZoneId.systemDefault()).toInstant(),
+                maxDate.atStartOfDay(ZoneId.systemDefault()).toInstant(),
+                seed
+            )
+        );
         randomizers.put(LocalDate.class, new LocalDateRangeRandomizer(minDate, maxDate, seed));
-        randomizers.put(LocalDateTime.class, new LocalDateTimeRangeRandomizer(of(minDate, minTime), of(maxDate, maxTime), seed));
+        randomizers.put(
+            LocalDateTime.class,
+            new LocalDateTimeRangeRandomizer(of(minDate, minTime), of(maxDate, maxTime), seed)
+        );
         randomizers.put(LocalTime.class, new LocalTimeRangeRandomizer(minTime, maxTime, seed));
         randomizers.put(MonthDay.class, new MonthDayRandomizer(seed));
-        randomizers.put(OffsetDateTime.class,
-                new OffsetDateTimeRangeRandomizer(toOffsetDateTime(minDate, minTime), toOffsetDateTime(maxDate, maxTime), seed));
-        randomizers.put(OffsetTime.class, new OffsetTimeRangeRandomizer(minTime.atOffset(OffsetDateTime.now().getOffset()),
-                maxTime.atOffset(OffsetDateTime.now().getOffset()), seed));
+        randomizers.put(
+            OffsetDateTime.class,
+            new OffsetDateTimeRangeRandomizer(
+                toOffsetDateTime(minDate, minTime),
+                toOffsetDateTime(maxDate, maxTime),
+                seed
+            )
+        );
+        randomizers.put(
+            OffsetTime.class,
+            new OffsetTimeRangeRandomizer(
+                minTime.atOffset(OffsetDateTime.now().getOffset()),
+                maxTime.atOffset(OffsetDateTime.now().getOffset()),
+                seed
+            )
+        );
         randomizers.put(Period.class, new PeriodRandomizer(seed));
         randomizers.put(TimeZone.class, new TimeZoneRandomizer(seed));
-        randomizers.put(YearMonth.class, new YearMonthRangeRandomizer(YearMonth.of(minDate.getYear(), minDate.getMonth()),
-                YearMonth.of(maxDate.getYear(), maxDate.getMonth()), seed));
-        randomizers.put(Year.class, new YearRangeRandomizer(Year.of(minDate.getYear()), Year.of(maxDate.getYear()), seed));
-        randomizers.put(ZonedDateTime.class,
-                new ZonedDateTimeRangeRandomizer(toZonedDateTime(minDate, minTime), toZonedDateTime(maxDate, maxTime), seed));
+        randomizers.put(
+            YearMonth.class,
+            new YearMonthRangeRandomizer(
+                YearMonth.of(minDate.getYear(), minDate.getMonth()),
+                YearMonth.of(maxDate.getYear(), maxDate.getMonth()),
+                seed
+            )
+        );
+        randomizers.put(
+            Year.class,
+            new YearRangeRandomizer(Year.of(minDate.getYear()), Year.of(maxDate.getYear()), seed)
+        );
+        randomizers.put(
+            ZonedDateTime.class,
+            new ZonedDateTimeRangeRandomizer(toZonedDateTime(minDate, minTime), toZonedDateTime(maxDate, maxTime), seed)
+        );
         randomizers.put(ZoneOffset.class, new ZoneOffsetRandomizer(seed));
         randomizers.put(ZoneId.class, new ZoneIdRandomizer(seed));
     }

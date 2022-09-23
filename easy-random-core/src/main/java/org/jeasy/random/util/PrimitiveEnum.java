@@ -29,7 +29,6 @@ package org.jeasy.random.util;
  * @author Sam Van Overmeire
  */
 enum PrimitiveEnum {
-
     BYTE(Byte.TYPE, Byte.class),
     SHORT(Short.TYPE, Short.class),
     INTEGER(Integer.TYPE, Integer.class),

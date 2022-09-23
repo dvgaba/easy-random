@@ -27,8 +27,7 @@ public class Foo {
 
     private Bar bar;
 
-    public Foo() {
-    }
+    public Foo() {}
 
     public Bar getBar() {
         return this.bar;

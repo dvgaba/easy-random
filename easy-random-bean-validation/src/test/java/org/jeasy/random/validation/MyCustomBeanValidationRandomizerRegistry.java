@@ -24,14 +24,13 @@
 package org.jeasy.random.validation;
 
 import javax.validation.constraints.Digits;
-
 import org.jeasy.random.EasyRandomParameters;
 
 public class MyCustomBeanValidationRandomizerRegistry extends BeanValidationRandomizerRegistry {
 
-	@Override
-	public void init(EasyRandomParameters parameters) {
-		super.init(parameters);
-		annotationHandlers.put(Digits.class, new MyCustomDigitsAnnotationHandler());
-	}
+    @Override
+    public void init(EasyRandomParameters parameters) {
+        super.init(parameters);
+        annotationHandlers.put(Digits.class, new MyCustomDigitsAnnotationHandler());
+    }
 }

@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.validation;
 
+import java.lang.reflect.Field;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.misc.ConstantRandomizer;
-
-import java.lang.reflect.Field;
 
 class AssertTrueAnnotationHandler implements BeanValidationAnnotationHandler {
 

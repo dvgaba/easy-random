@@ -32,7 +32,6 @@ import org.jeasy.random.ObjectCreationException;
  * @since 4.0
  */
 public interface ObjectFactory {
-
     /**
      * Create a new instance of {@code type} in the given randomization context.
      *
@@ -43,5 +42,4 @@ public interface ObjectFactory {
      * @throws ObjectCreationException when unable to create an instance of the given type
      */
     <T> T createInstance(final Class<T> type, final RandomizerContext context) throws ObjectCreationException;
-
 }

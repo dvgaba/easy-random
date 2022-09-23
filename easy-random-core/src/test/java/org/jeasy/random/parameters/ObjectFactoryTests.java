@@ -23,6 +23,8 @@
  */
 package org.jeasy.random.parameters;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.ObjectCreationException;
@@ -33,17 +35,17 @@ import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.Street;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class ObjectFactoryTests {
 
     @Test
     void testCustomObjectFactory() {
         // given
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .objectFactory(new ObjectFactory() {
+            .objectFactory(
+                new ObjectFactory() {
                     @Override
-                    public <T> T createInstance(Class<T> type, RandomizerContext context) throws ObjectCreationException {
+                    public <T> T createInstance(Class<T> type, RandomizerContext context)
+                        throws ObjectCreationException {
                         try {
                             // use custom logic for a specific type
                             if (type.isAssignableFrom(Address.class)) {
@@ -65,7 +67,8 @@ class ObjectFactoryTests {
                             throw new ObjectCreationException("Unable to create a new instance of " + type, e);
                         }
                     }
-                });
+                }
+            );
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
@@ -91,6 +94,6 @@ class ObjectFactoryTests {
         assertThat(street).isNotNull();
         assertThat(street.getName()).isEqualTo("main street");
         assertThat(street.getNumber()).isEqualTo(1);
-        assertThat(street.getType()).isEqualTo((byte)1);
+        assertThat(street.getType()).isEqualTo((byte) 1);
     }
 }

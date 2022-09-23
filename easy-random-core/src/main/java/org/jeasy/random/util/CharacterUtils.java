@@ -23,27 +23,26 @@
  */
 package org.jeasy.random.util;
 
+import static java.util.stream.Collectors.toList;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Character utility methods.
- * 
+ *
  * <strong>This class is intended for internal use only.</strong>
  *
  * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
 public final class CharacterUtils {
 
-    private CharacterUtils() {
-    }
+    private CharacterUtils() {}
 
     /**
      * Returns a list of all printable charaters of the given charset.
-     * 
+     *
      * @param charset
      *            Charset to use
      * @return list of printable characters
@@ -77,5 +76,4 @@ public final class CharacterUtils {
         Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
         return !Character.isISOControl(character) && !Character.UnicodeBlock.SPECIALS.equals(block);
     }
-
 }

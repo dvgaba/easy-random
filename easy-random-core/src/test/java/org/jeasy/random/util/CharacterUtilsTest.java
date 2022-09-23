@@ -23,12 +23,11 @@
  */
 package org.jeasy.random.util;
 
-import static org.jeasy.random.util.CharacterUtils.filterLetters;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.jeasy.random.util.CharacterUtils.filterLetters;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 class CharacterUtilsTest {

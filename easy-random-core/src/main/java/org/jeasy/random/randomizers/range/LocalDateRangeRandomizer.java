@@ -78,5 +78,4 @@ public class LocalDateRangeRandomizer extends AbstractRangeRandomizer<LocalDate>
         long randomEpochDay = (long) nextDouble(minEpochDay, maxEpochDay);
         return LocalDate.ofEpochDay(randomEpochDay);
     }
-
 }

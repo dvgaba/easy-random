@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
-
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
@@ -36,12 +35,14 @@ class CollectionSizeRangeParameterTests {
 
     @Test
     void shouldNotAllowNegativeMinCollectionSize() {
-        assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(-1, 10)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(-1, 10))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void shouldNotAllowMinCollectionSizeGreaterThanMaxCollectionSize() {
-        assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(2, 1)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(2, 1))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -58,5 +59,4 @@ class CollectionSizeRangeParameterTests {
 
         assertThat(strArr.length).isLessThanOrEqualTo(10);
     }
-
 }

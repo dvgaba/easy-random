@@ -35,8 +35,7 @@ public class LongRandomizer extends AbstractRandomizer<Long> {
     /**
      * Create a new {@link LongRandomizer}.
      */
-    public LongRandomizer() {
-    }
+    public LongRandomizer() {}
 
     /**
      * Create a new {@link LongRandomizer}.

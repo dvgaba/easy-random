@@ -37,35 +37,33 @@ import java.util.Set;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public interface RandomizerProvider {
+    /**
+     * Return a randomizer for the given field in the current context.
+     *
+     * @param field for which a randomizer should be returned
+     * @param context current randomization context
+     * @return a randomizer for the given field in the current context.
+     */
+    default Randomizer<?> getRandomizerByField(final Field field, final RandomizerContext context) {
+        return null;
+    }
 
-  /**
-   * Return a randomizer for the given field in the current context.
-   *
-   * @param field for which a randomizer should be returned
-   * @param context current randomization context
-   * @return a randomizer for the given field in the current context.
-   */
-  default Randomizer<?> getRandomizerByField(final Field field, final RandomizerContext context) {
-    return null;
-  }
+    /**
+     * Return a randomizer for the given type in the current context.
+     *
+     * @param type for which a randomizer should be returned
+     * @param context current randomization context
+     * @param <T> generic type
+     * @return a randomizer for the given type in the current context.
+     */
+    default <T> Randomizer<T> getRandomizerByType(final Class<T> type, final RandomizerContext context) {
+        return null;
+    }
 
-  /**
-   * Return a randomizer for the given type in the current context.
-   *
-   * @param type for which a randomizer should be returned
-   * @param context current randomization context
-   * @param <T> generic type
-   * @return a randomizer for the given type in the current context.
-   */
-  default <T> Randomizer<T> getRandomizerByType(
-      final Class<T> type, final RandomizerContext context) {
-    return null;
-  }
-
-  /**
-   * Set randomizer registries.
-   *
-   * @param randomizerRegistries to set
-   */
-  default void setRandomizerRegistries(Set<RandomizerRegistry> randomizerRegistries) {}
+    /**
+     * Set randomizer registries.
+     *
+     * @param randomizerRegistries to set
+     */
+    default void setRandomizerRegistries(Set<RandomizerRegistry> randomizerRegistries) {}
 }

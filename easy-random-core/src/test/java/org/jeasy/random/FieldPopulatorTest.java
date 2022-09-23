@@ -32,15 +32,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.jeasy.random.api.ContextAwareRandomizer;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.ArrayBean;
 import org.jeasy.random.beans.CollectionBean;
@@ -48,6 +40,12 @@ import org.jeasy.random.beans.Human;
 import org.jeasy.random.beans.MapBean;
 import org.jeasy.random.beans.Person;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
@@ -57,18 +55,25 @@ class FieldPopulatorTest {
 
     @Mock
     private EasyRandom easyRandom;
+
     @Mock
     private RegistriesRandomizerProvider randomizerProvider;
+
     @Mock
     private Randomizer randomizer;
+
     @Mock
     private ContextAwareRandomizer contextAwareRandomizer;
+
     @Mock
     private ArrayPopulator arrayPopulator;
+
     @Mock
     private CollectionPopulator collectionPopulator;
+
     @Mock
     private MapPopulator mapPopulator;
+
     @Mock
     private OptionalPopulator optionalPopulator;
 
@@ -76,7 +81,15 @@ class FieldPopulatorTest {
 
     @BeforeEach
     void setUp() {
-        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
+        fieldPopulator =
+            new FieldPopulator(
+                easyRandom,
+                randomizerProvider,
+                arrayPopulator,
+                collectionPopulator,
+                mapPopulator,
+                optionalPopulator
+            );
     }
 
     @Test
@@ -96,7 +109,8 @@ class FieldPopulatorTest {
     }
 
     @Test
-    void whenCustomRandomizerIsRegisteredForTheField_thenTheFieldShouldBePopulatedWithTheRandomValue() throws Exception {
+    void whenCustomRandomizerIsRegisteredForTheField_thenTheFieldShouldBePopulatedWithTheRandomValue()
+        throws Exception {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
@@ -112,7 +126,8 @@ class FieldPopulatorTest {
     }
 
     @Test
-    void whenContextAwareRandomizerIsRegisteredForTheField_thenTheFieldShouldBeOnTopOfTheSuppliedContextStack() throws Exception {
+    void whenContextAwareRandomizerIsRegisteredForTheField_thenTheFieldShouldBeOnTopOfTheSuppliedContextStack()
+        throws Exception {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
@@ -121,9 +136,12 @@ class FieldPopulatorTest {
         when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(contextAwareRandomizer);
         when(contextAwareRandomizer.getRandomValue()).thenReturn(NAME);
         doAnswer(invocationOnMock -> {
-            currentObjectFromContext[0] = (Human)invocationOnMock.getArgument(0, RandomizationContext.class).getCurrentObject();
-            return null;
-        }).when(contextAwareRandomizer).setRandomizerContext(context);
+                currentObjectFromContext[0] =
+                    (Human) invocationOnMock.getArgument(0, RandomizationContext.class).getCurrentObject();
+                return null;
+            })
+            .when(contextAwareRandomizer)
+            .setRandomizerContext(context);
 
         // When
         fieldPopulator.populateField(human, name, context);
@@ -192,5 +210,4 @@ class FieldPopulatorTest {
         // Then
         assertThat(human.getName()).isNull();
     }
-
 }

@@ -23,17 +23,15 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import static org.jeasy.random.FieldPredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.jeasy.random.FieldPredicates.*;
 
 import java.time.Instant;
-
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.beans.TimeBean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.beans.TimeBean;
 
 class TimeSupportTest {
 
@@ -55,7 +53,7 @@ class TimeSupportTest {
     // https://github.com/j-easy/easy-random/issues/135
     void threeTenRandomizersCanBeOverriddenByCustomRandomizers() {
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .excludeField(named("instant").and(ofType(Instant.class)).and(inClass(TimeBean.class)));
+            .excludeField(named("instant").and(ofType(Instant.class)).and(inClass(TimeBean.class)));
         easyRandom = new EasyRandom(parameters);
 
         TimeBean timeBean = easyRandom.nextObject(TimeBean.class);

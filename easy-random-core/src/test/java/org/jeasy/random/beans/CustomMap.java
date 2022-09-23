@@ -75,14 +75,10 @@ public class CustomMap implements Map<String, Object> {
     }
 
     @Override
-    public void putAll(Map<? extends String, ?> m) {
-
-    }
+    public void putAll(Map<? extends String, ?> m) {}
 
     @Override
-    public void clear() {
-
-    }
+    public void clear() {}
 
     @Override
     public Set<String> keySet() {

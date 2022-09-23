@@ -23,23 +23,26 @@
  */
 package org.jeasy.random.context;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.jeasy.random.FieldPredicates.*;
+
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
-
-import static org.jeasy.random.FieldPredicates.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class ContextAwareRandomizationTests {
 
     @Test
     void testContextAwareRandomization() {
         // given
-        String[] names = {"james", "daniel"};
+        String[] names = { "james", "daniel" };
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(named("firstName").and(ofType(String.class)).and(inClass(Person.class)), new FirstNameRandomizer(names))
-                .randomize(named("lastName").and(ofType(String.class)).and(inClass(Person.class)), new LastNameRandomizer())
-                .excludeField(named("nickname"));
+            .randomize(
+                named("firstName").and(ofType(String.class)).and(inClass(Person.class)),
+                new FirstNameRandomizer(names)
+            )
+            .randomize(named("lastName").and(ofType(String.class)).and(inClass(Person.class)), new LastNameRandomizer())
+            .excludeField(named("nickname"));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
@@ -62,14 +65,14 @@ class ContextAwareRandomizationTests {
     @Test
     void testContextAwareRandomizerWithMultipleTypes() {
         // given
-        String[] names = {"james", "daniel"};
-        String[] countries = {"france", "germany", "belgium"};
+        String[] names = { "james", "daniel" };
+        String[] countries = { "france", "germany", "belgium" };
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(named("firstName").and(ofType(String.class)), new FirstNameRandomizer(names))
-                .randomize(named("lastName").and(ofType(String.class)), new LastNameRandomizer())
-                .randomize(ofType(Country.class), new CountryRandomizer(countries))
-                .randomize(ofType(City.class), new CityRandomizer())
-                .excludeField(named("nickname"));
+            .randomize(named("firstName").and(ofType(String.class)), new FirstNameRandomizer(names))
+            .randomize(named("lastName").and(ofType(String.class)), new LastNameRandomizer())
+            .randomize(ofType(Country.class), new CountryRandomizer(countries))
+            .randomize(ofType(City.class), new CityRandomizer())
+            .excludeField(named("nickname"));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
@@ -105,6 +108,5 @@ class ContextAwareRandomizationTests {
         if (country.getName().equalsIgnoreCase("belgium")) {
             assertThat(city.getName().equalsIgnoreCase("brussels"));
         }
-
     }
 }

@@ -27,15 +27,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Array;
-
+import org.jeasy.random.beans.ArrayBean;
+import org.jeasy.random.beans.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import org.jeasy.random.beans.ArrayBean;
-import org.jeasy.random.beans.Person;
 
 @ExtendWith(MockitoExtension.class)
 class ArrayPopulatorTest {
@@ -45,6 +43,7 @@ class ArrayPopulatorTest {
 
     @Mock
     private RandomizationContext context;
+
     @Mock
     private EasyRandom easyRandom;
 

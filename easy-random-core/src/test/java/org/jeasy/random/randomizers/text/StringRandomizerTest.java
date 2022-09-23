@@ -25,10 +25,9 @@ package org.jeasy.random.randomizers.text;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
 class StringRandomizerTest extends AbstractRandomizerTest<String> {
 
@@ -85,5 +84,4 @@ class StringRandomizerTest extends AbstractRandomizerTest<String> {
         assertThat(actual).isEqualTo(expectedValue);
         assertThat(actual.length()).isBetween(minLength, maxLength);
     }
-
 }

@@ -23,12 +23,11 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.misc.EnumRandomizer;
-
 import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.misc.EnumRandomizer;
 
 /**
  * A {@link Randomizer} that generates random {@link YearMonth}.

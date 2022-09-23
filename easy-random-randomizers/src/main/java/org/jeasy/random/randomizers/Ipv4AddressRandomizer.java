@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random IPv4 addresses.
@@ -37,8 +36,7 @@ public class Ipv4AddressRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link Ipv4AddressRandomizer}.
      */
-    public Ipv4AddressRandomizer() {
-    }
+    public Ipv4AddressRandomizer() {}
 
     /**
      * Create a new {@link Ipv4AddressRandomizer}.
@@ -66,5 +64,4 @@ public class Ipv4AddressRandomizer extends FakerBasedRandomizer<String> {
     public String getRandomValue() {
         return faker.internet().ipV4Address();
     }
-
 }

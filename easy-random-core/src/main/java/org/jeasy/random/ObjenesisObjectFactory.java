@@ -23,6 +23,10 @@
  */
 package org.jeasy.random;
 
+import static org.jeasy.random.util.ReflectionUtils.getPublicConcreteSubTypesOf;
+import static org.jeasy.random.util.ReflectionUtils.isAbstract;
+
+import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Random;
 import org.jeasy.random.api.ObjectFactory;
@@ -30,17 +34,12 @@ import org.jeasy.random.api.RandomizerContext;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
-import java.lang.reflect.Constructor;
-
-import static org.jeasy.random.util.ReflectionUtils.getPublicConcreteSubTypesOf;
-import static org.jeasy.random.util.ReflectionUtils.isAbstract;
-
 /**
  * Objenesis based factory to create "fancy" objects: immutable java beans, generic types, abstract and interface types.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings({ "unchecked" })
 public class ObjenesisObjectFactory implements ObjectFactory {
 
     private final Objenesis objenesis = new ObjenesisStd();
@@ -55,9 +54,13 @@ public class ObjenesisObjectFactory implements ObjectFactory {
         if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(type)) {
             List<Class<?>> publicConcreteSubTypes = getPublicConcreteSubTypesOf(type);
             if (publicConcreteSubTypes.isEmpty()) {
-                throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
+                throw new InstantiationError(
+                    "Unable to find a matching concrete subtype of type: " + type + " in the classpath"
+                );
             } else {
-                Class<?> randomConcreteSubType = publicConcreteSubTypes.get(random.nextInt(publicConcreteSubTypes.size()));
+                Class<?> randomConcreteSubType = publicConcreteSubTypes.get(
+                    random.nextInt(publicConcreteSubTypes.size())
+                );
                 return (T) createNewInstance(randomConcreteSubType);
             }
         } else {
@@ -78,5 +81,4 @@ public class ObjenesisObjectFactory implements ObjectFactory {
             return objenesis.newInstance(type);
         }
     }
-
 }

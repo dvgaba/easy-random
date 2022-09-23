@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.AbstractRandomizer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
  * A {@link Randomizer} that generates a random value from a given {@link Enum}.
@@ -90,7 +89,9 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
     }
 
     private void checkExcludedValues(Class<E> enumeration, E[] excludedValues) {
-        boolean excludedValuesIncludeAllValues = Arrays.asList(excludedValues).containsAll(Arrays.asList(enumeration.getEnumConstants()));
+        boolean excludedValuesIncludeAllValues = Arrays
+            .asList(excludedValues)
+            .containsAll(Arrays.asList(enumeration.getEnumConstants()));
         if (excludedValuesIncludeAllValues) {
             throw new IllegalArgumentException("No enum element available for random picking.");
         }

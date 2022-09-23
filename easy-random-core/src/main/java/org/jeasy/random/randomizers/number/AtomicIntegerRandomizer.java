@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers.number;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.concurrent.atomic.AtomicInteger;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * Generate a random {@link AtomicInteger}.

@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.validation;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import org.jeasy.random.api.Randomizer;
 
 class NegativeAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
 

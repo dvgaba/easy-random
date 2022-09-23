@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.text;
 
+import java.nio.charset.Charset;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.randomizers.AbstractRandomizer;
-
-import java.nio.charset.Charset;
 
 /**
  * Generate a random {@link String}.

@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random zip codes.
@@ -37,8 +36,7 @@ public class ZipCodeRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link ZipCodeRandomizer}.
      */
-    public ZipCodeRandomizer() {
-    }
+    public ZipCodeRandomizer() {}
 
     /**
      * Create a new {@link ZipCodeRandomizer}.

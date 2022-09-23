@@ -24,23 +24,23 @@
 package org.jeasy.random.beans;
 
 public class Salary {
-	
-	private int amount;
-	private boolean setterInvoked;
 
-	public int getAmount() {
-		return amount;
-	}
+    private int amount;
+    private boolean setterInvoked;
 
-	public void setAmount(int amount) {
-		setterInvoked = true;
-		if (amount <= 0) {
-			throw new IllegalArgumentException("Amount must be positive");
-		}
-		this.amount = amount;
-	}
+    public int getAmount() {
+        return amount;
+    }
 
-	public boolean isSetterInvoked() {
-		return setterInvoked;
-	}
+    public void setAmount(int amount) {
+        setterInvoked = true;
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
+        }
+        this.amount = amount;
+    }
+
+    public boolean isSetterInvoked() {
+        return setterInvoked;
+    }
 }

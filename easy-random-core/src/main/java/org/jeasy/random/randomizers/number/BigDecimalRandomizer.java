@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.number;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * Generate a random {@link BigDecimal}.

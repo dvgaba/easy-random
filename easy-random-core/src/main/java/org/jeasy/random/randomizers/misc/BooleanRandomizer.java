@@ -35,8 +35,7 @@ public class BooleanRandomizer extends AbstractRandomizer<Boolean> {
     /**
      * Create a new {@link BooleanRandomizer}.
      */
-    public BooleanRandomizer() {
-    }
+    public BooleanRandomizer() {}
 
     /**
      * Create a new {@link BooleanRandomizer}.

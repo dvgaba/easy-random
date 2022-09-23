@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.time;
 
+import java.util.GregorianCalendar;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.number.LongRandomizer;
-
-import java.util.GregorianCalendar;
 
 /**
  * Generate a random {@link GregorianCalendarRandomizer}.

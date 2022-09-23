@@ -24,24 +24,24 @@
 package org.jeasy.random.beans;
 
 public class PersonTuple {
+
     public Person left, right;
 
-	public PersonTuple() {
-	}
+    public PersonTuple() {}
 
-	public Person getLeft() {
-		return this.left;
-	}
+    public Person getLeft() {
+        return this.left;
+    }
 
-	public Person getRight() {
-		return this.right;
-	}
+    public Person getRight() {
+        return this.right;
+    }
 
-	public void setLeft(Person left) {
-		this.left = left;
-	}
+    public void setLeft(Person left) {
+        this.left = left;
+    }
 
-	public void setRight(Person right) {
-		this.right = right;
-	}
+    public void setRight(Person right) {
+        this.right = right;
+    }
 }

@@ -30,5 +30,4 @@ public abstract class AbstractRandomizerTest<T> {
     protected static final long SEED = 123L;
 
     protected Randomizer<T> randomizer;
-
 }

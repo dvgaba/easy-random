@@ -77,5 +77,4 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
         long randomDateTime = (long) nextDouble((double) minDateTime, (double) maxDateTime);
         return new Date(randomDateTime);
     }
-
 }

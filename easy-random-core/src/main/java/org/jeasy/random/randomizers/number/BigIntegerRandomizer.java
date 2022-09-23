@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers.number;
 
-import org.jeasy.random.randomizers.AbstractRandomizer;
-
 import java.math.BigInteger;
+import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link BigInteger}.

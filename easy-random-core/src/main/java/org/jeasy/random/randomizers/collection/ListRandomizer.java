@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.collection;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A custom {@link Randomizer} that generates a list of random values using a delegate {@link Randomizer}.

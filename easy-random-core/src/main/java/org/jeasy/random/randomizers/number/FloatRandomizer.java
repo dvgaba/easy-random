@@ -35,8 +35,7 @@ public class FloatRandomizer extends AbstractRandomizer<Float> {
     /**
      * Create a new {@link FloatRandomizer}.
      */
-    public FloatRandomizer() {
-    }
+    public FloatRandomizer() {}
 
     /**
      * Create a new {@link FloatRandomizer}.

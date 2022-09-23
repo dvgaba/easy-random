@@ -27,10 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Locale;
 import java.util.UUID;
-
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.api.Test;
 
 class UUIDRandomizerTest extends AbstractRandomizerTest<Locale> {
 
@@ -41,6 +39,7 @@ class UUIDRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        assertThat(new UUIDRandomizer(SEED).getRandomValue()).isEqualTo(new UUID(-5106534569952410475L, -167885730524958550L));
+        assertThat(new UUIDRandomizer(SEED).getRandomValue())
+            .isEqualTo(new UUID(-5106534569952410475L, -167885730524958550L));
     }
 }

@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.randomizers.collection;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.number.ByteRandomizer;
+import static java.lang.Math.abs;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.lang.Math.abs;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.number.ByteRandomizer;
 
 /**
  * A {@link Randomizer} that generates a {@link Map} with random entries.

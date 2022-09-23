@@ -26,11 +26,9 @@ package org.jeasy.random.randomizers.time;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.ZoneId;
-
+import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
 class ZoneIdRandomizerTest extends AbstractRandomizerTest<ZoneId> {
 
@@ -49,7 +47,7 @@ class ZoneIdRandomizerTest extends AbstractRandomizerTest<ZoneId> {
         // we cannot use a canned value, because values returned by the randomizer differ between locales/jdks
         ZoneId firstZoneId = new ZoneIdRandomizer(SEED).getRandomValue();
         ZoneId secondZoneId = new ZoneIdRandomizer(SEED).getRandomValue();
-        
+
         assertThat(firstZoneId).isNotNull();
         assertThat(secondZoneId).isNotNull();
         assertThat(firstZoneId).isEqualTo(secondZoneId);

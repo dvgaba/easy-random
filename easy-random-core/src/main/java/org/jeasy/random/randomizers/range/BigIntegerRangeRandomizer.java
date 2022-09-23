@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.math.BigInteger;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * Generate a random {@link BigInteger} in the given range.

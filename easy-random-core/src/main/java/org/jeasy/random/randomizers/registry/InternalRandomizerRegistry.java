@@ -23,22 +23,7 @@
  */
 package org.jeasy.random.randomizers.registry;
 
-import org.jeasy.random.annotation.Priority;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerRegistry;
-import org.jeasy.random.randomizers.misc.BooleanRandomizer;
-import org.jeasy.random.randomizers.misc.LocaleRandomizer;
-import org.jeasy.random.randomizers.misc.SkipRandomizer;
-import org.jeasy.random.randomizers.misc.UUIDRandomizer;
-import org.jeasy.random.randomizers.net.UriRandomizer;
-import org.jeasy.random.randomizers.net.UrlRandomizer;
-import org.jeasy.random.randomizers.number.*;
-import org.jeasy.random.randomizers.range.DateRangeRandomizer;
-import org.jeasy.random.randomizers.range.SqlDateRangeRandomizer;
-import org.jeasy.random.randomizers.text.CharacterRandomizer;
-import org.jeasy.random.randomizers.text.StringRandomizer;
-import org.jeasy.random.randomizers.time.*;
+import static java.sql.Date.valueOf;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -54,8 +39,22 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
-import static java.sql.Date.valueOf;
+import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.annotation.Priority;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.randomizers.misc.BooleanRandomizer;
+import org.jeasy.random.randomizers.misc.LocaleRandomizer;
+import org.jeasy.random.randomizers.misc.SkipRandomizer;
+import org.jeasy.random.randomizers.misc.UUIDRandomizer;
+import org.jeasy.random.randomizers.net.UriRandomizer;
+import org.jeasy.random.randomizers.net.UrlRandomizer;
+import org.jeasy.random.randomizers.number.*;
+import org.jeasy.random.randomizers.range.DateRangeRandomizer;
+import org.jeasy.random.randomizers.range.SqlDateRangeRandomizer;
+import org.jeasy.random.randomizers.text.CharacterRandomizer;
+import org.jeasy.random.randomizers.text.StringRandomizer;
+import org.jeasy.random.randomizers.time.*;
 
 /**
  * Registry for Java built-in types.
@@ -71,7 +70,15 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     public void init(EasyRandomParameters parameters) {
         long seed = parameters.getSeed();
         Charset charset = parameters.getCharset();
-        randomizers.put(String.class, new StringRandomizer(charset, parameters.getStringLengthRange().getMin(), parameters.getStringLengthRange().getMax(), seed));
+        randomizers.put(
+            String.class,
+            new StringRandomizer(
+                charset,
+                parameters.getStringLengthRange().getMin(),
+                parameters.getStringLengthRange().getMax(),
+                seed
+            )
+        );
         CharacterRandomizer characterRandomizer = new CharacterRandomizer(charset, seed);
         randomizers.put(Character.class, characterRandomizer);
         randomizers.put(char.class, characterRandomizer);
@@ -96,7 +103,10 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
         Date minDate = valueOf(parameters.getDateRange().getMin());
         Date maxDate = valueOf(parameters.getDateRange().getMax());
         randomizers.put(Date.class, new DateRangeRandomizer(minDate, maxDate, seed));
-        randomizers.put(java.sql.Date.class, new SqlDateRangeRandomizer(new java.sql.Date(minDate.getTime()), new java.sql.Date(maxDate.getTime()), seed));
+        randomizers.put(
+            java.sql.Date.class,
+            new SqlDateRangeRandomizer(new java.sql.Date(minDate.getTime()), new java.sql.Date(maxDate.getTime()), seed)
+        );
         randomizers.put(java.sql.Time.class, new SqlTimeRandomizer(seed));
         randomizers.put(java.sql.Timestamp.class, new SqlTimestampRandomizer(seed));
         randomizers.put(Calendar.class, new CalendarRandomizer(seed));

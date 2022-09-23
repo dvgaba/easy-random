@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -68,7 +67,8 @@ class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTi
 
     @Test
     void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new OffsetTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new OffsetTimeRangeRandomizer(maxTime, minTime))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -94,5 +94,4 @@ class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTi
         // Then
         assertThat(randomValue).isAfterOrEqualTo(minTime);
     }
-
 }

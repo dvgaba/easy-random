@@ -28,11 +28,11 @@ import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 /**
  * A {@link Randomizer} that generates a random hour value between {@link HourRandomizer#MIN_HOUR} and {@link HourRandomizer#MAX_HOUR}.
- * 
+ *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class HourRandomizer implements Randomizer<Integer> {
-    
+
     public static final int MIN_HOUR = 0;
     public static final int MAX_HOUR = 23;
 

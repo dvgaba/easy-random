@@ -23,97 +23,100 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.beans.ChainedSetterBean;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.jeasy.random.beans.ChainedSetterBean;
+import org.junit.jupiter.api.Test;
 
 public class ChainedSettersSupportTest {
 
-	@Test
-	void generatedBeanWithFluentSetterShouldBeCorrectlyPopulated() {
-		// given
-		EasyRandom easyRandom = new EasyRandom();
+    @Test
+    void generatedBeanWithFluentSetterShouldBeCorrectlyPopulated() {
+        // given
+        EasyRandom easyRandom = new EasyRandom();
 
-		// when
-		ChainedSetterBean chainedSetterBean = easyRandom.nextObject(ChainedSetterBean.class);
+        // when
+        ChainedSetterBean chainedSetterBean = easyRandom.nextObject(ChainedSetterBean.class);
 
-		// then
-		assertThat(chainedSetterBean.getName()).isNotEmpty();
-		assertThat(chainedSetterBean.getIndex()).isNotZero();
-	}
+        // then
+        assertThat(chainedSetterBean.getName()).isNotEmpty();
+        assertThat(chainedSetterBean.getIndex()).isNotZero();
+    }
 
-	@Test
-	void chainSettersWithOverriddenFieldShouldBeRandomized() {
-		// given
-		class BaseClass {
-			private String field; // field overridden (note: not setter)
+    @Test
+    void chainSettersWithOverriddenFieldShouldBeRandomized() {
+        // given
+        class BaseClass {
 
-			public BaseClass setField(String field) {
-				this.field = field;
-				return this;
-			}
-		}
-		class SubClass extends BaseClass {
-			private int field; // note: field overridden
-		}
-		EasyRandom easyRandom = new EasyRandom();
+            private String field; // field overridden (note: not setter)
 
-		// when
-		SubClass value = easyRandom.nextObject(SubClass.class);
+            public BaseClass setField(String field) {
+                this.field = field;
+                return this;
+            }
+        }
+        class SubClass extends BaseClass {
 
-		// then
-		assertFalse(((BaseClass) value).field.isEmpty());
-		assertNotEquals(value.field ,0);
-	}
+            private int field; // note: field overridden
+        }
+        EasyRandom easyRandom = new EasyRandom();
 
-	@Test
-	void chainSettersWithOverriddenSetterShouldBeRandomized() {
-		// given
-		class BaseClass {
-			private String field; // setter overridden
-			private int f; // single-char name
+        // when
+        SubClass value = easyRandom.nextObject(SubClass.class);
 
-			public BaseClass setField(String field) {
-				this.field = field;
-				return this;
-			}
+        // then
+        assertFalse(((BaseClass) value).field.isEmpty());
+        assertNotEquals(value.field, 0);
+    }
 
-			public String getField() {
-				return field;
-			}
+    @Test
+    void chainSettersWithOverriddenSetterShouldBeRandomized() {
+        // given
+        class BaseClass {
 
-			public int getF() {
-				return f;
-			}
+            private String field; // setter overridden
+            private int f; // single-char name
 
-			public BaseClass setF(int f) {
-				this.f = f;
-				return this;
-			}
-		}
-		class SubClassB extends BaseClass {
-			@Override
-			public SubClassB setField(String field) {
-				super.setField(field);
-				return this;
-			}
-		}
-		class SubClassA extends BaseClass {
-			private SubClassB subClassB;
-		}
-		EasyRandom easyRandom = new EasyRandom();
+            public BaseClass setField(String field) {
+                this.field = field;
+                return this;
+            }
 
-		// when
-		SubClassA value = easyRandom.nextObject(SubClassA.class);
+            public String getField() {
+                return field;
+            }
 
-		// then
-		assertNotNull(value.getField());
-		assertNotEquals(0, value.getF() );
-	}
+            public int getF() {
+                return f;
+            }
 
+            public BaseClass setF(int f) {
+                this.f = f;
+                return this;
+            }
+        }
+        class SubClassB extends BaseClass {
+
+            @Override
+            public SubClassB setField(String field) {
+                super.setField(field);
+                return this;
+            }
+        }
+        class SubClassA extends BaseClass {
+
+            private SubClassB subClassB;
+        }
+        EasyRandom easyRandom = new EasyRandom();
+
+        // when
+        SubClassA value = easyRandom.nextObject(SubClassA.class);
+
+        // then
+        assertNotNull(value.getField());
+        assertNotEquals(0, value.getF());
+    }
 }

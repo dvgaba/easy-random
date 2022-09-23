@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random phone numbers.
@@ -37,8 +36,7 @@ public class PhoneNumberRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link PhoneNumberRandomizer}.
      */
-    public PhoneNumberRandomizer() {
-    }
+    public PhoneNumberRandomizer() {}
 
     /**
      * Create a new {@link PhoneNumberRandomizer}.

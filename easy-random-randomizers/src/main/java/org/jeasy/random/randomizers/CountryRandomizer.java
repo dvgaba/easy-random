@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random countries.
@@ -37,8 +36,7 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link CountryRandomizer}.
      */
-    public CountryRandomizer() {
-    }
+    public CountryRandomizer() {}
 
     /**
      * Create a new {@link CountryRandomizer}.
@@ -63,5 +61,4 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
     public String getRandomValue() {
         return faker.address().country();
     }
-
 }

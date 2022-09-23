@@ -31,7 +31,7 @@ public class Mamals {
     private MammalImpl mamalImpl;
     private List<Mammal> mamalList;
     private List<MammalImpl> mamalImplList;
-    
+
     public Mammal getMamal() {
         return mamal;
     }

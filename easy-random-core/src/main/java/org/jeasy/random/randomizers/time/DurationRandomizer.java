@@ -23,12 +23,11 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
-
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 /**
  * A {@link Randomizer} that generates random {@link Duration}.

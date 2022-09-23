@@ -23,15 +23,14 @@
  */
 package org.jeasy.random.parameters;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.concurrent.Callable;
+import org.assertj.core.api.Assertions;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.ObjectCreationException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.Callable;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class IgnoreRandomizationErrorsParameterTests {
 
@@ -58,26 +57,26 @@ class IgnoreRandomizationErrorsParameterTests {
     }
 
     static class Foo {
+
         private String name;
         private Callable<String> callable;
 
-		public Foo() {
-		}
+        public Foo() {}
 
-		public String getName() {
-			return this.name;
-		}
+        public String getName() {
+            return this.name;
+        }
 
-		public Callable<String> getCallable() {
-			return this.callable;
-		}
+        public Callable<String> getCallable() {
+            return this.callable;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-		public void setCallable(Callable<String> callable) {
-			this.callable = callable;
-		}
-	}
+        public void setCallable(Callable<String> callable) {
+            this.callable = callable;
+        }
+    }
 }

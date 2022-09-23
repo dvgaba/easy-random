@@ -30,12 +30,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Collection;
-
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
+import org.jeasy.random.api.Randomizer;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import org.jeasy.random.api.Randomizer;
 
 class CollectionRandomizersTest {
 
@@ -44,9 +42,10 @@ class CollectionRandomizersTest {
     static Object[] generateCollectionRandomizers() {
         Randomizer<String> elementRandomizer = elementRandomizer();
         return new Object[] {
-                new ListRandomizer(elementRandomizer),
-                new QueueRandomizer(elementRandomizer),
-                new SetRandomizer(elementRandomizer) };
+            new ListRandomizer(elementRandomizer),
+            new QueueRandomizer(elementRandomizer),
+            new SetRandomizer(elementRandomizer),
+        };
     }
 
     @ParameterizedTest
@@ -60,9 +59,10 @@ class CollectionRandomizersTest {
 
     static Object[] generateCollectionRandomizersWithSpecificSize() {
         return new Object[] {
-                new ListRandomizer(elementRandomizer(), collectionSize),
-                new QueueRandomizer(elementRandomizer(), collectionSize),
-                new SetRandomizer(elementRandomizer(), collectionSize) };
+            new ListRandomizer(elementRandomizer(), collectionSize),
+            new QueueRandomizer(elementRandomizer(), collectionSize),
+            new SetRandomizer(elementRandomizer(), collectionSize),
+        };
     }
 
     @ParameterizedTest
@@ -76,9 +76,10 @@ class CollectionRandomizersTest {
 
     static Object[] generateCollectionRandomizersForEmptyCollections() {
         return new Object[] {
-                new ListRandomizer(elementRandomizer(), 0),
-                new QueueRandomizer(elementRandomizer(), 0),
-                new SetRandomizer(elementRandomizer(), 0) };
+            new ListRandomizer(elementRandomizer(), 0),
+            new QueueRandomizer(elementRandomizer(), 0),
+            new SetRandomizer(elementRandomizer(), 0),
+        };
     }
 
     @ParameterizedTest
@@ -93,10 +94,11 @@ class CollectionRandomizersTest {
     static Object[] generateCollectionRandomizersWithIllegalSize() {
         Randomizer<String> elementRandomizer = elementRandomizer();
         int illegalSize = -1;
-        return new Object[] { 
-                (ThrowingCallable) () -> new ListRandomizer(elementRandomizer, illegalSize),
-                (ThrowingCallable) () -> new QueueRandomizer(elementRandomizer, illegalSize),
-                (ThrowingCallable) () -> new SetRandomizer(elementRandomizer, illegalSize) };
+        return new Object[] {
+            (ThrowingCallable) () -> new ListRandomizer(elementRandomizer, illegalSize),
+            (ThrowingCallable) () -> new QueueRandomizer(elementRandomizer, illegalSize),
+            (ThrowingCallable) () -> new SetRandomizer(elementRandomizer, illegalSize),
+        };
     }
 
     @ParameterizedTest

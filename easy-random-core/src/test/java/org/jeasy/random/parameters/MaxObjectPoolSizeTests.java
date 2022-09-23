@@ -27,9 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.beans.PersonTuple;
+import org.junit.jupiter.api.Test;
 
 class MaxObjectPoolSizeTests {
 
@@ -45,5 +44,4 @@ class MaxObjectPoolSizeTests {
         // Then
         assertThat(persons.left).isSameAs(persons.right);
     }
-
 }

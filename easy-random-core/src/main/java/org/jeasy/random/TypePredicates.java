@@ -150,5 +150,4 @@ public class TypePredicates {
     public static Predicate<Class<?>> isAssignableFrom(Class<?> type) {
         return clazz -> clazz.isAssignableFrom(type);
     }
-
 }

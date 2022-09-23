@@ -27,9 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.beans.Person;
+import org.junit.jupiter.api.Test;
 
 class RandomizationDepthParameterTests {
 
@@ -48,5 +47,4 @@ class RandomizationDepthParameterTests {
         assertThat(person.getParent().getParent()).isNotNull();
         assertThat(person.getParent().getParent().getParent()).isNull();
     }
-
 }

@@ -27,9 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.beans.Person;
+import org.junit.jupiter.api.Test;
 
 class StringLengthRangeParameterTests {
 
@@ -38,7 +37,8 @@ class StringLengthRangeParameterTests {
         // Given
         int minStringLength = 3;
         int maxStringLength = 50;
-        EasyRandomParameters parameters = new EasyRandomParameters().stringLengthRange(minStringLength, maxStringLength);
+        EasyRandomParameters parameters = new EasyRandomParameters()
+            .stringLengthRange(minStringLength, maxStringLength);
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // When
@@ -53,5 +53,4 @@ class StringLengthRangeParameterTests {
         assertThat(person.getAddress().getZipCode().length()).isBetween(minStringLength, maxStringLength);
         assertThat(person.getAddress().getStreet().getName().length()).isBetween(minStringLength, maxStringLength);
     }
-
 }

@@ -27,10 +27,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.jeasy.random.annotation.RandomizerArgument;
+import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.AbstractRandomizer;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.api.Randomizer;
 
 class RandomizerAnnotationTest {
 
@@ -46,7 +45,6 @@ class RandomizerAnnotationTest {
         assertThatThrownBy(() -> new EasyRandom().nextObject(Bar.class)).isInstanceOf(ObjectCreationException.class);
     }
 
-
     @Test
     void testRandomizerArgumentAsArray() {
         Person person = new EasyRandom().nextObject(Person.class);
@@ -54,7 +52,6 @@ class RandomizerAnnotationTest {
         assertThat(person.getName()).isIn("foo", "bar");
         assertThat(person.getAge()).isIn(1, 2, 3);
     }
-
 
     @Test
     void testRandomizerIsReused() {
@@ -76,36 +73,39 @@ class RandomizerAnnotationTest {
 
     static class Person {
 
-        @org.jeasy.random.annotation.Randomizer(value = MyStringRandomizer.class, args = {
+        @org.jeasy.random.annotation.Randomizer(
+            value = MyStringRandomizer.class,
+            args = {
                 @RandomizerArgument(value = "123", type = long.class),
-                @RandomizerArgument(value = "foo, bar", type = String[].class)
-        })
+                @RandomizerArgument(value = "foo, bar", type = String[].class),
+            }
+        )
         private String name;
 
-        @org.jeasy.random.annotation.Randomizer(value = MyNumbersRandomizer.class, args = {
-                @RandomizerArgument(value = "1, 2, 3", type = Integer[].class)
-        })
+        @org.jeasy.random.annotation.Randomizer(
+            value = MyNumbersRandomizer.class,
+            args = { @RandomizerArgument(value = "1, 2, 3", type = Integer[].class) }
+        )
         private int age;
 
-		public Person() {
-		}
+        public Person() {}
 
-		public String getName() {
-			return this.name;
-		}
+        public String getName() {
+            return this.name;
+        }
 
-		public int getAge() {
-			return this.age;
-		}
+        public int getAge() {
+            return this.age;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-		public void setAge(int age) {
-			this.age = age;
-		}
-	}
+        public void setAge(int age) {
+            this.age = age;
+        }
+    }
 
     public static class MyStringRandomizer extends AbstractRandomizer<String> {
 
@@ -149,14 +149,14 @@ class RandomizerAnnotationTest {
     }
 
     private class Bar {
+
         @org.jeasy.random.annotation.Randomizer(RandomizerWithoutDefaultConstrcutor.class)
         private String name;
     }
 
     public static class RandomizerWithoutDefaultConstrcutor implements Randomizer<String> {
 
-        public RandomizerWithoutDefaultConstrcutor(int d) {
-        }
+        public RandomizerWithoutDefaultConstrcutor(int d) {}
 
         @Override
         public String getRandomValue() {
@@ -173,6 +173,7 @@ class RandomizerAnnotationTest {
     }
 
     private class Foo {
+
         @org.jeasy.random.annotation.Randomizer(DummyRandomizer.class)
         private String name;
 
@@ -185,5 +186,4 @@ class RandomizerAnnotationTest {
             this.name = name;
         }
     }
-
 }

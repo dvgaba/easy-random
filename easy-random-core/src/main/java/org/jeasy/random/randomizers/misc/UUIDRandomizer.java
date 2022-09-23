@@ -24,7 +24,6 @@
 package org.jeasy.random.randomizers.misc;
 
 import java.util.UUID;
-
 import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
@@ -37,8 +36,7 @@ public class UUIDRandomizer extends AbstractRandomizer<UUID> {
     /**
      * Create a new {@link UUIDRandomizer}.
      */
-    public UUIDRandomizer() {
-    }
+    public UUIDRandomizer() {}
 
     /**
      * Create a new {@link UUIDRandomizer}.

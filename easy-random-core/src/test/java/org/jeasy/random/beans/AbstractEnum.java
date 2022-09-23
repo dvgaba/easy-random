@@ -25,14 +25,12 @@ package org.jeasy.random.beans;
 
 public enum AbstractEnum {
     VAL1() {
-
         @Override
         public String test() {
             return "1";
         }
     },
     VAL2() {
-
         @Override
         public String test() {
             return "2";

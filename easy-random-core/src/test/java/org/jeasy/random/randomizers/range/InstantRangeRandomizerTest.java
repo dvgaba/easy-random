@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.time.Instant;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.time.Instant;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Instant> {
 
@@ -54,7 +53,6 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
 
     @Test
     void generatedInstantShouldBeAlwaysTheSameForTheSameSeed() {
-
         // Given
         randomizer = new InstantRangeRandomizer(minInstant, maxInstant, SEED);
         Instant expected = Instant.parse("+130459354-01-19T05:47:51.168Z");
@@ -68,7 +66,8 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
 
     @Test
     void whenSpecifiedMinInstantIsAfterMaxInstant_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new InstantRangeRandomizer(maxInstant, minInstant)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new InstantRangeRandomizer(maxInstant, minInstant))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -109,5 +108,4 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
         // Then
         assertThat(randomValue).isBetween(minInstant, maxInstant);
     }
-
 }

@@ -23,13 +23,9 @@
  */
 package org.jeasy.random.validation;
 
-
+import java.lang.reflect.Field;
 import org.jeasy.random.api.Randomizer;
 
-import java.lang.reflect.Field;
-
 interface BeanValidationAnnotationHandler {
-
     Randomizer<?> getRandomizer(Field field);
-
 }

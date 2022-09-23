@@ -24,6 +24,7 @@
 package org.jeasy.random.beans;
 
 public class GenericBaseClass2<T, U> {
+
     private final T x;
     private final U y;
 

@@ -24,7 +24,6 @@
 package org.jeasy.random.randomizers.misc;
 
 import java.util.Locale;
-
 import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
@@ -37,8 +36,7 @@ public class LocaleRandomizer extends AbstractRandomizer<Locale> {
     /**
      * Create a new {@link LocaleRandomizer}.
      */
-    public LocaleRandomizer() {
-    }
+    public LocaleRandomizer() {}
 
     /**
      * Create a new {@link LocaleRandomizer}.

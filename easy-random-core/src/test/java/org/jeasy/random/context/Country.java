@@ -24,14 +24,14 @@
 package org.jeasy.random.context;
 
 public class Country {
+
     private String name;
 
     public Country(String name) {
         this.name = name;
     }
 
-    public Country() {
-    }
+    public Country() {}
 
     public String getName() {
         return this.name;

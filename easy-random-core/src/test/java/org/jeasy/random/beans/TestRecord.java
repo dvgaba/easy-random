@@ -23,10 +23,4 @@
  */
 package org.jeasy.random.beans;
 
-public record TestRecord(int id,
-                  String name,
-                  String section,
-                  String className,
-                  int age) {
-
-}
+public record TestRecord(int id, String name, String section, String className, int age) {}

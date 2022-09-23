@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.net;
 
-import org.jeasy.random.randomizers.AbstractRandomizer;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link URL}.
@@ -40,8 +39,7 @@ public class UrlRandomizer extends AbstractRandomizer<URL> {
     /**
      * Create a new {@link UrlRandomizer}.
      */
-    public UrlRandomizer() {
-    }
+    public UrlRandomizer() {}
 
     /**
      * Create a new {@link UrlRandomizer}.

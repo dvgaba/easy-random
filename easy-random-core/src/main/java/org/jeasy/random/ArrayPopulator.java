@@ -23,9 +23,8 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
-
 import java.lang.reflect.Array;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 /**
  * Random array populator.
@@ -53,6 +52,11 @@ class ArrayPopulator {
 
     private int getRandomArraySize(EasyRandomParameters parameters) {
         EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
-        return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), easyRandom.nextLong()).getRandomValue();
+        return new IntegerRangeRandomizer(
+            collectionSizeRange.getMin(),
+            collectionSizeRange.getMax(),
+            easyRandom.nextLong()
+        )
+            .getRandomValue();
     }
 }

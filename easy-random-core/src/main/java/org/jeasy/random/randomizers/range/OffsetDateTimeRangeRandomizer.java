@@ -25,7 +25,6 @@ package org.jeasy.random.randomizers.range;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
-
 import org.jeasy.random.EasyRandomParameters;
 
 /**
@@ -79,7 +78,9 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
         int minNanoSeconds = min.getNano();
         int maxNanoSeconds = max.getNano();
         long nanoSeconds = (long) nextDouble(minNanoSeconds, maxNanoSeconds);
-        return OffsetDateTime.ofInstant(Instant.ofEpochSecond(seconds, nanoSeconds),
-                EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().getZone());
+        return OffsetDateTime.ofInstant(
+            Instant.ofEpochSecond(seconds, nanoSeconds),
+            EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().getZone()
+        );
     }
 }

@@ -23,16 +23,15 @@
  */
 package org.jeasy.random.beans;
 
-import org.junit.jupiter.api.Test;
-
 public class TestBeanWithRecord {
-  private TestRecord testRecord;
 
-  public TestRecord getTestRecord() {
-    return testRecord;
-  }
+    private TestRecord testRecord;
 
-  public void setTestRecord(TestRecord testRecord) {
-    this.testRecord = testRecord;
-  }
+    public TestRecord getTestRecord() {
+        return testRecord;
+    }
+
+    public void setTestRecord(TestRecord testRecord) {
+        this.testRecord = testRecord;
+    }
 }

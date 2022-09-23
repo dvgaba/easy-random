@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random cities.
@@ -37,8 +36,7 @@ public class CityRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link CityRandomizer}.
      */
-    public CityRandomizer() {
-    }
+    public CityRandomizer() {}
 
     /**
      * Create a new {@link CityRandomizer}.

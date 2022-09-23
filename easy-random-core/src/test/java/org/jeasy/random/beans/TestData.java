@@ -23,28 +23,32 @@
  */
 package org.jeasy.random.beans;
 
+import java.util.Date;
 import org.jeasy.random.annotation.Randomizer;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.randomizers.range.DateRangeRandomizer;
 import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
-import java.util.Date;
-
 public class TestData {
 
-    public TestData() {
-    }
+    public TestData() {}
 
-    @Randomizer(value = DateRangeRandomizer.class, args = {
+    @Randomizer(
+        value = DateRangeRandomizer.class,
+        args = {
             @RandomizerArgument(value = "2016-01-10 00:00:00", type = Date.class),
-            @RandomizerArgument(value = "2016-01-30 23:59:59", type = Date.class)
-    })
+            @RandomizerArgument(value = "2016-01-30 23:59:59", type = Date.class),
+        }
+    )
     private Date date;
 
-    @Randomizer(value = IntegerRangeRandomizer.class, args = {
+    @Randomizer(
+        value = IntegerRangeRandomizer.class,
+        args = {
             @RandomizerArgument(value = "200", type = Integer.class),
-            @RandomizerArgument(value = "500", type = Integer.class)
-    })
+            @RandomizerArgument(value = "500", type = Integer.class),
+        }
+    )
     private int price;
 
     public Date getDate() {

@@ -23,9 +23,8 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.annotation.Priority;
-
 import java.util.Comparator;
+import org.jeasy.random.annotation.Priority;
 
 /**
  * Compare objects annotated with {@link Priority} annotation in the ascending order.

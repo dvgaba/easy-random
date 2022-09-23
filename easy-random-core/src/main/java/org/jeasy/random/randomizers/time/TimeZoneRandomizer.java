@@ -24,7 +24,6 @@
 package org.jeasy.random.randomizers.time;
 
 import java.util.TimeZone;
-
 import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
@@ -37,8 +36,7 @@ public class TimeZoneRandomizer extends AbstractRandomizer<TimeZone> {
     /**
      * Create a new {@link TimeZoneRandomizer}.
      */
-    public TimeZoneRandomizer() {
-    }
+    public TimeZoneRandomizer() {}
 
     /**
      * Create a new {@link TimeZoneRandomizer}.

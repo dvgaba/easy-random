@@ -45,53 +45,53 @@ import org.jeasy.random.randomizers.misc.SkipRandomizer;
 @Priority(0)
 public class ExclusionRandomizerRegistry implements RandomizerRegistry {
 
-  private Set<BiPredicate<Field, Object>> fieldPredicates = new HashSet<>();
-  private Set<Predicate<Class<?>>> typePredicates = new HashSet<>();
+    private Set<BiPredicate<Field, Object>> fieldPredicates = new HashSet<>();
+    private Set<Predicate<Class<?>>> typePredicates = new HashSet<>();
 
-  /** {@inheritDoc} */
-  @Override
-  public void init(EasyRandomParameters parameters) {
-    fieldPredicates.add(FieldPredicates.isAnnotatedWith(Exclude.class));
-    typePredicates.add(TypePredicates.isAnnotatedWith(Exclude.class));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public Randomizer<?> getRandomizer(Field field) {
-    for (BiPredicate<Field, Object> fieldPredicate : fieldPredicates) {
-      if (fieldPredicate.test(field, null)) {
-        return new SkipRandomizer();
-      }
+    /** {@inheritDoc} */
+    @Override
+    public void init(EasyRandomParameters parameters) {
+        fieldPredicates.add(FieldPredicates.isAnnotatedWith(Exclude.class));
+        typePredicates.add(TypePredicates.isAnnotatedWith(Exclude.class));
     }
-    return null;
-  }
 
-  /** {@inheritDoc} */
-  @Override
-  public Randomizer<?> getRandomizer(Class<?> clazz) {
-    for (Predicate<Class<?>> typePredicate : typePredicates) {
-      if (typePredicate.test(clazz)) {
-        return new SkipRandomizer();
-      }
+    /** {@inheritDoc} */
+    @Override
+    public Randomizer<?> getRandomizer(Field field) {
+        for (BiPredicate<Field, Object> fieldPredicate : fieldPredicates) {
+            if (fieldPredicate.test(field, null)) {
+                return new SkipRandomizer();
+            }
+        }
+        return null;
     }
-    return null;
-  }
 
-  /**
-   * Add a field predicate.
-   *
-   * @param predicate to add
-   */
-  public void addFieldPredicate(BiPredicate<Field, Object> predicate) {
-    fieldPredicates.add(predicate);
-  }
+    /** {@inheritDoc} */
+    @Override
+    public Randomizer<?> getRandomizer(Class<?> clazz) {
+        for (Predicate<Class<?>> typePredicate : typePredicates) {
+            if (typePredicate.test(clazz)) {
+                return new SkipRandomizer();
+            }
+        }
+        return null;
+    }
 
-  /**
-   * Add a type predicate.
-   *
-   * @param predicate to add
-   */
-  public void addTypePredicate(Predicate<Class<?>> predicate) {
-    typePredicates.add(predicate);
-  }
+    /**
+     * Add a field predicate.
+     *
+     * @param predicate to add
+     */
+    public void addFieldPredicate(BiPredicate<Field, Object> predicate) {
+        fieldPredicates.add(predicate);
+    }
+
+    /**
+     * Add a type predicate.
+     *
+     * @param predicate to add
+     */
+    public void addTypePredicate(Predicate<Class<?>> predicate) {
+        typePredicates.add(predicate);
+    }
 }

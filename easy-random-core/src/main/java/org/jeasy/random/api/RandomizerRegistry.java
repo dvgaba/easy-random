@@ -33,27 +33,26 @@ import org.jeasy.random.EasyRandomParameters;
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
 public interface RandomizerRegistry {
+    /**
+     * Initialize the registry.
+     *
+     * @param parameters of the {@link EasyRandom} instance being configured
+     */
+    void init(EasyRandomParameters parameters);
 
-  /**
-   * Initialize the registry.
-   *
-   * @param parameters of the {@link EasyRandom} instance being configured
-   */
-  void init(EasyRandomParameters parameters);
+    /**
+     * Retrieves a randomizer for the given field.
+     *
+     * @param field the field for which a randomizer was registered
+     * @return the randomizer registered for the given field
+     */
+    Randomizer<?> getRandomizer(final Field field);
 
-  /**
-   * Retrieves a randomizer for the given field.
-   *
-   * @param field the field for which a randomizer was registered
-   * @return the randomizer registered for the given field
-   */
-  Randomizer<?> getRandomizer(final Field field);
-
-  /**
-   * Retrieves a randomizer for a given type.
-   *
-   * @param type the type for which a randomizer was registered
-   * @return the randomizer registered for the given type.
-   */
-  Randomizer<?> getRandomizer(final Class<?> type);
+    /**
+     * Retrieves a randomizer for a given type.
+     *
+     * @param type the type for which a randomizer was registered
+     * @return the randomizer registered for the given type.
+     */
+    Randomizer<?> getRandomizer(final Class<?> type);
 }

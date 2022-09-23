@@ -26,10 +26,8 @@ package org.jeasy.random.randomizers.time;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.time.ZonedDateTime;
-
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.api.Test;
 
 class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> {
 

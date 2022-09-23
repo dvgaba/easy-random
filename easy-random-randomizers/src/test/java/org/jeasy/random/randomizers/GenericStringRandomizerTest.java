@@ -35,7 +35,7 @@ class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
 
     @BeforeEach
     void setUp() {
-        words = new String[]{"foo", "bar"};
+        words = new String[] { "foo", "bar" };
     }
 
     @Test

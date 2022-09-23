@@ -27,12 +27,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.jeasy.random.PriorityComparator;
+import org.jeasy.random.annotation.Priority;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.annotation.Priority;
 
 class PriorityComparatorTest {
 
@@ -53,19 +50,15 @@ class PriorityComparatorTest {
     void testCompare() {
         assertThat(priorityComparator.compare(foo, bar)).isPositive();
 
-        List<Object> objects = Arrays.asList(foo,bar);
+        List<Object> objects = Arrays.asList(foo, bar);
         objects.sort(priorityComparator);
         // objects must be sorted in decreasing priority order: 2 > 1
         assertThat(objects).containsExactly(bar, foo);
     }
 
     @Priority(1)
-    private class Foo {
-
-    }
+    private class Foo {}
 
     @Priority(2)
-    private class Bar {
-
-    }
+    private class Bar {}
 }

@@ -27,26 +27,24 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
     static Object[] generateRandomizers() {
-        return new Object[] { 
-                new ByteRandomizer(),
-                new ShortRandomizer(),
-                new IntegerRandomizer(),
-                new NumberRandomizer(),
-                new LongRandomizer(),
-                new FloatRandomizer(),
-                new DoubleRandomizer(),
-                new BigDecimalRandomizer(),
-                new BigIntegerRandomizer(),
+        return new Object[] {
+            new ByteRandomizer(),
+            new ShortRandomizer(),
+            new IntegerRandomizer(),
+            new NumberRandomizer(),
+            new LongRandomizer(),
+            new FloatRandomizer(),
+            new DoubleRandomizer(),
+            new BigDecimalRandomizer(),
+            new BigIntegerRandomizer(),
         };
     }
 
@@ -60,16 +58,16 @@ class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
     }
 
     static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
-        return new Object[][] { 
-                { new ByteRandomizer(SEED), (byte) -35 },
-                { new ShortRandomizer(SEED), (short) -3619 },
-                { new IntegerRandomizer(SEED), -1188957731 },
-                { new NumberRandomizer(SEED), -1188957731 },
-                { new LongRandomizer(SEED), -5106534569952410475L },
-                { new FloatRandomizer(SEED), 0.72317415F },
-                { new DoubleRandomizer(SEED), 0.7231742029971469 },
-                { new BigDecimalRandomizer(SEED), new BigDecimal(0.723174202997146853277854461339302361011505126953125) },
-                { new BigIntegerRandomizer(SEED), new BigInteger("295011414634219278107705585431435293517") },
+        return new Object[][] {
+            { new ByteRandomizer(SEED), (byte) -35 },
+            { new ShortRandomizer(SEED), (short) -3619 },
+            { new IntegerRandomizer(SEED), -1188957731 },
+            { new NumberRandomizer(SEED), -1188957731 },
+            { new LongRandomizer(SEED), -5106534569952410475L },
+            { new FloatRandomizer(SEED), 0.72317415F },
+            { new DoubleRandomizer(SEED), 0.7231742029971469 },
+            { new BigDecimalRandomizer(SEED), new BigDecimal(0.723174202997146853277854461339302361011505126953125) },
+            { new BigIntegerRandomizer(SEED), new BigInteger("295011414634219278107705585431435293517") },
         };
     }
 

@@ -23,11 +23,10 @@
  */
 package org.jeasy.random.validation;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.text.StringRandomizer;
-
 import java.lang.reflect.Field;
 import java.util.Random;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.text.StringRandomizer;
 
 class NotBlankAnnotationHandler implements BeanValidationAnnotationHandler {
 

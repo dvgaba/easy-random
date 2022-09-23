@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random emails.
@@ -39,8 +38,7 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link EmailRandomizer}.
      */
-    public EmailRandomizer() {
-    }
+    public EmailRandomizer() {}
 
     /**
      * Create a new {@link EmailRandomizer}.
@@ -77,5 +75,4 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
     public String getRandomValue() {
         return safe ? faker.internet().safeEmailAddress() : faker.internet().emailAddress();
     }
-
 }

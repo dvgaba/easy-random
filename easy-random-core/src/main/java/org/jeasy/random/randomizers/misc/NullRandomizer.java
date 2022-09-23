@@ -36,5 +36,4 @@ public class NullRandomizer implements Randomizer<Void> {
     public Void getRandomValue() {
         return null;
     }
-
 }

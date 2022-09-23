@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.beans;
 
-import org.jeasy.random.annotation.Exclude;
-
 import java.util.Date;
 import java.util.List;
+import org.jeasy.random.annotation.Exclude;
 
 public class Person extends Human implements Comparable<Person> {
 
@@ -127,7 +126,6 @@ public class Person extends Human implements Comparable<Person> {
         if (gender != person.gender) return false;
         if (address != null ? !address.equals(person.address) : person.address != null) return false;
         return !(phoneNumber != null ? !phoneNumber.equals(person.phoneNumber) : person.phoneNumber != null);
-
     }
 
     @Override

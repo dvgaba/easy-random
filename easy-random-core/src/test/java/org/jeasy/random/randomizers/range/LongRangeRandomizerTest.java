@@ -68,7 +68,7 @@ class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         LongRangeRandomizer longRangeRandomizer = new LongRangeRandomizer(min, max, SEED);
-        
+
         // when
         Long l = longRangeRandomizer.getRandomValue();
 

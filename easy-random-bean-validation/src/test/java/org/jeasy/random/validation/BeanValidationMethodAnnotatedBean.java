@@ -23,11 +23,11 @@
  */
 package org.jeasy.random.validation;
 
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
+import javax.validation.constraints.*;
 
 class BeanValidationMethodAnnotatedBean {
 
@@ -49,13 +49,12 @@ class BeanValidationMethodAnnotatedBean {
 
     private int negativeOrZero;
 
-
     private Long positiveLong;
-    
+
     private Long positiveOrZeroLong;
-    
+
     private Long negativeLong;
-    
+
     private Long negativeOrZeroLong;
 
     private String notBlank;
@@ -153,7 +152,6 @@ class BeanValidationMethodAnnotatedBean {
     public void setPositive(int positive) {
         this.positive = positive;
     }
-
 
     @PositiveOrZero
     public int getPositiveOrZero() {
@@ -317,7 +315,7 @@ class BeanValidationMethodAnnotatedBean {
         this.unusedString = unusedString;
     }
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     public String getBriefMessage() {
         return briefMessage;
     }
@@ -326,7 +324,7 @@ class BeanValidationMethodAnnotatedBean {
         this.briefMessage = briefMessage;
     }
 
-    @Pattern(regexp="[a-z]{4}")
+    @Pattern(regexp = "[a-z]{4}")
     public String getRegexString() {
         return regexString;
     }
@@ -353,7 +351,7 @@ class BeanValidationMethodAnnotatedBean {
         this.email = email;
     }
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     public Collection<String> getSizedCollection() {
         return sizedCollection;
     }
@@ -362,7 +360,7 @@ class BeanValidationMethodAnnotatedBean {
         this.sizedCollection = sizedCollection;
     }
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     public List<String> getSizedList() {
         return sizedList;
     }
@@ -380,7 +378,7 @@ class BeanValidationMethodAnnotatedBean {
         this.sizedListEmbeddedBean = sizedListEmbeddedBean;
     }
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     public Set<String> getSizedSet() {
         return sizedSet;
     }
@@ -389,7 +387,7 @@ class BeanValidationMethodAnnotatedBean {
         this.sizedSet = sizedSet;
     }
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     public Map<String, Integer> getSizedMap() {
         return sizedMap;
     }
@@ -398,7 +396,7 @@ class BeanValidationMethodAnnotatedBean {
         this.sizedMap = sizedMap;
     }
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     public String[] getSizedArray() {
         return sizedArray;
     }
@@ -407,7 +405,7 @@ class BeanValidationMethodAnnotatedBean {
         this.sizedArray = sizedArray;
     }
 
-    @Size(min=2)
+    @Size(min = 2)
     public String getSizedString() {
         return sizedString;
     }
@@ -418,36 +416,73 @@ class BeanValidationMethodAnnotatedBean {
 
     @Override
     public String toString() {
-        return "BeanValidationMethodAnnotatedBean{" +
-                "unsupported=" + unsupported +
-                ", active=" + active +
-                ", maxDiscount=" + maxDiscount +
-                ", minDiscount=" + minDiscount +
-                ", discount=" + discount +
-                ", positive=" + positive +
-                ", positiveOrZero=" + positiveOrZero +
-                ", negative=" + negative +
-                ", negativeOrZero=" + negativeOrZero +
-                ", notBlank='" + notBlank + '\'' +
-                ", email='" + email + '\'' +
-                ", eventDate=" + eventDate +
-                ", eventLocalDateTime=" + eventLocalDateTime +
-                ", birthday=" + birthday +
-                ", birthdayLocalDateTime=" + birthdayLocalDateTime +
-                ", pastOrPresent=" + pastOrPresent +
-                ", futureOrPresent=" + futureOrPresent +
-                ", maxQuantity=" + maxQuantity +
-                ", minQuantity=" + minQuantity +
-                ", username='" + username + '\'' +
-                ", unusedString='" + unusedString + '\'' +
-                ", briefMessage='" + briefMessage + '\'' +
-                ", sizedCollection=" + sizedCollection +
-                ", sizedList=" + sizedList +
-                ", sizedSet=" + sizedSet +
-                ", sizedMap=" + sizedMap +
-                ", sizedArray=" + Arrays.toString(sizedArray) +
-                ", sizedString=" + sizedString +
-                ", regexString='" + regexString + '\'' +
-                '}';
+        return (
+            "BeanValidationMethodAnnotatedBean{" +
+            "unsupported=" +
+            unsupported +
+            ", active=" +
+            active +
+            ", maxDiscount=" +
+            maxDiscount +
+            ", minDiscount=" +
+            minDiscount +
+            ", discount=" +
+            discount +
+            ", positive=" +
+            positive +
+            ", positiveOrZero=" +
+            positiveOrZero +
+            ", negative=" +
+            negative +
+            ", negativeOrZero=" +
+            negativeOrZero +
+            ", notBlank='" +
+            notBlank +
+            '\'' +
+            ", email='" +
+            email +
+            '\'' +
+            ", eventDate=" +
+            eventDate +
+            ", eventLocalDateTime=" +
+            eventLocalDateTime +
+            ", birthday=" +
+            birthday +
+            ", birthdayLocalDateTime=" +
+            birthdayLocalDateTime +
+            ", pastOrPresent=" +
+            pastOrPresent +
+            ", futureOrPresent=" +
+            futureOrPresent +
+            ", maxQuantity=" +
+            maxQuantity +
+            ", minQuantity=" +
+            minQuantity +
+            ", username='" +
+            username +
+            '\'' +
+            ", unusedString='" +
+            unusedString +
+            '\'' +
+            ", briefMessage='" +
+            briefMessage +
+            '\'' +
+            ", sizedCollection=" +
+            sizedCollection +
+            ", sizedList=" +
+            sizedList +
+            ", sizedSet=" +
+            sizedSet +
+            ", sizedMap=" +
+            sizedMap +
+            ", sizedArray=" +
+            Arrays.toString(sizedArray) +
+            ", sizedString=" +
+            sizedString +
+            ", regexString='" +
+            regexString +
+            '\'' +
+            '}'
+        );
     }
 }

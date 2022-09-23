@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.OffsetDateTime;
-
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,7 +67,8 @@ class OffsetDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Offs
 
     @Test
     void whenSpecifiedMinOffsetDateTimeIsAfterMaxOffsetDateTime_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new OffsetDateTimeRangeRandomizer(maxOffsetDateTime, minOffsetDateTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new OffsetDateTimeRangeRandomizer(maxOffsetDateTime, minOffsetDateTime))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
