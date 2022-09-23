@@ -29,18 +29,18 @@ public class ComparableBean {
 
     private Comparable<Date> dateComparable;
 
-	public ComparableBean() {
-	}
+    public ComparableBean() {}
 
-	public Comparable<Date> getDateComparable() {
-		return this.dateComparable;
-	}
+    public Comparable<Date> getDateComparable() {
+        return this.dateComparable;
+    }
 
-	public void setDateComparable(Comparable<Date> dateComparable) {
-		this.dateComparable = dateComparable;
-	}
+    public void setDateComparable(Comparable<Date> dateComparable) {
+        this.dateComparable = dateComparable;
+    }
 
-	public static class AlwaysEqual implements Comparable<Date> {
+    public static class AlwaysEqual implements Comparable<Date> {
+
         @Override
         public int compareTo(Date o) {
             return 0;

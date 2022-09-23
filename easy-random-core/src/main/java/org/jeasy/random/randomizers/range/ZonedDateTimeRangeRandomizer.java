@@ -25,7 +25,6 @@ package org.jeasy.random.randomizers.range;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
-
 import org.jeasy.random.EasyRandomParameters;
 
 /**
@@ -81,5 +80,4 @@ public class ZonedDateTimeRangeRandomizer extends AbstractRangeRandomizer<ZonedD
         long nanoSeconds = (long) nextDouble(minNanoSeconds, maxNanoSeconds);
         return ZonedDateTime.ofInstant(Instant.ofEpochSecond(seconds, nanoSeconds), min.getZone());
     }
-
 }

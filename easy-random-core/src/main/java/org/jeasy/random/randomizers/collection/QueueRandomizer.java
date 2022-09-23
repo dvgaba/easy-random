@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.collection;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.LinkedList;
 import java.util.Queue;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates a queue of random values using a delegate {@link Randomizer}.

@@ -35,8 +35,7 @@ public class NumberRandomizer extends AbstractRandomizer<Number> {
     /**
      * Create a new {@link NumberRandomizer}.
      */
-    public NumberRandomizer() {
-    }
+    public NumberRandomizer() {}
 
     /**
      * Create a new {@link NumberRandomizer}.

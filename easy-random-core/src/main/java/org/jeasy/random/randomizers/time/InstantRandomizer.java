@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.time.Instant;
 import java.util.Date;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random {@link Instant}.

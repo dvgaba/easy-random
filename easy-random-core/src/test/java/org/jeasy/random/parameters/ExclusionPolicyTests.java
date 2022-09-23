@@ -23,6 +23,9 @@
  */
 package org.jeasy.random.parameters;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.lang.reflect.Field;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.ExclusionPolicy;
@@ -31,17 +34,14 @@ import org.jeasy.random.beans.Address;
 import org.jeasy.random.beans.Person;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class ExclusionPolicyTests {
 
     @Test
     void testCustomExclusionPolicy() {
         // given
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .exclusionPolicy(new ExclusionPolicy() {
+            .exclusionPolicy(
+                new ExclusionPolicy() {
                     @Override
                     public boolean shouldBeExcluded(Field field, RandomizerContext context) {
                         return field.getName().equals("birthDate");
@@ -51,7 +51,8 @@ class ExclusionPolicyTests {
                     public boolean shouldBeExcluded(Class<?> type, RandomizerContext context) {
                         return type.isAssignableFrom(Address.class);
                     }
-                });
+                }
+            );
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when

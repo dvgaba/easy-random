@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.sql.Date;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +66,8 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
     @Test
     void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new DateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DateRangeRandomizer(maxDate, minDate))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -93,5 +93,4 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
         // Then
         assertThat(randomDate).isAfterOrEqualTo(minDate);
     }
-
 }

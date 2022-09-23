@@ -23,6 +23,10 @@
  */
 package org.jeasy.random.parameters;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.lang.reflect.Field;
+import java.util.Set;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
@@ -31,19 +35,14 @@ import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class RandomizerProviderTests {
 
     @Test
     void testCustomRandomizerProvider() {
         // given
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomizerProvider(new RandomizerProvider() {
-
+            .randomizerProvider(
+                new RandomizerProvider() {
                     private Set<RandomizerRegistry> randomizerRegistries;
 
                     @Override
@@ -74,8 +73,9 @@ class RandomizerProviderTests {
                         }
                         return null;
                     }
-                })
-                .randomizationDepth(2);
+                }
+            )
+            .randomizationDepth(2);
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
@@ -89,26 +89,26 @@ class RandomizerProviderTests {
     }
 
     static class Foo {
+
         private String name;
         private Foo bestFriend;
 
-		public Foo() {
-		}
+        public Foo() {}
 
-		public String getName() {
-			return this.name;
-		}
+        public String getName() {
+            return this.name;
+        }
 
-		public Foo getBestFriend() {
-			return this.bestFriend;
-		}
+        public Foo getBestFriend() {
+            return this.bestFriend;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-		public void setBestFriend(Foo bestFriend) {
-			this.bestFriend = bestFriend;
-		}
-	}
+        public void setBestFriend(Foo bestFriend) {
+            this.bestFriend = bestFriend;
+        }
+    }
 }

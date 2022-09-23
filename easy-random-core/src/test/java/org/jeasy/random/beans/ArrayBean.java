@@ -48,158 +48,156 @@ public class ArrayBean {
     private Double[] doubles;
     private Boolean[] booleans;
     private Character[] characters;
-    
+
     /*
      * custom types
      */
     private String[] strings;
     private Person[] persons;
 
-	public ArrayBean() {
-	}
+    public ArrayBean() {}
 
+    public byte[] getByteArray() {
+        return this.byteArray;
+    }
 
-	public byte[] getByteArray() {
-		return this.byteArray;
-	}
+    public short[] getShortArray() {
+        return this.shortArray;
+    }
 
-	public short[] getShortArray() {
-		return this.shortArray;
-	}
+    public int[] getIntArray() {
+        return this.intArray;
+    }
 
-	public int[] getIntArray() {
-		return this.intArray;
-	}
+    public long[] getLongArray() {
+        return this.longArray;
+    }
 
-	public long[] getLongArray() {
-		return this.longArray;
-	}
+    public float[] getFloatArray() {
+        return this.floatArray;
+    }
 
-	public float[] getFloatArray() {
-		return this.floatArray;
-	}
+    public double[] getDoubleArray() {
+        return this.doubleArray;
+    }
 
-	public double[] getDoubleArray() {
-		return this.doubleArray;
-	}
+    public boolean[] getBooleanArray() {
+        return this.booleanArray;
+    }
 
-	public boolean[] getBooleanArray() {
-		return this.booleanArray;
-	}
+    public char[] getCharArray() {
+        return this.charArray;
+    }
 
-	public char[] getCharArray() {
-		return this.charArray;
-	}
+    public Byte[] getBytes() {
+        return this.bytes;
+    }
 
-	public Byte[] getBytes() {
-		return this.bytes;
-	}
+    public Short[] getShorts() {
+        return this.shorts;
+    }
 
-	public Short[] getShorts() {
-		return this.shorts;
-	}
+    public Integer[] getIntegers() {
+        return this.integers;
+    }
 
-	public Integer[] getIntegers() {
-		return this.integers;
-	}
+    public Long[] getLongs() {
+        return this.longs;
+    }
 
-	public Long[] getLongs() {
-		return this.longs;
-	}
+    public Float[] getFloats() {
+        return this.floats;
+    }
 
-	public Float[] getFloats() {
-		return this.floats;
-	}
+    public Double[] getDoubles() {
+        return this.doubles;
+    }
 
-	public Double[] getDoubles() {
-		return this.doubles;
-	}
+    public Boolean[] getBooleans() {
+        return this.booleans;
+    }
 
-	public Boolean[] getBooleans() {
-		return this.booleans;
-	}
+    public Character[] getCharacters() {
+        return this.characters;
+    }
 
-	public Character[] getCharacters() {
-		return this.characters;
-	}
+    public String[] getStrings() {
+        return this.strings;
+    }
 
-	public String[] getStrings() {
-		return this.strings;
-	}
+    public Person[] getPersons() {
+        return this.persons;
+    }
 
-	public Person[] getPersons() {
-		return this.persons;
-	}
+    public void setByteArray(byte[] byteArray) {
+        this.byteArray = byteArray;
+    }
 
-	public void setByteArray(byte[] byteArray) {
-		this.byteArray = byteArray;
-	}
+    public void setShortArray(short[] shortArray) {
+        this.shortArray = shortArray;
+    }
 
-	public void setShortArray(short[] shortArray) {
-		this.shortArray = shortArray;
-	}
+    public void setIntArray(int[] intArray) {
+        this.intArray = intArray;
+    }
 
-	public void setIntArray(int[] intArray) {
-		this.intArray = intArray;
-	}
+    public void setLongArray(long[] longArray) {
+        this.longArray = longArray;
+    }
 
-	public void setLongArray(long[] longArray) {
-		this.longArray = longArray;
-	}
+    public void setFloatArray(float[] floatArray) {
+        this.floatArray = floatArray;
+    }
 
-	public void setFloatArray(float[] floatArray) {
-		this.floatArray = floatArray;
-	}
+    public void setDoubleArray(double[] doubleArray) {
+        this.doubleArray = doubleArray;
+    }
 
-	public void setDoubleArray(double[] doubleArray) {
-		this.doubleArray = doubleArray;
-	}
+    public void setBooleanArray(boolean[] booleanArray) {
+        this.booleanArray = booleanArray;
+    }
 
-	public void setBooleanArray(boolean[] booleanArray) {
-		this.booleanArray = booleanArray;
-	}
+    public void setCharArray(char[] charArray) {
+        this.charArray = charArray;
+    }
 
-	public void setCharArray(char[] charArray) {
-		this.charArray = charArray;
-	}
+    public void setBytes(Byte[] bytes) {
+        this.bytes = bytes;
+    }
 
-	public void setBytes(Byte[] bytes) {
-		this.bytes = bytes;
-	}
+    public void setShorts(Short[] shorts) {
+        this.shorts = shorts;
+    }
 
-	public void setShorts(Short[] shorts) {
-		this.shorts = shorts;
-	}
+    public void setIntegers(Integer[] integers) {
+        this.integers = integers;
+    }
 
-	public void setIntegers(Integer[] integers) {
-		this.integers = integers;
-	}
+    public void setLongs(Long[] longs) {
+        this.longs = longs;
+    }
 
-	public void setLongs(Long[] longs) {
-		this.longs = longs;
-	}
+    public void setFloats(Float[] floats) {
+        this.floats = floats;
+    }
 
-	public void setFloats(Float[] floats) {
-		this.floats = floats;
-	}
+    public void setDoubles(Double[] doubles) {
+        this.doubles = doubles;
+    }
 
-	public void setDoubles(Double[] doubles) {
-		this.doubles = doubles;
-	}
+    public void setBooleans(Boolean[] booleans) {
+        this.booleans = booleans;
+    }
 
-	public void setBooleans(Boolean[] booleans) {
-		this.booleans = booleans;
-	}
+    public void setCharacters(Character[] characters) {
+        this.characters = characters;
+    }
 
-	public void setCharacters(Character[] characters) {
-		this.characters = characters;
-	}
+    public void setStrings(String[] strings) {
+        this.strings = strings;
+    }
 
-	public void setStrings(String[] strings) {
-		this.strings = strings;
-	}
-
-	public void setPersons(Person[] persons) {
-		this.persons = persons;
-	}
+    public void setPersons(Person[] persons) {
+        this.persons = persons;
+    }
 }

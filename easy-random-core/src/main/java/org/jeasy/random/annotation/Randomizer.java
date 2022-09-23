@@ -36,7 +36,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Randomizer {
-
     /**
      * The {@link org.jeasy.random.api.Randomizer} to use to generate the random value for this field.
      *
@@ -44,5 +43,6 @@ public @interface Randomizer {
      */
     Class<? extends org.jeasy.random.api.Randomizer<?>> value();
 
-    @RandomizerArgument RandomizerArgument[] args() default {};
+    @RandomizerArgument
+    RandomizerArgument[] args() default {};
 }

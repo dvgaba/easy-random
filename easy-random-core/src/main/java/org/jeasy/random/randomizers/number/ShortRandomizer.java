@@ -35,8 +35,7 @@ public class ShortRandomizer extends AbstractRandomizer<Short> {
     /**
      * Create a new {@link ShortRandomizer}.
      */
-    public ShortRandomizer() {
-    }
+    public ShortRandomizer() {}
 
     /**
      * Create a new {@link ShortRandomizer}.

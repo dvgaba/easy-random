@@ -23,6 +23,9 @@
  */
 package org.jeasy.random;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.jeasy.random.api.RandomizerContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,9 +34,6 @@ import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 class ObjenesisObjectFactoryTest {
@@ -58,10 +58,9 @@ class ObjenesisObjectFactoryTest {
     @Test
     void whenNoConcreteTypeIsFound_thenShouldThrowAnInstantiationError() {
         Mockito.when(context.getParameters().isScanClasspathForConcreteTypes()).thenReturn(true);
-        assertThatThrownBy(() -> objenesisObjectFactory.createInstance(AbstractFoo.class, context)).isInstanceOf(InstantiationError.class);
+        assertThatThrownBy(() -> objenesisObjectFactory.createInstance(AbstractFoo.class, context))
+            .isInstanceOf(InstantiationError.class);
     }
 
-    private abstract class AbstractFoo {
-
-    }
+    private abstract class AbstractFoo {}
 }

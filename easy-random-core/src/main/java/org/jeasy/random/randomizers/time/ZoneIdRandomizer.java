@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.AbstractRandomizer;
-
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
  * A {@link Randomizer} that generates random {@link ZoneId}.
@@ -41,8 +40,7 @@ public class ZoneIdRandomizer extends AbstractRandomizer<ZoneId> {
     /**
      * Create a new {@link ZoneIdRandomizer}.
      */
-    public ZoneIdRandomizer() {
-    }
+    public ZoneIdRandomizer() {}
 
     /**
      * Create a new {@link ZoneIdRandomizer}.

@@ -23,19 +23,17 @@
  */
 package org.jeasy.random.parameters;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.jeasy.random.util.CharacterUtils.collectPrintableCharactersOf;
 import static org.jeasy.random.util.CharacterUtils.filterLetters;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.beans.Person;
+import org.junit.jupiter.api.Test;
 
 class CharsetParameterTests {
 

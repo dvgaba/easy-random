@@ -40,12 +40,10 @@ public class Generic2Test {
         CompositeResource composite = easyRandom.nextObject(CompositeResource.class);
 
         // then
-        assertThat(composite.longResource.getId())
-                .isInstanceOf(Long.class)
-                .isNotNull();
+        assertThat(composite.longResource.getId()).isInstanceOf(Long.class).isNotNull();
     }
 
-    static abstract class IdResource<K extends Serializable, T extends IdResource<K, ?>> {
+    abstract static class IdResource<K extends Serializable, T extends IdResource<K, ?>> {
 
         private K id;
 
@@ -60,10 +58,10 @@ public class Generic2Test {
         }
     }
 
-    static class LongResource extends IdResource<Long, LongResource> {
-    }
+    static class LongResource extends IdResource<Long, LongResource> {}
 
     static class CompositeResource {
+
         private LongResource longResource;
     }
 }

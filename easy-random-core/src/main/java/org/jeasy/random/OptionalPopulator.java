@@ -23,39 +23,39 @@
  */
 package org.jeasy.random;
 
+import static org.jeasy.random.util.ReflectionUtils.isParameterizedType;
+import static org.jeasy.random.util.ReflectionUtils.isPopulatable;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Optional;
 
-import static org.jeasy.random.util.ReflectionUtils.isParameterizedType;
-import static org.jeasy.random.util.ReflectionUtils.isPopulatable;
-
 /**
  * Populator for {@link Optional} type.
- * 
+ *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 class OptionalPopulator {
 
-	private final EasyRandom easyRandom;
+    private final EasyRandom easyRandom;
 
-	OptionalPopulator(EasyRandom easyRandom) {
-		this.easyRandom = easyRandom;
-	}
+    OptionalPopulator(EasyRandom easyRandom) {
+        this.easyRandom = easyRandom;
+    }
 
-	Optional<?> getRandomOptional(final Field field, final RandomizationContext context) {
-		Type fieldGenericType = field.getGenericType();
-		if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
-			ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
-			Type genericType = parameterizedType.getActualTypeArguments()[0];
-			if (isPopulatable(genericType)) {
-				return Optional.of(easyRandom.doPopulateBean((Class<?>) genericType, context));
-			} else {
-				return Optional.empty();
-			}
-		} else {
-			return Optional.empty();
-		}
-	}
+    Optional<?> getRandomOptional(final Field field, final RandomizationContext context) {
+        Type fieldGenericType = field.getGenericType();
+        if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
+            ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
+            Type genericType = parameterizedType.getActualTypeArguments()[0];
+            if (isPopulatable(genericType)) {
+                return Optional.of(easyRandom.doPopulateBean((Class<?>) genericType, context));
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
+    }
 }

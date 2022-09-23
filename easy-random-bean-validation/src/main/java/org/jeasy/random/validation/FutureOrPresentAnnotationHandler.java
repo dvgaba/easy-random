@@ -23,12 +23,11 @@
  */
 package org.jeasy.random.validation;
 
+import java.lang.reflect.Field;
+import java.time.LocalDate;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
-
-import java.lang.reflect.Field;
-import java.time.LocalDate;
 
 class FutureOrPresentAnnotationHandler implements BeanValidationAnnotationHandler {
 
@@ -43,8 +42,8 @@ class FutureOrPresentAnnotationHandler implements BeanValidationAnnotationHandle
     public Randomizer<?> getRandomizer(Field field) {
         if (easyRandom == null) {
             LocalDate now = LocalDate.now();
-            parameters.setDateRange(new EasyRandomParameters.Range<>(
-                    now, now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE))
+            parameters.setDateRange(
+                new EasyRandomParameters.Range<>(now, now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE))
             );
             easyRandom = new EasyRandom(parameters);
         }

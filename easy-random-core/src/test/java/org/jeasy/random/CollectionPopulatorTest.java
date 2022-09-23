@@ -33,13 +33,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.jeasy.random.beans.CollectionBean;
 import org.jeasy.random.beans.CompositeCollectionBean;
 import org.jeasy.random.beans.CustomList;
@@ -48,9 +41,14 @@ import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.SynchronousQueueBean;
 import org.jeasy.random.beans.TypeVariableCollectionBean;
 import org.jeasy.random.beans.WildCardCollectionBean;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-@SuppressWarnings({"unchecked", "rawtypes"})
+@SuppressWarnings({ "unchecked", "rawtypes" })
 class CollectionPopulatorTest {
 
     private static final int SIZE = 2;
@@ -58,8 +56,10 @@ class CollectionPopulatorTest {
 
     @Mock
     private RandomizationContext context;
+
     @Mock
     private EasyRandom easyRandom;
+
     private EasyRandomParameters parameters;
 
     private CollectionPopulator collectionPopulator;
@@ -131,13 +131,13 @@ class CollectionPopulatorTest {
 
     @SuppressWarnings("rawtypes")
     class Foo {
+
         private List rawInterfaceList;
         private List<String> typedInterfaceList;
         private ArrayList rawConcreteList;
         private ArrayList<String> typedConcreteList;
 
-        public Foo() {
-        }
+        public Foo() {}
 
         public List getRawInterfaceList() {
             return this.rawInterfaceList;
@@ -382,14 +382,16 @@ class CollectionPopulatorTest {
     void synchronousQueueTypeMustBeRejected() {
         EasyRandom easyRandom = new EasyRandom();
 
-        assertThatThrownBy(() -> easyRandom.nextObject(SynchronousQueueBean.class)).isInstanceOf(ObjectCreationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(SynchronousQueueBean.class))
+            .isInstanceOf(ObjectCreationException.class);
     }
 
     @Test
     void delayedQueueTypeMustBeRejected() {
         EasyRandom easyRandom = new EasyRandom();
 
-        assertThatThrownBy(() -> easyRandom.nextObject(DelayedQueueBean.class)).isInstanceOf(ObjectCreationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(DelayedQueueBean.class))
+            .isInstanceOf(ObjectCreationException.class);
     }
 
     @Test

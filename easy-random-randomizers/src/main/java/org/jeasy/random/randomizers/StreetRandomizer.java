@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random street names.
@@ -37,8 +36,7 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link StreetRandomizer}.
      */
-    public StreetRandomizer() {
-    }
+    public StreetRandomizer() {}
 
     /**
      * Create a new {@link StreetRandomizer}.
@@ -63,5 +61,4 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
     public String getRandomValue() {
         return faker.address().streetName();
     }
-
 }

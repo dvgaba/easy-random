@@ -24,17 +24,15 @@
 package org.jeasy.random.validation;
 
 import java.lang.reflect.Field;
-
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.number.BigDecimalRandomizer;
 
 public class MyCustomDigitsAnnotationHandler implements BeanValidationAnnotationHandler {
-	
-	@Override
-	public Randomizer<?> getRandomizer(Field field) {
-		// `@Digits` is applicable to several types (see its javadoc)
-		// for this test, just assuming the field is a BigDecimal
-		return new BigDecimalRandomizer(Integer.valueOf(2));
-	}
-	
+
+    @Override
+    public Randomizer<?> getRandomizer(Field field) {
+        // `@Digits` is applicable to several types (see its javadoc)
+        // for this test, just assuming the field is a BigDecimal
+        return new BigDecimalRandomizer(Integer.valueOf(2));
+    }
 }

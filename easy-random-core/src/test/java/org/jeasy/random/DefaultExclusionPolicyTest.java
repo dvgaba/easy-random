@@ -26,15 +26,13 @@ package org.jeasy.random;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Field;
-
 import org.jeasy.random.api.RandomizerContext;
+import org.jeasy.random.beans.Human;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import org.jeasy.random.beans.Human;
 
 @ExtendWith(MockitoExtension.class)
 class DefaultExclusionPolicyTest {
@@ -60,5 +58,4 @@ class DefaultExclusionPolicyTest {
         // Then
         assertThat(actual).isTrue();
     }
-
 }

@@ -76,7 +76,7 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
         int minSecond = min.getSecond();
         int minMinute = min.getMinute();
         int minHour = min.getHour();
-        
+
         int maxNanoSecond = max.getNano();
         int maxSecond = max.getSecond();
         int maxMinute = max.getMinute();
@@ -88,5 +88,4 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
         int randomHour = (int) nextDouble(minHour, maxHour);
         return LocalTime.of(randomHour, randomMinute, randomSecond, randomNanoSecond);
     }
-
 }

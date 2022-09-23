@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random mac addresses.
@@ -37,8 +36,7 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link MacAddressRandomizer}.
      */
-    public MacAddressRandomizer() {
-    }
+    public MacAddressRandomizer() {}
 
     /**
      * Create a new {@link MacAddressRandomizer}.
@@ -66,5 +64,4 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
     public String getRandomValue() {
         return faker.internet().macAddress();
     }
-
 }

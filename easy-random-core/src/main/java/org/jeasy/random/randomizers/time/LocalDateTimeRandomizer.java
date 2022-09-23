@@ -23,11 +23,10 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random {@link LocalDateTime}.

@@ -68,7 +68,7 @@ class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short> {
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         ShortRangeRandomizer shortRangeRandomizer = new ShortRangeRandomizer(min, max, SEED);
-        
+
         // when
         Short s = shortRangeRandomizer.getRandomValue();
 

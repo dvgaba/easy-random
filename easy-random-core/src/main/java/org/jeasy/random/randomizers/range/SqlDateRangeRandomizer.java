@@ -77,5 +77,4 @@ public class SqlDateRangeRandomizer extends AbstractRangeRandomizer<Date> {
         long randomDateTime = (long) nextDouble(minDateTime, maxDateTime);
         return new Date(randomDateTime);
     }
-
 }

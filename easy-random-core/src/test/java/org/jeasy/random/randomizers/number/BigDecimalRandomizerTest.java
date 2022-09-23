@@ -27,10 +27,8 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.api.Test;
 
 class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
 

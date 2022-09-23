@@ -25,10 +25,9 @@ package org.jeasy.random.beans;
 
 import java.util.concurrent.SynchronousQueue;
 
-@SuppressWarnings({"rawtypes", "unused"})
+@SuppressWarnings({ "rawtypes", "unused" })
 public class SynchronousQueueBean {
 
     private SynchronousQueue synchronousQueue;
     private SynchronousQueue<Person> typedSynchronousQueue;
-
 }

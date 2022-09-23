@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.util;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Facade for {@link io.github.classgraph.ClassGraph}. It is a separate class from {@link ReflectionUtils},
@@ -54,8 +53,12 @@ abstract class ClassGraphFacade {
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
         String typeName = type.getName();
-        ClassInfoList subTypes = type.isInterface() ? scanResult.getClassesImplementing(typeName) : scanResult.getSubclasses(typeName);
-        List<Class<?>> loadedSubTypes = subTypes.filter(subType -> subType.isPublic() && !subType.isAbstract()).loadClasses(true);
+        ClassInfoList subTypes = type.isInterface()
+            ? scanResult.getClassesImplementing(typeName)
+            : scanResult.getSubclasses(typeName);
+        List<Class<?>> loadedSubTypes = subTypes
+            .filter(subType -> subType.isPublic() && !subType.isAbstract())
+            .loadClasses(true);
         return Collections.unmodifiableList(loadedSubTypes);
     }
 }

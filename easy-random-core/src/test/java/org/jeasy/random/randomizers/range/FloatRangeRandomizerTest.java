@@ -68,7 +68,7 @@ class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float> {
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         FloatRangeRandomizer floatRangeRandomizer = new FloatRangeRandomizer(min, max, SEED);
-        
+
         // when
         Float f = floatRangeRandomizer.getRandomValue();
 

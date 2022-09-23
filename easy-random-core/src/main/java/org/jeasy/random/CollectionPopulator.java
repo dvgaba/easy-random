@@ -23,14 +23,13 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
+import static org.jeasy.random.util.ReflectionUtils.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
-
-import static org.jeasy.random.util.ReflectionUtils.*;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 /**
  * Random collection populator.
@@ -45,7 +44,7 @@ class CollectionPopulator {
         this.easyRandom = easyRandom;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     Collection<?> getRandomCollection(final Field field, final RandomizationContext context) {
         int randomSize = getRandomCollectionSize(context.getParameters());
         Class<?> fieldType = field.getType();
@@ -66,15 +65,18 @@ class CollectionPopulator {
                     Object item = easyRandom.doPopulateBean((Class<?>) type, context);
                     collection.add(item);
                 }
-
             }
         }
         return collection;
-
     }
 
     private int getRandomCollectionSize(EasyRandomParameters parameters) {
         EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
-        return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), easyRandom.nextLong()).getRandomValue();
+        return new IntegerRangeRandomizer(
+            collectionSizeRange.getMin(),
+            collectionSizeRange.getMax(),
+            easyRandom.nextLong()
+        )
+            .getRandomValue();
     }
 }

@@ -33,5 +33,4 @@ class NullRandomizerTest {
     void generatedValueShouldBeNull() {
         assertThat(new NullRandomizer().getRandomValue()).isNull();
     }
-
 }

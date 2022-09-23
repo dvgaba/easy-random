@@ -28,5 +28,4 @@ import org.jeasy.random.randomizers.AbstractRandomizerTest;
 abstract class AbstractRangeRandomizerTest<T> extends AbstractRandomizerTest<T> {
 
     T min, max;
-
 }

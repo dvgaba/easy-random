@@ -28,11 +28,11 @@ import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 /**
  * A {@link Randomizer} that generates a random minute value between {@link MinuteRandomizer#MIN_MINUTE} and {@link MinuteRandomizer#MAX_MINUTE}.
- * 
+ *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class MinuteRandomizer implements Randomizer<Integer> {
-    
+
     public static final int MIN_MINUTE = 0;
     public static final int MAX_MINUTE = 59;
 

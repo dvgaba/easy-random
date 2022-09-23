@@ -23,28 +23,26 @@
  */
 package org.jeasy.random.randomizers.collection;
 
-import java.time.Month;
-import java.util.EnumSet;
-
-import org.jeasy.random.randomizers.misc.EnumRandomizer;
-import org.junit.jupiter.api.Test;
-
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.Month;
+import java.util.EnumSet;
+import org.jeasy.random.randomizers.misc.EnumRandomizer;
+import org.junit.jupiter.api.Test;
+
 class EnumSetRandomizerTest {
 
-	@Test
-	void testEnumSetGeneration() {
-		// given
-		EnumRandomizer<Month> delegate = new EnumRandomizer<>(Month.class);
-		EnumSetRandomizer<Month> randomizer = new EnumSetRandomizer<>(delegate);
+    @Test
+    void testEnumSetGeneration() {
+        // given
+        EnumRandomizer<Month> delegate = new EnumRandomizer<>(Month.class);
+        EnumSetRandomizer<Month> randomizer = new EnumSetRandomizer<>(delegate);
 
-		// when
-		EnumSet<Month> randomEnumSet = randomizer.getRandomValue();
+        // when
+        EnumSet<Month> randomEnumSet = randomizer.getRandomValue();
 
-		// then
-		assertThat(randomEnumSet).containsAnyElementsOf(asList(Month.values()));
-	}
-
+        // then
+        assertThat(randomEnumSet).containsAnyElementsOf(asList(Month.values()));
+    }
 }

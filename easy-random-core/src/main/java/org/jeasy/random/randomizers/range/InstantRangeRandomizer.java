@@ -27,32 +27,32 @@ import java.time.Instant;
 
 public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
 
-	/**
-	 * Create a new {@link InstantRangeRandomizer}.
-	 *
-	 * @param min min value (inclusive)
-	 * @param max max value (exclusive)
-	 */
+    /**
+     * Create a new {@link InstantRangeRandomizer}.
+     *
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
+     */
     public InstantRangeRandomizer(final Instant min, final Instant max) {
         super(min, max);
     }
 
-	/**
-	 * Create a new {@link InstantRangeRandomizer}.
-	 *
-	 * @param min min value (inclusive)
-	 * @param max max value (exclusive)
-	 * @param seed initial seed
-	 */
+    /**
+     * Create a new {@link InstantRangeRandomizer}.
+     *
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
+     * @param seed initial seed
+     */
     public InstantRangeRandomizer(final Instant min, final Instant max, long seed) {
         super(min, max, seed);
     }
 
     @Override
     protected void checkValues() {
-		if (min.isAfter(max)) {
-			throw new IllegalArgumentException("max must be after min");
-		}
+        if (min.isAfter(max)) {
+            throw new IllegalArgumentException("max must be after min");
+        }
     }
 
     @Override
@@ -62,15 +62,14 @@ public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
 
     @Override
     protected Instant getDefaultMaxValue() {
-		return Instant.ofEpochMilli(Long.MAX_VALUE);
+        return Instant.ofEpochMilli(Long.MAX_VALUE);
     }
 
     @Override
     public Instant getRandomValue() {
-		long minEpochMillis = min.toEpochMilli();
-		long maxEpochMillis = max.toEpochMilli();
-		long randomEpochMillis = (long) nextDouble(minEpochMillis, maxEpochMillis);
-		return Instant.ofEpochMilli(randomEpochMillis);
+        long minEpochMillis = min.toEpochMilli();
+        long maxEpochMillis = max.toEpochMilli();
+        long randomEpochMillis = (long) nextDouble(minEpochMillis, maxEpochMillis);
+        return Instant.ofEpochMilli(randomEpochMillis);
     }
-
 }

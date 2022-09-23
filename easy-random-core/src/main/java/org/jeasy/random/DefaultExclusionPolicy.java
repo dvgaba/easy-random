@@ -40,42 +40,42 @@ import org.jeasy.random.api.RandomizerContext;
  */
 public class DefaultExclusionPolicy implements ExclusionPolicy {
 
-  /**
-   * Given the current randomization context, should the field be excluded from being populated ?
-   *
-   * @param field the field to check
-   * @param context the current randomization context
-   * @return true if the field should be excluded, false otherwise
-   */
-  public boolean shouldBeExcluded(final Field field, final RandomizerContext context) {
-    if (isStatic(field)) {
-      return true;
+    /**
+     * Given the current randomization context, should the field be excluded from being populated ?
+     *
+     * @param field the field to check
+     * @param context the current randomization context
+     * @return true if the field should be excluded, false otherwise
+     */
+    public boolean shouldBeExcluded(final Field field, final RandomizerContext context) {
+        if (isStatic(field)) {
+            return true;
+        }
+        Set<BiPredicate<Field, Object>> fieldExclusionPredicates = context
+            .getParameters()
+            .getFieldExclusionPredicates();
+        for (BiPredicate<Field, Object> fieldExclusionPredicate : fieldExclusionPredicates) {
+            if (fieldExclusionPredicate.test(field, null)) {
+                return true;
+            }
+        }
+        return false;
     }
-    Set<BiPredicate<Field, Object>> fieldExclusionPredicates =
-        context.getParameters().getFieldExclusionPredicates();
-    for (BiPredicate<Field, Object> fieldExclusionPredicate : fieldExclusionPredicates) {
-      if (fieldExclusionPredicate.test(field, null)) {
-        return true;
-      }
-    }
-    return false;
-  }
 
-  /**
-   * Given the current randomization context, should the type be excluded from being populated ?
-   *
-   * @param type the type to check
-   * @param context the current randomization context
-   * @return true if the type should be excluded, false otherwise
-   */
-  public boolean shouldBeExcluded(final Class<?> type, final RandomizerContext context) {
-    Set<Predicate<Class<?>>> typeExclusionPredicates =
-        context.getParameters().getTypeExclusionPredicates();
-    for (Predicate<Class<?>> typeExclusionPredicate : typeExclusionPredicates) {
-      if (typeExclusionPredicate.test(type)) {
-        return true;
-      }
+    /**
+     * Given the current randomization context, should the type be excluded from being populated ?
+     *
+     * @param type the type to check
+     * @param context the current randomization context
+     * @return true if the type should be excluded, false otherwise
+     */
+    public boolean shouldBeExcluded(final Class<?> type, final RandomizerContext context) {
+        Set<Predicate<Class<?>>> typeExclusionPredicates = context.getParameters().getTypeExclusionPredicates();
+        for (Predicate<Class<?>> typeExclusionPredicate : typeExclusionPredicates) {
+            if (typeExclusionPredicate.test(type)) {
+                return true;
+            }
+        }
+        return false;
     }
-    return false;
-  }
 }

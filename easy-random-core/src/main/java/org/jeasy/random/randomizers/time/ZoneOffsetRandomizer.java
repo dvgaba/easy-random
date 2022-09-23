@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.time;
 
+import java.time.ZoneOffset;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
-
-import java.time.ZoneOffset;
 
 /**
  * A {@link Randomizer} that generates random {@link ZoneOffset}.
@@ -65,5 +64,4 @@ public class ZoneOffsetRandomizer implements Randomizer<ZoneOffset> {
         Integer randomValue = integerRangeRandomizer.getRandomValue();
         return ZoneOffset.ofTotalSeconds(randomValue);
     }
-    
 }

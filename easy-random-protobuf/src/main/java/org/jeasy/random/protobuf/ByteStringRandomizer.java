@@ -30,24 +30,24 @@ import org.jeasy.random.api.Randomizer;
 /** Generate a random Protobuf {@link ByteString}. */
 public class ByteStringRandomizer implements Randomizer<ByteString> {
 
-  private final Random random;
+    private final Random random;
 
-  public ByteStringRandomizer() {
-    this.random = new Random();
-  }
+    public ByteStringRandomizer() {
+        this.random = new Random();
+    }
 
-  public ByteStringRandomizer(long seed) {
-    this.random = new Random(seed);
-  }
+    public ByteStringRandomizer(long seed) {
+        this.random = new Random(seed);
+    }
 
-  @Override
-  public ByteString getRandomValue() {
-    byte[] bytes = new byte[32];
-    random.nextBytes(bytes);
-    return ByteString.copyFrom(bytes);
-  }
+    @Override
+    public ByteString getRandomValue() {
+        byte[] bytes = new byte[32];
+        random.nextBytes(bytes);
+        return ByteString.copyFrom(bytes);
+    }
 
-  public String toString() {
-    return this.getClass().getSimpleName();
-  }
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

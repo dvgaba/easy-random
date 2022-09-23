@@ -23,12 +23,11 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.RandomizerContext;
+import static java.util.stream.Collectors.toList;
 
 import java.lang.reflect.Field;
 import java.util.*;
-
-import static java.util.stream.Collectors.toList;
+import org.jeasy.random.api.RandomizerContext;
 
 /**
  * Context object for a single call on {@link EasyRandom#nextObject(Class)}.
@@ -100,10 +99,9 @@ class RandomizationContext implements RandomizerContext {
     }
 
     private List<String> getStackedFieldNames() {
-
         List<String> collect = new ArrayList<>();
         Iterator<RandomizationContextStackItem> it = stack.descendingIterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             collect.add(it.next().getField().getName());
         }
         return collect;
@@ -128,8 +126,7 @@ class RandomizationContext implements RandomizerContext {
     public Object getCurrentObject() {
         if (stack.isEmpty()) {
             return rootObject;
-        }
-        else {
+        } else {
             return stack.peek().getObject();
         }
     }

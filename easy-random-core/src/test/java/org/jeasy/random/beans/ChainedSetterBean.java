@@ -45,5 +45,4 @@ public class ChainedSetterBean {
     public int getIndex() {
         return index;
     }
-
 }

@@ -35,54 +35,55 @@ public class Address {
 
     private String country;
 
-	public Address() {
-	}
+    public Address() {}
 
-	public Street getStreet() {
-		return this.street;
-	}
+    public Street getStreet() {
+        return this.street;
+    }
 
-	public String getZipCode() {
-		return this.zipCode;
-	}
+    public String getZipCode() {
+        return this.zipCode;
+    }
 
-	public String getCity() {
-		return this.city;
-	}
+    public String getCity() {
+        return this.city;
+    }
 
-	public String getCountry() {
-		return this.country;
-	}
+    public String getCountry() {
+        return this.country;
+    }
 
-	public void setStreet(Street street) {
-		this.street = street;
-	}
+    public void setStreet(Street street) {
+        this.street = street;
+    }
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Address address = (Address) o;
-		return Objects.equals(street, address.street) &&
-				Objects.equals(zipCode, address.zipCode) &&
-				Objects.equals(city, address.city) &&
-				Objects.equals(country, address.country);
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return (
+            Objects.equals(street, address.street) &&
+            Objects.equals(zipCode, address.zipCode) &&
+            Objects.equals(city, address.city) &&
+            Objects.equals(country, address.country)
+        );
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(street, zipCode, city, country);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(street, zipCode, city, country);
+    }
 }

@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.validation;
 
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.util.ReflectionUtils;
-
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.util.ReflectionUtils;
 
 class DecimalMinMaxAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
 
@@ -40,10 +39,8 @@ class DecimalMinMaxAnnotationHandler extends AbstractNumberBaseAnnotationHandler
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        DecimalMax decimalMaxAnnotation = ReflectionUtils
-                .getAnnotation(field, DecimalMax.class);
-        DecimalMin decimalMinAnnotation = ReflectionUtils
-                .getAnnotation(field, DecimalMin.class);
+        DecimalMax decimalMaxAnnotation = ReflectionUtils.getAnnotation(field, DecimalMax.class);
+        DecimalMin decimalMinAnnotation = ReflectionUtils.getAnnotation(field, DecimalMin.class);
 
         BigDecimal maxValue = null;
         BigDecimal minValue = null;

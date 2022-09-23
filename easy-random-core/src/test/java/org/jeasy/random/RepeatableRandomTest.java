@@ -53,18 +53,18 @@ public class RepeatableRandomTest {
         // same seed - hence same object expected
         Object instance2 = randomInstance(Pojo.class, seed, poolSize);
 
-        assertThat(instance1)
-                .isEqualTo(instance2);
-        assertThat(instance1.hashCode())
-                .isEqualTo(instance2.hashCode());
+        assertThat(instance1).isEqualTo(instance2);
+        assertThat(instance1.hashCode()).isEqualTo(instance2.hashCode());
     }
 
     private Object randomInstance(Class<?> type, long seed, int poolSize) {
-        EasyRandom easyRandom = new EasyRandom(new EasyRandomParameters()
+        EasyRandom easyRandom = new EasyRandom(
+            new EasyRandomParameters()
                 .objectPoolSize(poolSize)
                 .seed(seed)
                 .stringLengthRange(3, 5)
-                .collectionSizeRange(3, 4));
+                .collectionSizeRange(3, 4)
+        );
         return easyRandom.nextObject(type);
     }
 
@@ -85,9 +85,7 @@ public class RepeatableRandomTest {
                 return false;
             }
             Pojo that = (Pojo) o;
-            return id.equals(that.id)
-                    && a.equals(that.a)
-                    && b.equals(that.b);
+            return id.equals(that.id) && a.equals(that.a) && b.equals(that.b);
         }
 
         @Override
@@ -97,11 +95,7 @@ public class RepeatableRandomTest {
 
         @Override
         public String toString() {
-            return "Pojo{" +
-                    "id='" + id + '\'' +
-                    ", a=" + a +
-                    ", b=" + b +
-                    '}';
+            return "Pojo{" + "id='" + id + '\'' + ", a=" + a + ", b=" + b + '}';
         }
     }
 
@@ -121,8 +115,7 @@ public class RepeatableRandomTest {
                 return false;
             }
             PojoA that = (PojoA) o;
-            return s.equals(that.s)
-                    && root.id.equals(that.root.id);
+            return s.equals(that.s) && root.id.equals(that.root.id);
         }
 
         @Override
@@ -132,10 +125,7 @@ public class RepeatableRandomTest {
 
         @Override
         public String toString() {
-            return "PojoA{" +
-                    "s='" + s + '\'' +
-                    ", root.id=" + root.id +
-                    '}';
+            return "PojoA{" + "s='" + s + '\'' + ", root.id=" + root.id + '}';
         }
     }
 
@@ -162,9 +152,7 @@ public class RepeatableRandomTest {
 
         @Override
         public String toString() {
-            return "PojoB{" +
-                    "s='" + s + '\'' +
-                    '}';
+            return "PojoB{" + "s='" + s + '\'' + '}';
         }
     }
 }

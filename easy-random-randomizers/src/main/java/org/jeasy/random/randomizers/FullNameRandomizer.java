@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random full names.
@@ -37,8 +36,7 @@ public class FullNameRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link FullNameRandomizer}.
      */
-    public FullNameRandomizer() {
-    }
+    public FullNameRandomizer() {}
 
     /**
      * Create a new {@link FullNameRandomizer}.

@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers;
 
+import java.util.Locale;
 import net.datafaker.Faker;
 import org.jeasy.random.api.Randomizer;
-
-import java.util.Locale;
 
 /**
  * Abstract {@link Randomizer} based on <a href="https://github.com/DiUS/java-faker">Faker</a>.

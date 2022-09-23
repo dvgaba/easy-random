@@ -33,7 +33,6 @@ import org.jeasy.random.EasyRandomParameters;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public interface RandomizerContext {
-
     /**
      * Return the target type (parameter of {@link EasyRandom#nextObject(Class)}).
      * @return target type
@@ -69,5 +68,4 @@ public interface RandomizerContext {
      * @return currently used parameters
      */
     EasyRandomParameters getParameters();
-
 }

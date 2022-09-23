@@ -26,7 +26,6 @@ package org.jeasy.random.randomizers.collection;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.misc.EnumRandomizer;
 

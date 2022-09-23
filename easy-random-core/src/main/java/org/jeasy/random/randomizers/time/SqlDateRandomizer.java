@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.sql.Date;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * Generate a random {@link Date}.
@@ -56,5 +55,4 @@ public class SqlDateRandomizer implements Randomizer<Date> {
     public Date getRandomValue() {
         return new Date(delegate.getRandomValue().getTime());
     }
-
 }

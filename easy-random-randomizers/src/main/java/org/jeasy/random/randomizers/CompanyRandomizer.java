@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random companies.
@@ -37,8 +36,7 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link CompanyRandomizer}.
      */
-    public CompanyRandomizer() {
-    }
+    public CompanyRandomizer() {}
 
     /**
      * Create a new {@link CompanyRandomizer}.

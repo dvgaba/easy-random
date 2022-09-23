@@ -30,7 +30,5 @@ package org.jeasy.random.api;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public interface ContextAwareRandomizer<T> extends Randomizer<T> {
-
     void setRandomizerContext(RandomizerContext context);
-
 }

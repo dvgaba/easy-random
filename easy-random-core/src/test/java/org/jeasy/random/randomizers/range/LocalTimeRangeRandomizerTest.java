@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +66,8 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
 
     @Test
     void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new LocalTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new LocalTimeRangeRandomizer(maxTime, minTime))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -93,5 +93,4 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
         // Then
         assertThat(randomValue).isAfterOrEqualTo(minTime);
     }
-
 }

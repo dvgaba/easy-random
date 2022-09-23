@@ -32,27 +32,25 @@ import java.lang.reflect.Field;
  * @since 4.0
  */
 public interface ExclusionPolicy {
+    /**
+     * Given the current randomization context, should the field be excluded from being randomized?
+     *
+     * @param field the field to check
+     * @param context the current randomization context
+     * @return true if the field should be excluded, false otherwise
+     */
+    boolean shouldBeExcluded(final Field field, final RandomizerContext context);
 
-  /**
-   * Given the current randomization context, should the field be excluded from being randomized?
-   *
-   * @param field the field to check
-   * @param context the current randomization context
-   * @return true if the field should be excluded, false otherwise
-   */
-  boolean shouldBeExcluded(final Field field, final RandomizerContext context);
+    /**
+     * Given the current randomization context, should the type be excluded from being randomized?
+     *
+     * @param type the type to check
+     * @param context the current randomization context
+     * @return true if the type should be excluded, false otherwise
+     */
+    boolean shouldBeExcluded(final Class<?> type, final RandomizerContext context);
 
-  /**
-   * Given the current randomization context, should the type be excluded from being randomized?
-   *
-   * @param type the type to check
-   * @param context the current randomization context
-   * @return true if the type should be excluded, false otherwise
-   */
-  boolean shouldBeExcluded(final Class<?> type, final RandomizerContext context);
-
-  default boolean shouldBeExcluded(
-      final Field field, final RandomizerContext context, Object object) {
-    return this.shouldBeExcluded(field, context);
-  }
+    default boolean shouldBeExcluded(final Field field, final RandomizerContext context, Object object) {
+        return this.shouldBeExcluded(field, context);
+    }
 }

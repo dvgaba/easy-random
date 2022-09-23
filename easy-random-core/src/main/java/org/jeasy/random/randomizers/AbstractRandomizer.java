@@ -23,18 +23,17 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
+import static java.util.ResourceBundle.getBundle;
 
 import java.util.Random;
-
-import static java.util.ResourceBundle.getBundle;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * Base class for {@link org.jeasy.random.api.Randomizer} implementations.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
+public abstract class AbstractRandomizer<T> implements Randomizer<T> {
 
     protected final Random random;
 

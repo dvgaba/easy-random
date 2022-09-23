@@ -23,15 +23,8 @@
  */
 package org.jeasy.random.validation;
 
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
-import org.jeasy.random.randomizers.text.StringRandomizer;
-import org.jeasy.random.util.ReflectionUtils;
-import org.objenesis.ObjenesisStd;
+import static org.jeasy.random.util.ReflectionUtils.*;
 
-import javax.validation.constraints.Size;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -40,8 +33,14 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
-
-import static org.jeasy.random.util.ReflectionUtils.*;
+import javax.validation.constraints.Size;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
+import org.jeasy.random.randomizers.text.StringRandomizer;
+import org.jeasy.random.util.ReflectionUtils;
+import org.objenesis.ObjenesisStd;
 
 class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
 
@@ -53,11 +52,10 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({ "unchecked" })
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        Size sizeAnnotation = ReflectionUtils
-                .getAnnotation(field, Size.class);
+        Size sizeAnnotation = ReflectionUtils.getAnnotation(field, Size.class);
 
         final int min = sizeAnnotation.min();
         final int max = sizeAnnotation.max() == Integer.MAX_VALUE ? 255 : sizeAnnotation.max();
@@ -102,7 +100,6 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
                             Object item = easyRandom.nextObject((Class<?>) type);
                             collection.add(item);
                         }
-
                     }
                 }
                 return collection;
@@ -119,11 +116,16 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
                 } else {
                     try {
                         map = (Map<Object, Object>) fieldType.getDeclaredConstructor().newInstance();
-                    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                    } catch (
+                        InstantiationException
+                        | IllegalAccessException
+                        | NoSuchMethodException
+                        | InvocationTargetException e
+                    ) {
                         if (fieldType.isAssignableFrom(EnumMap.class)) {
                             if (isParameterizedType(fieldGenericType)) {
                                 Type type = ((ParameterizedType) fieldGenericType).getActualTypeArguments()[0];
-                                map = new EnumMap((Class<?>)type);
+                                map = new EnumMap((Class<?>) type);
                             } else {
                                 return null;
                             }
@@ -141,7 +143,7 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
                         for (int index = 0; index < randomSize; index++) {
                             Object randomKey = easyRandom.nextObject((Class<?>) keyType);
                             Object randomValue = easyRandom.nextObject((Class<?>) valueType);
-                            if(randomKey != null) {
+                            if (randomKey != null) {
                                 map.put(randomKey, randomValue);
                             }
                         }

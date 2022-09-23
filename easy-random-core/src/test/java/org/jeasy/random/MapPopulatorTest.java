@@ -31,23 +31,21 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.jeasy.random.api.ObjectFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.jeasy.random.beans.CompositeMapBean;
 import org.jeasy.random.beans.CustomMap;
 import org.jeasy.random.beans.EnumMapBean;
 import org.jeasy.random.beans.MapBean;
 import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.WildCardMapBean;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-@SuppressWarnings({"unchecked", "rawtypes"})
+@SuppressWarnings({ "unchecked", "rawtypes" })
 class MapPopulatorTest {
 
     private static final int SIZE = 1;
@@ -56,8 +54,10 @@ class MapPopulatorTest {
 
     @Mock
     private RandomizationContext context;
+
     @Mock
     private EasyRandom easyRandom;
+
     private EasyRandomParameters parameters;
 
     private MapPopulator mapPopulator;
@@ -142,13 +142,13 @@ class MapPopulatorTest {
     }
 
     class Foo {
+
         private Map rawMap;
         private HashMap concreteMap;
         private Map<String, String> typedMap;
         private HashMap<String, String> typedConcreteMap;
 
-        public Foo() {
-        }
+        public Foo() {}
 
         public Map getRawMap() {
             return this.rawMap;

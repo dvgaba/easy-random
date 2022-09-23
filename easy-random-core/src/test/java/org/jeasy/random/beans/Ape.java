@@ -23,5 +23,4 @@
  */
 package org.jeasy.random.beans;
 
-public class Ape extends MammalImpl {
-}
+public class Ape extends MammalImpl {}

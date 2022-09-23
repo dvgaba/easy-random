@@ -23,15 +23,14 @@
  */
 package org.jeasy.random.randomizers.time.internal;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.jeasy.random.randomizers.time.MinuteRandomizer.MAX_MINUTE;
 import static org.jeasy.random.randomizers.time.MinuteRandomizer.MIN_MINUTE;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.jeasy.random.randomizers.time.MinuteRandomizer;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class MinuteRandomizerTest extends AbstractRandomizerTest<Integer> {
 

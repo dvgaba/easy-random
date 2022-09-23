@@ -68,7 +68,7 @@ class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         ByteRangeRandomizer byteRangeRandomizer = new ByteRangeRandomizer(min, max, SEED);
-        
+
         // when
         Byte b = byteRangeRandomizer.getRandomValue();
 

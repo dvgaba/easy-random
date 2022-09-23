@@ -23,16 +23,15 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.*;
-import org.jeasy.random.randomizers.misc.EnumRandomizer;
-import org.jeasy.random.util.ReflectionUtils;
+import static org.jeasy.random.util.ReflectionUtils.*;
 
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-
-import static org.jeasy.random.util.ReflectionUtils.*;
+import org.jeasy.random.api.*;
+import org.jeasy.random.randomizers.misc.EnumRandomizer;
+import org.jeasy.random.util.ReflectionUtils;
 
 /**
  * Extension of {@link java.util.Random} that is able to generate random Java objects.
@@ -73,7 +72,8 @@ public class EasyRandom extends Random {
         super.setSeed(easyRandomParameters.getSeed());
         LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries(easyRandomParameters);
         RandomizerProvider customRandomizerProvider = easyRandomParameters.getRandomizerProvider();
-        randomizerProvider = customRandomizerProvider == null ? new RegistriesRandomizerProvider() : customRandomizerProvider;
+        randomizerProvider =
+            customRandomizerProvider == null ? new RegistriesRandomizerProvider() : customRandomizerProvider;
         randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
         arrayPopulator = new ArrayPopulator(this);
@@ -81,9 +81,15 @@ public class EasyRandom extends Random {
         MapPopulator mapPopulator = new MapPopulator(this, objectFactory);
         OptionalPopulator optionalPopulator = new OptionalPopulator(this);
         enumRandomizersByType = new ConcurrentHashMap<>();
-        fieldPopulator = new FieldPopulator(this,
-                this.randomizerProvider, arrayPopulator,
-                collectionPopulator, mapPopulator, optionalPopulator);
+        fieldPopulator =
+            new FieldPopulator(
+                this,
+                this.randomizerProvider,
+                arrayPopulator,
+                collectionPopulator,
+                mapPopulator,
+                optionalPopulator
+            );
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
     }
@@ -131,7 +137,6 @@ public class EasyRandom extends Random {
 
         T result;
         try {
-
             Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type, context);
             if (randomizer != null) {
                 if (randomizer instanceof ContextAwareRandomizer) {
@@ -200,18 +205,24 @@ public class EasyRandom extends Random {
         return null;
     }
 
-    private <T> void populateFields(final List<Field> fields, final T result, final RandomizationContext context) throws IllegalAccessException {
+    private <T> void populateFields(final List<Field> fields, final T result, final RandomizationContext context)
+        throws IllegalAccessException {
         for (final Field field : fields) {
             populateField(field, result, context);
         }
     }
 
-    private <T> void populateField(final Field field, final T result, final RandomizationContext context) throws IllegalAccessException {
+    private <T> void populateField(final Field field, final T result, final RandomizationContext context)
+        throws IllegalAccessException {
         if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }
-        if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
-          return;
+        if (
+            !parameters.isOverrideDefaultInitialization() &&
+            getFieldValue(result, field) != null &&
+            !isPrimitiveFieldWithDefaultValue(result, field)
+        ) {
+            return;
         }
         fieldPopulator.populateField(result, field, context);
     }
@@ -231,5 +242,4 @@ public class EasyRandom extends Random {
         ServiceLoader.load(RandomizerRegistry.class).forEach(registries::add);
         return registries;
     }
-
 }

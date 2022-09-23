@@ -31,12 +31,10 @@ package org.jeasy.random.api;
  */
 @FunctionalInterface
 public interface Randomizer<T> {
-
     /**
      * Generate a random value for the given type.
      *
      * @return a random value for the given type
      */
     T getRandomValue();
-
 }

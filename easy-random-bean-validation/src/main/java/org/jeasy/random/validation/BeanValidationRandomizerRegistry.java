@@ -23,17 +23,16 @@
  */
 package org.jeasy.random.validation;
 
-import org.jeasy.random.annotation.Priority;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerRegistry;
-import org.jeasy.random.util.ReflectionUtils;
-
-import javax.validation.constraints.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import javax.validation.constraints.*;
+import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.annotation.Priority;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.util.ReflectionUtils;
 
 /**
  * A registry of randomizers to support fields annotated with the <a href="http://beanvalidation.org/">JSR 349</a> annotations.
@@ -71,12 +70,10 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(final Field field) {
-
         for (Map.Entry<Class<? extends Annotation>, BeanValidationAnnotationHandler> entry : annotationHandlers.entrySet()) {
             Class<? extends Annotation> annotation = entry.getKey();
             BeanValidationAnnotationHandler annotationHandler = entry.getValue();
-            if (ReflectionUtils
-                    .isAnnotationPresent(field, annotation) && annotationHandler != null) {
+            if (ReflectionUtils.isAnnotationPresent(field, annotation) && annotationHandler != null) {
                 return annotationHandler.getRandomizer(field);
             }
         }

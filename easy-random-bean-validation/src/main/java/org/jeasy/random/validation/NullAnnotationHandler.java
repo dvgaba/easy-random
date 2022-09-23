@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.validation;
 
+import java.lang.reflect.Field;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.misc.NullRandomizer;
-
-import java.lang.reflect.Field;
 
 class NullAnnotationHandler implements BeanValidationAnnotationHandler {
 

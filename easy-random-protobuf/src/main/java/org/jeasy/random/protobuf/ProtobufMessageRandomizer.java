@@ -57,134 +57,132 @@ import org.jeasy.random.randomizers.text.StringRandomizer;
 /** Generate a random Protobuf {@link Message}. */
 public class ProtobufMessageRandomizer implements ContextAwareRandomizer<Message> {
 
-  private final Class<Message> messageClass;
-  private final EnumMap<JavaType, BiFunction<FieldDescriptor, Message.Builder, Object>>
-      fieldGenerators;
-  private final EasyRandom easyRandom;
-  private final EasyRandomParameters parameters;
-  private RandomizerContext context;
+    private final Class<Message> messageClass;
+    private final EnumMap<JavaType, BiFunction<FieldDescriptor, Message.Builder, Object>> fieldGenerators;
+    private final EasyRandom easyRandom;
+    private final EasyRandomParameters parameters;
+    private RandomizerContext context;
 
-  public ProtobufMessageRandomizer(
-      Class<Message> messageClass, EasyRandom easyRandom, EasyRandomParameters parameters) {
-    this.messageClass = messageClass;
-    this.easyRandom = easyRandom;
-    this.parameters = parameters;
+    public ProtobufMessageRandomizer(
+        Class<Message> messageClass,
+        EasyRandom easyRandom,
+        EasyRandomParameters parameters
+    ) {
+        this.messageClass = messageClass;
+        this.easyRandom = easyRandom;
+        this.parameters = parameters;
 
-    this.fieldGenerators = new EnumMap<>(JavaType.class);
-    this.fieldGenerators.put(INT, (field, containingBuilder) -> easyRandom.nextInt());
-    this.fieldGenerators.put(LONG, (field, containingBuilder) -> easyRandom.nextLong());
-    this.fieldGenerators.put(FLOAT, (field, containingBuilder) -> easyRandom.nextFloat());
-    this.fieldGenerators.put(DOUBLE, (field, containingBuilder) -> easyRandom.nextDouble());
-    this.fieldGenerators.put(BOOLEAN, (field, containingBuilder) -> easyRandom.nextBoolean());
-    this.fieldGenerators.put(
-        STRING,
-        (field, containingBuilder) -> new StringRandomizer(easyRandom.nextLong()).getRandomValue());
-    this.fieldGenerators.put(
-        BYTE_STRING,
-        (field, containingBuilder) ->
-            new ByteStringRandomizer(easyRandom.nextLong()).getRandomValue());
-    this.fieldGenerators.put(
-        ENUM, (field, containingBuilder) -> getRandomEnumValue(field.getEnumType()));
-    this.fieldGenerators.put(
-        MESSAGE,
-        (field, containingBuilder) ->
-            easyRandom.nextObject(
-                containingBuilder
-                    .newBuilderForField(field)
-                    .getDefaultInstanceForType()
-                    .getClass()));
-  }
-
-  private static Message.Builder instantiateMessageBuilder(Class<Message> clazz) {
-    try {
-      Method getDefaultInstanceMethod = clazz.getMethod("getDefaultInstance");
-      Message message = (Message) getDefaultInstanceMethod.invoke(null);
-      return message.newBuilderForType();
-    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      throw new IllegalArgumentException(e);
+        this.fieldGenerators = new EnumMap<>(JavaType.class);
+        this.fieldGenerators.put(INT, (field, containingBuilder) -> easyRandom.nextInt());
+        this.fieldGenerators.put(LONG, (field, containingBuilder) -> easyRandom.nextLong());
+        this.fieldGenerators.put(FLOAT, (field, containingBuilder) -> easyRandom.nextFloat());
+        this.fieldGenerators.put(DOUBLE, (field, containingBuilder) -> easyRandom.nextDouble());
+        this.fieldGenerators.put(BOOLEAN, (field, containingBuilder) -> easyRandom.nextBoolean());
+        this.fieldGenerators.put(
+                STRING,
+                (field, containingBuilder) -> new StringRandomizer(easyRandom.nextLong()).getRandomValue()
+            );
+        this.fieldGenerators.put(
+                BYTE_STRING,
+                (field, containingBuilder) -> new ByteStringRandomizer(easyRandom.nextLong()).getRandomValue()
+            );
+        this.fieldGenerators.put(ENUM, (field, containingBuilder) -> getRandomEnumValue(field.getEnumType()));
+        this.fieldGenerators.put(
+                MESSAGE,
+                (field, containingBuilder) ->
+                    easyRandom.nextObject(
+                        containingBuilder.newBuilderForField(field).getDefaultInstanceForType().getClass()
+                    )
+            );
     }
-  }
 
-  @Override
-  public Message getRandomValue() {
-    if (this.parameters.getExclusionPolicy().shouldBeExcluded(messageClass, context)) {
-      return null;
+    private static Message.Builder instantiateMessageBuilder(Class<Message> clazz) {
+        try {
+            Method getDefaultInstanceMethod = clazz.getMethod("getDefaultInstance");
+            Message message = (Message) getDefaultInstanceMethod.invoke(null);
+            return message.newBuilderForType();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
-    Message.Builder builder = instantiateMessageBuilder(messageClass);
-    Descriptor descriptor = builder.getDescriptorForType();
-    List<FieldDescriptor> plainFields =
-        descriptor.getFields().stream()
+
+    @Override
+    public Message getRandomValue() {
+        if (this.parameters.getExclusionPolicy().shouldBeExcluded(messageClass, context)) {
+            return null;
+        }
+        Message.Builder builder = instantiateMessageBuilder(messageClass);
+        Descriptor descriptor = builder.getDescriptorForType();
+        List<FieldDescriptor> plainFields = descriptor
+            .getFields()
+            .stream()
             .filter(field -> field.getContainingOneof() == null)
             .collect(Collectors.toList());
-    for (FieldDescriptor fieldDescriptor : plainFields) {
-      populateField(fieldDescriptor, builder);
+        for (FieldDescriptor fieldDescriptor : plainFields) {
+            populateField(fieldDescriptor, builder);
+        }
+        for (Descriptors.OneofDescriptor oneofDescriptor : descriptor.getOneofs()) {
+            populateOneof(oneofDescriptor, builder);
+        }
+        return builder.build();
     }
-    for (Descriptors.OneofDescriptor oneofDescriptor : descriptor.getOneofs()) {
-      populateOneof(oneofDescriptor, builder);
-    }
-    return builder.build();
-  }
 
-  private void populateField(FieldDescriptor field, Message.Builder containingBuilder) {
-    try {
-      Field javaField = this.messageClass.getDeclaredField(field.getName() + "_");
-      if (this.parameters.getExclusionPolicy().shouldBeExcluded(javaField, context, field)) {
-        return;
-      }
-    } catch (NoSuchFieldException e) {
-
-    }
-    BiFunction<FieldDescriptor, Message.Builder, Object> fieldGenerator;
-    if (field.isMapField()) {
-      fieldGenerator =
-          (fieldDescriptor, parentBuilder) -> {
-            Message.Builder mapEntryBuilder = parentBuilder.newBuilderForField(fieldDescriptor);
-            for (FieldDescriptor subField : fieldDescriptor.getMessageType().getFields()) {
-              populateField(subField, mapEntryBuilder);
+    private void populateField(FieldDescriptor field, Message.Builder containingBuilder) {
+        try {
+            Field javaField = this.messageClass.getDeclaredField(field.getName() + "_");
+            if (this.parameters.getExclusionPolicy().shouldBeExcluded(javaField, context, field)) {
+                return;
             }
-            return mapEntryBuilder.build();
-          };
-    } else {
-      fieldGenerator = this.fieldGenerators.get(field.getJavaType());
+        } catch (NoSuchFieldException e) {}
+        BiFunction<FieldDescriptor, Message.Builder, Object> fieldGenerator;
+        if (field.isMapField()) {
+            fieldGenerator =
+                (fieldDescriptor, parentBuilder) -> {
+                    Message.Builder mapEntryBuilder = parentBuilder.newBuilderForField(fieldDescriptor);
+                    for (FieldDescriptor subField : fieldDescriptor.getMessageType().getFields()) {
+                        populateField(subField, mapEntryBuilder);
+                    }
+                    return mapEntryBuilder.build();
+                };
+        } else {
+            fieldGenerator = this.fieldGenerators.get(field.getJavaType());
+        }
+
+        if (field.isRepeated()) {
+            IntegerRangeRandomizer collectionSizeRandomizer = new IntegerRangeRandomizer(
+                parameters.getCollectionSizeRange().getMin(),
+                parameters.getCollectionSizeRange().getMax(),
+                easyRandom.nextLong()
+            );
+            for (int i = 0; i < collectionSizeRandomizer.getRandomValue(); i++) {
+                Object generated = fieldGenerator.apply(field, containingBuilder);
+                if (generated != null) containingBuilder.addRepeatedField(field, generated);
+            }
+        } else {
+            Object generated = fieldGenerator.apply(field, containingBuilder);
+            if (generated != null) containingBuilder.setField(field, generated);
+        }
     }
 
-
-
-    if (field.isRepeated()) {
-      IntegerRangeRandomizer collectionSizeRandomizer =
-          new IntegerRangeRandomizer(
-              parameters.getCollectionSizeRange().getMin(),
-              parameters.getCollectionSizeRange().getMax(),
-              easyRandom.nextLong());
-      for (int i = 0; i < collectionSizeRandomizer.getRandomValue(); i++) {
-        Object generated = fieldGenerator.apply(field, containingBuilder);
-        if (generated != null) containingBuilder.addRepeatedField(field, generated);
-      }
-    } else {
-      Object generated = fieldGenerator.apply(field, containingBuilder);
-      if (generated != null) containingBuilder.setField(field, generated);
+    private void populateOneof(Descriptors.OneofDescriptor oneofDescriptor, Message.Builder builder) {
+        int fieldCount = oneofDescriptor.getFieldCount();
+        int oneofCase = easyRandom.nextInt(fieldCount);
+        FieldDescriptor selectedCase = oneofDescriptor.getField(oneofCase);
+        populateField(selectedCase, builder);
     }
-  }
 
-  private void populateOneof(Descriptors.OneofDescriptor oneofDescriptor, Message.Builder builder) {
-    int fieldCount = oneofDescriptor.getFieldCount();
-    int oneofCase = easyRandom.nextInt(fieldCount);
-    FieldDescriptor selectedCase = oneofDescriptor.getField(oneofCase);
-    populateField(selectedCase, builder);
-  }
+    private EnumValueDescriptor getRandomEnumValue(EnumDescriptor enumDescriptor) {
+        List<EnumValueDescriptor> values = enumDescriptor.getValues();
+        int choice = easyRandom.nextInt(values.size());
+        return values.get(choice);
+    }
 
-  private EnumValueDescriptor getRandomEnumValue(EnumDescriptor enumDescriptor) {
-    List<EnumValueDescriptor> values = enumDescriptor.getValues();
-    int choice = easyRandom.nextInt(values.size());
-    return values.get(choice);
-  }
+    @Override
+    public void setRandomizerContext(RandomizerContext context) {
+        this.context = context;
+    }
 
-  @Override
-  public void setRandomizerContext(RandomizerContext context) {
-    this.context = context;
-  }
-
-  public String toString() {
-    return this.getClass().getSimpleName();
-  }
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

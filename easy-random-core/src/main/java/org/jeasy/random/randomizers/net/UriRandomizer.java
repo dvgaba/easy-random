@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.net;
 
-import org.jeasy.random.randomizers.AbstractRandomizer;
-
 import java.net.URI;
 import java.net.URISyntaxException;
+import org.jeasy.random.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link URI}.
@@ -40,8 +39,7 @@ public class UriRandomizer extends AbstractRandomizer<URI> {
     /**
      * Create a new {@link UriRandomizer}.
      */
-    public UriRandomizer() {
-    }
+    public UriRandomizer() {}
 
     /**
      * Create a new {@link UriRandomizer}.

@@ -27,9 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.beans.BeanWithDefaultFieldValues;
+import org.junit.jupiter.api.Test;
 
 class OverrideDefaultInitializationParameterTests {
 

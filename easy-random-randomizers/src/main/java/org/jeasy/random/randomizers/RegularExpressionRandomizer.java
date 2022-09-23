@@ -62,7 +62,8 @@ public class RegularExpressionRandomizer extends FakerBasedRandomizer<String> {
         String regularExpressionWithoutBoundaryMatchers = regularExpression;
         int lastIndex = regularExpressionWithoutBoundaryMatchers.length() - 1;
         if (regularExpressionWithoutBoundaryMatchers.indexOf('^') == 0) {
-            regularExpressionWithoutBoundaryMatchers = regularExpressionWithoutBoundaryMatchers.substring(1, lastIndex + 1);
+            regularExpressionWithoutBoundaryMatchers =
+                regularExpressionWithoutBoundaryMatchers.substring(1, lastIndex + 1);
             lastIndex = regularExpressionWithoutBoundaryMatchers.length() - 1;
         }
         if (regularExpressionWithoutBoundaryMatchers.lastIndexOf('$') == lastIndex) {

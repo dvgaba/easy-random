@@ -74,7 +74,6 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
 
     @Override
     public LocalDateTime getRandomValue() {
-
         long minSeconds = min.toEpochSecond(ZoneOffset.UTC);
         long maxSeconds = max.toEpochSecond(ZoneOffset.UTC);
         long seconds = (long) nextDouble(minSeconds, maxSeconds);
@@ -85,5 +84,4 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
 
         return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
     }
-
 }

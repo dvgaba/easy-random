@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.Year;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +66,8 @@ class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
 
     @Test
     void whenSpecifiedMinYearIsAfterMaxYear_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new YearRangeRandomizer(maxYear, minYear)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new YearRangeRandomizer(maxYear, minYear))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

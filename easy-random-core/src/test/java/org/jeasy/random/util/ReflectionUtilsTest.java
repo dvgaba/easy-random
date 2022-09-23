@@ -23,8 +23,12 @@
  */
 package org.jeasy.random.util;
 
-import org.jeasy.random.beans.*;
-import org.junit.jupiter.api.Test;
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -36,13 +40,8 @@ import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.SynchronousQueue;
-
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import org.jeasy.random.beans.*;
+import org.junit.jupiter.api.Test;
 
 class ReflectionUtilsTest {
 
@@ -139,32 +138,67 @@ class ReflectionUtilsTest {
     void testIsPrimitiveFieldWithDefaultValue() throws Exception {
         Class<PrimitiveFieldsWithDefaultValuesBean> defaultValueClass = PrimitiveFieldsWithDefaultValuesBean.class;
         PrimitiveFieldsWithDefaultValuesBean defaultValueBean = new PrimitiveFieldsWithDefaultValuesBean();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("bool"))).isTrue();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("b"))).isTrue();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("s"))).isTrue();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("i"))).isTrue();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("l"))).isTrue();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("f"))).isTrue();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("d"))).isTrue();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("c"))).isTrue();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("bool"))
+        )
+            .isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("b")))
+            .isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("s")))
+            .isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("i")))
+            .isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("l")))
+            .isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("f")))
+            .isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("d")))
+            .isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("c")))
+            .isTrue();
 
-        Class<PrimitiveFieldsWithNonDefaultValuesBean> nonDefaultValueClass = PrimitiveFieldsWithNonDefaultValuesBean.class;
+        Class<PrimitiveFieldsWithNonDefaultValuesBean> nonDefaultValueClass =
+            PrimitiveFieldsWithNonDefaultValuesBean.class;
         PrimitiveFieldsWithNonDefaultValuesBean nonDefaultValueBean = new PrimitiveFieldsWithNonDefaultValuesBean();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("bool"))).isFalse();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("b"))).isFalse();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("s"))).isFalse();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("i"))).isFalse();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("l"))).isFalse();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("f"))).isFalse();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("d"))).isFalse();
-        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("c"))).isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("bool"))
+        )
+            .isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("b"))
+        )
+            .isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("s"))
+        )
+            .isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("i"))
+        )
+            .isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("l"))
+        )
+            .isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("f"))
+        )
+            .isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("d"))
+        )
+            .isFalse();
+        assertThat(
+            ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("c"))
+        )
+            .isFalse();
     }
 
     @Test
     void testGetReadMethod() throws NoSuchFieldException {
-        assertThat(ReflectionUtils.getReadMethod(PrimitiveFieldsWithDefaultValuesBean.class.getDeclaredField("b"))).isEmpty();
-        final Optional<Method> readMethod =
-                ReflectionUtils.getReadMethod(Foo.class.getDeclaredField("bar"));
+        assertThat(ReflectionUtils.getReadMethod(PrimitiveFieldsWithDefaultValuesBean.class.getDeclaredField("b")))
+            .isEmpty();
+        final Optional<Method> readMethod = ReflectionUtils.getReadMethod(Foo.class.getDeclaredField("bar"));
         assertThat(readMethod).isNotNull();
         assertThat(readMethod.get().getName()).isEqualTo("getBar");
     }
@@ -202,7 +236,10 @@ class ReflectionUtilsTest {
 
     @Test
     void createEmptyCollectionForArrayBlockingQueue() {
-        Collection<?> collection = ReflectionUtils.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
+        Collection<?> collection = ReflectionUtils.createEmptyCollectionForType(
+            ArrayBlockingQueue.class,
+            INITIAL_CAPACITY
+        );
 
         assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
         assertThat(((ArrayBlockingQueue<?>) collection).remainingCapacity()).isEqualTo(INITIAL_CAPACITY);
@@ -210,12 +247,14 @@ class ReflectionUtilsTest {
 
     @Test
     void synchronousQueueShouldBeRejected() {
-        assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
+        assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY))
+            .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
     void delayQueueShouldBeRejected() {
-        assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
+        assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY))
+            .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -255,6 +294,7 @@ class ReflectionUtilsTest {
 
     @SuppressWarnings("unused")
     private class PrimitiveFieldsWithDefaultValuesBean {
+
         public boolean bool;
         public byte b;
         public short s;
@@ -267,6 +307,7 @@ class ReflectionUtilsTest {
 
     @SuppressWarnings("unused")
     private class PrimitiveFieldsWithNonDefaultValuesBean {
+
         public boolean bool = true;
         public byte b = (byte) 1;
         public short s = (short) 1;
@@ -278,8 +319,10 @@ class ReflectionUtilsTest {
     }
 
     public static class AnnotatedBean {
+
         @NotNull
         private String fieldAnnotation;
+
         private String methodAnnotation;
         private String noAnnotation;
 
@@ -309,13 +352,11 @@ class ReflectionUtilsTest {
         }
     }
 
-    private class Dummy { }
+    private class Dummy {}
 
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
     @Retention(RUNTIME)
     @Documented
     public @interface NotNull {
-
     }
-
 }

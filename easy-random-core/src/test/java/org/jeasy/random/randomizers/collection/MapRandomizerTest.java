@@ -27,18 +27,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
+import org.jeasy.random.api.Randomizer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import org.jeasy.random.api.Randomizer;
 
 @ExtendWith(MockitoExtension.class)
 class MapRandomizerTest {
 
     @Mock
     private Randomizer<Integer> keyRandomizer;
+
     @Mock
     private Randomizer<String> valueRandomizer;
 
@@ -60,16 +60,19 @@ class MapRandomizerTest {
 
     @Test
     void specifiedSizeShouldBePositive() {
-        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, valueRandomizer, -3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, valueRandomizer, -3))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void nullKeyRandomizer() {
-        assertThatThrownBy(() -> new MapRandomizer(null, valueRandomizer, 3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer(null, valueRandomizer, 3))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void nullValueRandomizer() {
-        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, null, 3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, null, 3))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }

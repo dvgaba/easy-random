@@ -24,7 +24,6 @@
 package org.jeasy.random.randomizers;
 
 import java.util.Locale;
-
 import org.jeasy.random.api.Randomizer;
 
 class AbstractRandomizerTest<T> {
@@ -33,5 +32,4 @@ class AbstractRandomizerTest<T> {
     static final Locale LOCALE = Locale.FRANCE;
 
     Randomizer<T> randomizer;
-
 }

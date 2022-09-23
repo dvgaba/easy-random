@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.sql.Time;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * Generate a random {@link Time}.

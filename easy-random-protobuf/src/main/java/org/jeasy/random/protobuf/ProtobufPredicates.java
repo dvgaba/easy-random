@@ -17,47 +17,49 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class ProtobufPredicates {
-  private static EnumMap protoToJavaTypeMap = new EnumMap(FieldDescriptor.Type.class);
 
-  static {
-    protoToJavaTypeMap.put(Type.INT32, Int32Value.class);
-    protoToJavaTypeMap.put(Type.INT64, Int64Value.class);
-    protoToJavaTypeMap.put(Type.BOOL, BoolValue.class);
-    protoToJavaTypeMap.put(Type.BYTES, BytesValue.class);
-    protoToJavaTypeMap.put(Type.DOUBLE, DoubleValue.class);
-    protoToJavaTypeMap.put(Type.FIXED32, Int32Value.class);
-    protoToJavaTypeMap.put(Type.FIXED64, Int64Value.class);
-    protoToJavaTypeMap.put(Type.SFIXED32, Int32Value.class);
-    protoToJavaTypeMap.put(Type.SFIXED64, Int64Value.class);
-    protoToJavaTypeMap.put(Type.UINT32, Int64Value.class);
-    protoToJavaTypeMap.put(Type.UINT64, Int32Value.class);
-    protoToJavaTypeMap.put(Type.FLOAT, FloatValue.class);
-    protoToJavaTypeMap.put(Type.STRING, StringValue.class);
-  }
+    private static EnumMap protoToJavaTypeMap = new EnumMap(FieldDescriptor.Type.class);
 
-  public static BiPredicate<Field, Object> named(final String name) {
-    System.out.println(name);
-    final Pattern pattern = Pattern.compile(name + "_");
-    return (field, fieldDescriptor) -> {
-      return pattern.matcher(field.getName()).matches();
-    };
-  }
+    static {
+        protoToJavaTypeMap.put(Type.INT32, Int32Value.class);
+        protoToJavaTypeMap.put(Type.INT64, Int64Value.class);
+        protoToJavaTypeMap.put(Type.BOOL, BoolValue.class);
+        protoToJavaTypeMap.put(Type.BYTES, BytesValue.class);
+        protoToJavaTypeMap.put(Type.DOUBLE, DoubleValue.class);
+        protoToJavaTypeMap.put(Type.FIXED32, Int32Value.class);
+        protoToJavaTypeMap.put(Type.FIXED64, Int64Value.class);
+        protoToJavaTypeMap.put(Type.SFIXED32, Int32Value.class);
+        protoToJavaTypeMap.put(Type.SFIXED64, Int64Value.class);
+        protoToJavaTypeMap.put(Type.UINT32, Int64Value.class);
+        protoToJavaTypeMap.put(Type.UINT64, Int32Value.class);
+        protoToJavaTypeMap.put(Type.FLOAT, FloatValue.class);
+        protoToJavaTypeMap.put(Type.STRING, StringValue.class);
+    }
 
-  public static BiPredicate<Field, Object> ofProtobufType(Class<?> type) {
-    return (field, fieldDescriptor) -> {
-      FieldDescriptor descriptor = (FieldDescriptor) fieldDescriptor;
-      if (descriptor.getType() == Type.ENUM) {
-        return descriptor.getEnumType().getFullName().equals(type.getSimpleName());
-      }
-      return Optional.ofNullable(protoToJavaTypeMap.get(descriptor.getType()))
-          .filter(t -> t.equals(type))
-          .isPresent();
-    };
-  }
+    public static BiPredicate<Field, Object> named(final String name) {
+        System.out.println(name);
+        final Pattern pattern = Pattern.compile(name + "_");
+        return (field, fieldDescriptor) -> {
+            return pattern.matcher(field.getName()).matches();
+        };
+    }
 
-  public static Predicate<Class<?>> ofType(Class<?> type) {
-    return (clz) -> {
-      return clz.equals(type);
-    };
-  }
+    public static BiPredicate<Field, Object> ofProtobufType(Class<?> type) {
+        return (field, fieldDescriptor) -> {
+            FieldDescriptor descriptor = (FieldDescriptor) fieldDescriptor;
+            if (descriptor.getType() == Type.ENUM) {
+                return descriptor.getEnumType().getFullName().equals(type.getSimpleName());
+            }
+            return Optional
+                .ofNullable(protoToJavaTypeMap.get(descriptor.getType()))
+                .filter(t -> t.equals(type))
+                .isPresent();
+        };
+    }
+
+    public static Predicate<Class<?>> ofType(Class<?> type) {
+        return clz -> {
+            return clz.equals(type);
+        };
+    }
 }

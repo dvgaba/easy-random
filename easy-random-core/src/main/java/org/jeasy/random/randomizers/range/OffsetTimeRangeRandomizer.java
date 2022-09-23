@@ -26,7 +26,6 @@ package org.jeasy.random.randomizers.range;
 import java.time.LocalTime;
 import java.time.OffsetTime;
 import java.time.temporal.ChronoField;
-
 import org.jeasy.random.EasyRandomParameters;
 
 /**
@@ -77,7 +76,9 @@ public class OffsetTimeRangeRandomizer extends AbstractRangeRandomizer<OffsetTim
         long minSecondOfDay = min.getLong(ChronoField.SECOND_OF_DAY);
         long maxSecondOfDay = max.getLong(ChronoField.SECOND_OF_DAY);
         long randomSecondOfDay = (long) nextDouble(minSecondOfDay, maxSecondOfDay);
-        return OffsetTime.of(LocalTime.ofSecondOfDay(randomSecondOfDay), EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().getOffset());
+        return OffsetTime.of(
+            LocalTime.ofSecondOfDay(randomSecondOfDay),
+            EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().getOffset()
+        );
     }
-
 }

@@ -26,7 +26,7 @@ package org.jeasy.random.beans;
 public abstract class MammalImpl implements Mammal {
 
     private String name;
-    
+
     @Override
     public String getName() {
         return name;

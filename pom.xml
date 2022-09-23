@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>9</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.github.dvgaba</groupId>
   <artifactId>easy-random</artifactId>
+  <version>6.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <build>
     <extensions>
@@ -39,6 +49,34 @@
           <version>${maven-release-plugin.version}</version>
         </plugin>
         <plugin>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <configuration>
+            <formats>
+              <format>
+                <includes>
+                  <include>src/*/java/**/*.java</include>
+                </includes>
+                <prettier>
+                  <config>
+                    <parser>java</parser>
+                    <printWidth>120</printWidth>
+                    <tabWidth>4</tabWidth>
+                  </config>
+                  <devDependencies>
+                    <prettier>${prettier.version}</prettier>
+                    <prettier-plugin-java>${prettier-java.version}</prettier-plugin-java>
+                  </devDependencies>
+                </prettier>
+              </format>
+            </formats>
+            <java>
+              <removeUnusedImports/>
+            </java>
+          </configuration>
+          <groupId>com.diffplug.spotless</groupId>
+          <version>${spotless-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
           <artifactId>protobuf-maven-plugin</artifactId>
           <configuration>
             <protocArtifact>
@@ -66,6 +104,7 @@
     <system>Github Actions</system>
     <url>https://github.com/j-easy/easy-random/actions</url>
   </ciManagement>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -137,11 +176,12 @@
     </dependencies>
   </dependencyManagement>
   <description>Easy Random is a library to generate random Java beans</description>
+
   <developers>
     <developer>
-      <email>mahmoud.benhassine@icloud.com</email>
       <id>benas</id>
       <name>Mahmoud Ben Hassine</name>
+      <email>mahmoud.benhassine@icloud.com</email>
       <roles>
         <role>Lead developer</role>
       </roles>
@@ -171,7 +211,7 @@
       <url>https://maven.pkg.github.com/dvgaba/easy-random</url>
     </repository>
   </distributionManagement>
-  <groupId>io.github.dvgaba</groupId>
+
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/j-easy/easy-random/issues</url>
@@ -184,24 +224,13 @@
     </license>
   </licenses>
 
-  <modelVersion>4.0.0</modelVersion>
-
   <modules>
     <module>easy-random-core</module>
     <module>easy-random-bean-validation</module>
     <module>easy-random-randomizers</module>
     <module>easy-random-protobuf</module>
   </modules>
-
   <name>Easy Random</name>
-
-  <packaging>pom</packaging>
-
-  <parent>
-    <artifactId>oss-parent</artifactId>
-    <groupId>org.sonatype.oss</groupId>
-    <version>9</version>
-  </parent>
 
   <profiles>
     <profile>
@@ -271,9 +300,7 @@
         </snapshotRepository>
       </distributionManagement>
       <id>repo1</id>
-
     </profile>
-
     <profile>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -281,7 +308,6 @@
       <build>
       </build>
       <id>default</id>
-
     </profile>
   </profiles>
 
@@ -296,9 +322,8 @@
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-    <maven-license-plugin.version>4.1</maven-license-plugin.version>
     <maven-license-plugin.version>3.0</maven-license-plugin.version>
-
+    <maven-license-plugin.version>4.1</maven-license-plugin.version>
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -306,13 +331,13 @@
     <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
     <objenesis.version>3.3</objenesis.version>
     <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
-    <prettier-java.version>1.0.2</prettier-java.version>
-    <prettier.version>2.2.1</prettier.version>
+    <prettier-java.version>1.6.2</prettier-java.version>
+    <prettier.version>2.7.1</prettier.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     <protobuf.version>3.21.6</protobuf.version>
     <snakeyaml.version>1.30</snakeyaml.version>
-    <spotless-maven-plugin.version>2.11.1</spotless-maven-plugin.version>
+    <spotless-maven-plugin.version>2.26.0</spotless-maven-plugin.version>
     <validation-api.version>2.0.1.Final</validation-api.version>
     <velocity-engine-core.version>2.3</velocity-engine-core.version>
   </properties>
@@ -323,7 +348,5 @@
     <tag>HEAD</tag>
     <url>git@github.com:j-easy/easy-random.git</url>
   </scm>
-
   <url>https://github.com/j-easy/easy-random</url>
-  <version>6.1.0-SNAPSHOT</version>
 </project>

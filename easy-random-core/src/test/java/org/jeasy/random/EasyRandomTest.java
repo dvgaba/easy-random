@@ -23,6 +23,17 @@
  */
 package org.jeasy.random;
 
+import static java.sql.Timestamp.valueOf;
+import static java.time.LocalDateTime.of;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.jeasy.random.FieldPredicates.*;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Modifier;
+import java.util.*;
+import java.util.stream.Stream;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.*;
 import org.jeasy.random.util.ReflectionUtils;
@@ -32,18 +43,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.lang.reflect.Modifier;
-import java.util.*;
-import java.util.stream.Stream;
-
-import static java.sql.Timestamp.valueOf;
-import static java.time.LocalDateTime.of;
-import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.jeasy.random.FieldPredicates.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EasyRandomTest {
@@ -71,16 +70,19 @@ class EasyRandomTest {
         EasyRandom easyRandom = new EasyRandom();
         Throwable thrown = catchThrowable(() -> easyRandom.nextObject(Salary.class));
 
-        assertThat(thrown).isInstanceOf(ObjectCreationException.class)
-                .hasMessageContaining("Unable to create a random instance of type class org.jeasy.random.beans.Salary");
+        assertThat(thrown)
+            .isInstanceOf(ObjectCreationException.class)
+            .hasMessageContaining("Unable to create a random instance of type class org.jeasy.random.beans.Salary");
 
         Throwable cause = thrown.getCause();
-        assertThat(cause).isInstanceOf(ObjectCreationException.class)
-                .hasMessageContaining("Unable to invoke setter for field amount of class org.jeasy.random.beans.Salary");
+        assertThat(cause)
+            .isInstanceOf(ObjectCreationException.class)
+            .hasMessageContaining("Unable to invoke setter for field amount of class org.jeasy.random.beans.Salary");
 
         Throwable rootCause = cause.getCause();
-        assertThat(rootCause).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Amount must be positive");
+        assertThat(rootCause)
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Amount must be positive");
     }
 
     @Test
@@ -119,7 +121,7 @@ class EasyRandomTest {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer);
+            .randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer);
         easyRandom = new EasyRandom(parameters);
 
         Person person = easyRandom.nextObject(Person.class);
@@ -134,7 +136,7 @@ class EasyRandomTest {
 
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(hasModifiers(Modifier.TRANSIENT).and(ofType(String.class)), randomizer);
+            .randomize(hasModifiers(Modifier.TRANSIENT).and(ofType(String.class)), randomizer);
         easyRandom = new EasyRandom(parameters);
 
         // When
@@ -151,7 +153,7 @@ class EasyRandomTest {
         when(randomizer.getRandomValue()).thenReturn(FOO);
         int modifiers = Modifier.TRANSIENT | Modifier.PROTECTED;
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(hasModifiers(modifiers).and(ofType(String.class)), randomizer);
+            .randomize(hasModifiers(modifiers).and(ofType(String.class)), randomizer);
         easyRandom = new EasyRandom(parameters);
 
         // When
@@ -166,8 +168,7 @@ class EasyRandomTest {
     void customRandomzierForTypesShouldBeUsedToPopulateObjects() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
-        EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(String.class, randomizer);
+        EasyRandomParameters parameters = new EasyRandomParameters().randomize(String.class, randomizer);
         easyRandom = new EasyRandom(parameters);
 
         String string = easyRandom.nextObject(String.class);
@@ -179,8 +180,7 @@ class EasyRandomTest {
     void customRandomzierForTypesShouldBeUsedToPopulateFields() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
-        EasyRandomParameters parameters = new EasyRandomParameters()
-                .randomize(String.class, randomizer);
+        EasyRandomParameters parameters = new EasyRandomParameters().randomize(String.class, randomizer);
         easyRandom = new EasyRandom(parameters);
 
         Human human = easyRandom.nextObject(Human.class);
@@ -262,18 +262,19 @@ class EasyRandomTest {
             fail("Should skip fields of type Class");
         }
     }
-    
+
     @Test
     void differentCollectionsShouldBeRandomizedWithDifferentSizes() {
         // given
         class Foo {
+
             List<String> names;
             List<String> addresses;
         }
-        
+
         // when
         Foo foo = new EasyRandom().nextObject(Foo.class);
-        
+
         // then
         assertThat(foo.names.size()).isNotEqualTo(foo.addresses.size());
     }
@@ -282,6 +283,7 @@ class EasyRandomTest {
     void differentArraysShouldBeRandomizedWithDifferentSizes() {
         // given
         class Foo {
+
             String[] names;
             String[] addresses;
         }
@@ -297,13 +299,14 @@ class EasyRandomTest {
     void testGenericTypeRandomization() {
         // given
         class Base<T> {
+
             T t;
         }
         class Concrete extends Base<String> {}
-        
+
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.t).isInstanceOf(String.class);
         assertThat(concrete.t).isNotEmpty();
@@ -313,14 +316,15 @@ class EasyRandomTest {
     void testMultipleGenericTypeRandomization() {
         // given
         class Base<T, S> {
+
             T t;
             S s;
         }
         class Concrete extends Base<String, Long> {}
-        
+
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.t).isInstanceOf(String.class);
         assertThat(concrete.s).isInstanceOf(Long.class);
@@ -332,6 +336,7 @@ class EasyRandomTest {
     void genericBaseClass() {
         // given
         class Concrete extends GenericBaseClass<Integer> {
+
             private final String y;
 
             public Concrete(int x, String y) {
@@ -346,7 +351,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX().getClass()).isEqualTo(Integer.class);
         assertThat(concrete.getY().getClass()).isEqualTo(String.class);
@@ -356,6 +361,7 @@ class EasyRandomTest {
     void genericBaseClassWithBean() {
         // given
         class Concrete extends GenericBaseClass<Street> {
+
             private final String y;
 
             public Concrete(Street x, String y) {
@@ -370,7 +376,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX().getClass()).isEqualTo(Street.class);
         assertThat(concrete.getY().getClass()).isEqualTo(String.class);
@@ -380,6 +386,7 @@ class EasyRandomTest {
     void boundedBaseClass() {
         // given
         class Concrete extends BoundedBaseClass<BoundedBaseClass.IntWrapper> {
+
             private final String y;
 
             public Concrete(BoundedBaseClass.IntWrapper x, String y) {
@@ -394,7 +401,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX().getClass()).isEqualTo(BoundedBaseClass.IntWrapper.class);
         assertThat(concrete.getY().getClass()).isEqualTo(String.class);
@@ -404,27 +411,34 @@ class EasyRandomTest {
     void testMultipleGenericLevels() {
         // given
         abstract class BaseClass<T> {
+
             protected T x;
+
             BaseClass(T x) {
                 this.x = x;
             }
+
             public T getX() {
                 return x;
             }
         }
 
         abstract class GenericBaseClass<T, P> extends BaseClass<T> {
+
             protected P y;
+
             GenericBaseClass(T x, P y) {
                 super(x);
                 this.y = y;
             }
+
             public P getY() {
                 return y;
             }
         }
 
         class Concrete extends GenericBaseClass<String, Long> {
+
             Concrete(String x, Long y) {
                 super(x, y);
             }
@@ -432,7 +446,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX()).isInstanceOf(String.class);
         assertThat(concrete.getY()).isInstanceOf(Long.class);
@@ -442,36 +456,41 @@ class EasyRandomTest {
     void testComplexGenericTypeRandomization() { // not supported
         // given
         class Base<T> {
+
             T t;
         }
         class Concrete extends Base<List<String>> {}
 
-        assertThatThrownBy(
-                // when
-                () -> easyRandom.nextObject(Concrete.class))
-                // then
-                .isInstanceOf(ObjectCreationException.class)
-                .hasMessage("Unable to create a random instance of type class org.jeasy.random.EasyRandomTest$7Concrete");
+        assertThatThrownBy(() -> easyRandom.nextObject(Concrete.class) // when
+            )
+            // then
+            .isInstanceOf(ObjectCreationException.class)
+            .hasMessage("Unable to create a random instance of type class org.jeasy.random.EasyRandomTest$7Concrete");
     }
 
     @Test
     void testRootGenericType() { // intermediate type in the hierarchy is not generic
         // given
         abstract class BaseClass<T> {
+
             protected T x;
+
             BaseClass(T x) {
                 this.x = x;
             }
+
             public T getX() {
                 return x;
             }
         }
         abstract class GenericBaseClass extends BaseClass<String> {
+
             GenericBaseClass(String x) {
                 super(x);
             }
         }
         class Concrete extends GenericBaseClass {
+
             Concrete(String x) {
                 super(x);
             }
@@ -508,7 +527,7 @@ class EasyRandomTest {
 
     @Disabled("Dummy test to see possible reasons of randomization failures")
     @Test
-    void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
+    void tryToRandomizeAllPublicConcreteTypesInTheClasspath() {
         int success = 0;
         int failure = 0;
         List<Class<?>> publicConcreteTypes = ReflectionUtils.getPublicConcreteSubTypesOf(Object.class);
@@ -528,5 +547,4 @@ class EasyRandomTest {
         System.out.println("Success: " + success);
         System.out.println("Failure: " + failure);
     }
-
 }

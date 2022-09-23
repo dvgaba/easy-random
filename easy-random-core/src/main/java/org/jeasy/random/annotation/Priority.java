@@ -23,12 +23,11 @@
  */
 package org.jeasy.random.annotation;
 
-import org.jeasy.random.api.RandomizerRegistry;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.jeasy.random.api.RandomizerRegistry;
 
 /**
  * Define the priority of a {@link org.jeasy.random.api.Randomizer} or a {@link RandomizerRegistry}.
@@ -38,7 +37,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Priority {
-
     /**
      * The priority of the object.
      *

@@ -31,18 +31,17 @@ public class Human implements Mammal {
 
     protected String name;
 
-	public Human() {
-	}
+    public Human() {}
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }

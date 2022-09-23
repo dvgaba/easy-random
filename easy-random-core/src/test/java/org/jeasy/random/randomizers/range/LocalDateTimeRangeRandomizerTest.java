@@ -23,13 +23,12 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDateTime> {
 
@@ -54,7 +53,6 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
 
     @Test
     void generatedLocalDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
-
         // Given
         randomizer = new LocalDateTimeRangeRandomizer(minDateTime, maxDateTime, SEED);
         LocalDateTime expected = LocalDateTime.parse("+446348406-04-09T16:32:16.990898895");
@@ -68,7 +66,8 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
 
     @Test
     void whenSpecifiedMinDateTimeIsAfterMaxDateTime_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new LocalDateTimeRangeRandomizer(maxDateTime, minDateTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new LocalDateTimeRangeRandomizer(maxDateTime, minDateTime))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -109,5 +108,4 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
         // Then
         assertThat(randomValue).isBetween(minDateTime, maxDateTime);
     }
-
 }

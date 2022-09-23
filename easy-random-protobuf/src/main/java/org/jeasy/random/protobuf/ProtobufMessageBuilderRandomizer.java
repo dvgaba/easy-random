@@ -33,36 +33,39 @@ import org.jeasy.random.api.RandomizerContext;
 /** Generate a random Protobuf {@link Message.Builder}. */
 public class ProtobufMessageBuilderRandomizer implements ContextAwareRandomizer<Builder> {
 
-  private final ProtobufMessageRandomizer protobufMessageRandomizer;
-  private RandomizerContext context;
+    private final ProtobufMessageRandomizer protobufMessageRandomizer;
+    private RandomizerContext context;
 
-  public ProtobufMessageBuilderRandomizer(
-      Class<Message.Builder> messageBuilderClass,
-      EasyRandom easyRandom,
-      EasyRandomParameters parameters) {
-    this.protobufMessageRandomizer =
-        new ProtobufMessageRandomizer(
-            retrieveMessageClassFromBuilderClass(messageBuilderClass), easyRandom, parameters);
-  }
+    public ProtobufMessageBuilderRandomizer(
+        Class<Message.Builder> messageBuilderClass,
+        EasyRandom easyRandom,
+        EasyRandomParameters parameters
+    ) {
+        this.protobufMessageRandomizer =
+            new ProtobufMessageRandomizer(
+                retrieveMessageClassFromBuilderClass(messageBuilderClass),
+                easyRandom,
+                parameters
+            );
+    }
 
-  @SuppressWarnings("unchecked")
-  private static Class<Message> retrieveMessageClassFromBuilderClass(
-      Class<Message.Builder> messageBuilderClass) {
-    return (Class<Message>) messageBuilderClass.getEnclosingClass();
-  }
+    @SuppressWarnings("unchecked")
+    private static Class<Message> retrieveMessageClassFromBuilderClass(Class<Message.Builder> messageBuilderClass) {
+        return (Class<Message>) messageBuilderClass.getEnclosingClass();
+    }
 
-  @Override
-  public Message.Builder getRandomValue() {
-    return protobufMessageRandomizer.getRandomValue().toBuilder();
-  }
+    @Override
+    public Message.Builder getRandomValue() {
+        return protobufMessageRandomizer.getRandomValue().toBuilder();
+    }
 
-  public String toString() {
-    return this.getClass().getSimpleName();
-  }
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 
-  @Override
-  public void setRandomizerContext(RandomizerContext context) {
-    this.context = context;
-    protobufMessageRandomizer.setRandomizerContext(context);
-  }
+    @Override
+    public void setRandomizerContext(RandomizerContext context) {
+        this.context = context;
+        protobufMessageRandomizer.setRandomizerContext(context);
+    }
 }

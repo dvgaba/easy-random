@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigInteger;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -72,7 +71,7 @@ class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<BigInteg
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         BigIntegerRangeRandomizer bigIntegerRangeRandomizer = new BigIntegerRangeRandomizer(min, max, SEED);
-        
+
         // when
         BigInteger bigInteger = bigIntegerRangeRandomizer.getRandomValue();
 

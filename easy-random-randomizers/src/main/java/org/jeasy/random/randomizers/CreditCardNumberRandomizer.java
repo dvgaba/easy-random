@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random credit card numbers.
@@ -37,8 +36,7 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link CreditCardNumberRandomizer}.
      */
-    public CreditCardNumberRandomizer() {
-    }
+    public CreditCardNumberRandomizer() {}
 
     /**
      * Create a new {@link CreditCardNumberRandomizer}.

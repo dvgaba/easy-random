@@ -23,20 +23,18 @@
  */
 package org.jeasy.random;
 
+import static org.jeasy.random.util.ReflectionUtils.*;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
-
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
-
-import static org.jeasy.random.util.ReflectionUtils.*;
 
 /**
  * Component that encapsulates the logic of generating a random value for a given field.
@@ -64,9 +62,14 @@ class FieldPopulator {
 
     private final RandomizerProvider randomizerProvider;
 
-    FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
-                   final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator,
-                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator) {
+    FieldPopulator(
+        final EasyRandom easyRandom,
+        final RandomizerProvider randomizerProvider,
+        final ArrayPopulator arrayPopulator,
+        final CollectionPopulator collectionPopulator,
+        final MapPopulator mapPopulator,
+        OptionalPopulator optionalPopulator
+    ) {
         this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
         this.arrayPopulator = arrayPopulator;
@@ -75,7 +78,8 @@ class FieldPopulator {
         this.optionalPopulator = optionalPopulator;
     }
 
-    void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
+    void populateField(final Object target, final Field field, final RandomizationContext context)
+        throws IllegalAccessException {
         Randomizer<?> randomizer = getRandomizer(field, context, target.getClass());
         if (randomizer instanceof SkipRandomizer) {
             return;
@@ -84,7 +88,7 @@ class FieldPopulator {
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }
-        if(!context.hasExceededRandomizationDepth()) {
+        if (!context.hasExceededRandomizationDepth()) {
             Object value;
             if (randomizer != null) {
                 value = randomizer.getRandomValue();
@@ -92,8 +96,12 @@ class FieldPopulator {
                 try {
                     value = generateRandomValue(field, context);
                 } catch (ObjectCreationException e) {
-                    String exceptionMessage = String.format("Unable to create type: %s for field: %s of class: %s",
-                          field.getType().getName(), field.getName(), target.getClass().getName());
+                    String exceptionMessage = String.format(
+                        "Unable to create type: %s for field: %s of class: %s",
+                        field.getType().getName(),
+                        field.getName(),
+                        target.getClass().getName()
+                    );
                     // FIXME catch ObjectCreationException and throw ObjectCreationException ?
                     throw new ObjectCreationException(exceptionMessage, e);
                 }
@@ -104,9 +112,12 @@ class FieldPopulator {
                 try {
                     setProperty(target, field, value);
                 } catch (InvocationTargetException e) {
-                    String exceptionMessage = String.format("Unable to invoke setter for field %s of class %s",
-                            field.getName(), target.getClass().getName());
-                    throw new ObjectCreationException(exceptionMessage,  e.getCause());
+                    String exceptionMessage = String.format(
+                        "Unable to invoke setter for field %s of class %s",
+                        field.getName(),
+                        target.getClass().getName()
+                    );
+                    throw new ObjectCreationException(exceptionMessage, e.getCause());
                 }
             }
         }
@@ -142,12 +153,24 @@ class FieldPopulator {
         } else if (isOptionalType(fieldType)) {
             return optionalPopulator.getRandomOptional(field, context);
         } else {
-            if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but cannot inherit*/) {
-                List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType);
+            if (
+                context.getParameters().isScanClasspathForConcreteTypes() &&
+                isAbstract(fieldType) &&
+                !isEnumType(fieldType)
+                /*enums can be abstract, but cannot inherit*/
+            ) {
+                List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(
+                    getPublicConcreteSubTypesOf(fieldType),
+                    fieldGenericType
+                );
                 if (parameterizedTypes.isEmpty()) {
-                    throw new ObjectCreationException("Unable to find a matching concrete subtype of type: " + fieldType);
+                    throw new ObjectCreationException(
+                        "Unable to find a matching concrete subtype of type: " + fieldType
+                    );
                 } else {
-                    Class<?> randomConcreteSubType = parameterizedTypes.get(easyRandom.nextInt(parameterizedTypes.size()));
+                    Class<?> randomConcreteSubType = parameterizedTypes.get(
+                        easyRandom.nextInt(parameterizedTypes.size())
+                    );
                     return easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
@@ -183,9 +206,13 @@ class FieldPopulator {
             typeName = actualTypeArgument.getTypeName();
             aClass = Class.forName(typeName);
         } catch (ClassNotFoundException e) {
-            String message = String.format("Unable to load class %s of generic field %s in class %s. " +
-                            "Please refer to the documentation as this generic type may not be supported for randomization.",
-                    typeName, field.getName(), field.getDeclaringClass().getName());
+            String message = String.format(
+                "Unable to load class %s of generic field %s in class %s. " +
+                "Please refer to the documentation as this generic type may not be supported for randomization.",
+                typeName,
+                field.getName(),
+                field.getDeclaringClass().getName()
+            );
             throw new ObjectCreationException(message, e);
         }
         return aClass;

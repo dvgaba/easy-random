@@ -27,19 +27,19 @@ import static java.lang.String.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import org.jeasy.random.api.Randomizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.Randomizer;
-
 @ExtendWith(MockitoExtension.class)
 class StringDelegatingRandomizerTest {
 
     @Mock
     private Randomizer<Object> delegate;
+
     @Mock
     private Object object;
 

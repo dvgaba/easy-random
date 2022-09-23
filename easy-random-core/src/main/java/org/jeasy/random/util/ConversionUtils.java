@@ -33,7 +33,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.stream.Stream;
-
 import org.jeasy.random.annotation.RandomizerArgument;
 
 /**
@@ -45,58 +44,57 @@ import org.jeasy.random.annotation.RandomizerArgument;
  */
 public class ConversionUtils {
 
-	private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-	private ConversionUtils() {
-	}
+    private ConversionUtils() {}
 
-	public static Object[] convertArguments(final RandomizerArgument[] declaredArguments) {
-		int numberOfArguments = declaredArguments.length;
-		Object[] arguments = new Object[numberOfArguments];
-		for (int i = 0; i < numberOfArguments; i++) {
-			Class<?> type = declaredArguments[i].type();
-			String value = declaredArguments[i].value();
-			// issue 299: if argument type is array, split values before conversion
-			if (type.isArray()) {
-				Object[] values = Stream.of(value.split(",")).map(String::trim).toArray();
-				arguments[i] = convertArray(values, type);
-			} else {
-				arguments[i] = convertValue(value, type);
-			}
-		}
-		return arguments;
-	}
+    public static Object[] convertArguments(final RandomizerArgument[] declaredArguments) {
+        int numberOfArguments = declaredArguments.length;
+        Object[] arguments = new Object[numberOfArguments];
+        for (int i = 0; i < numberOfArguments; i++) {
+            Class<?> type = declaredArguments[i].type();
+            String value = declaredArguments[i].value();
+            // issue 299: if argument type is array, split values before conversion
+            if (type.isArray()) {
+                Object[] values = Stream.of(value.split(",")).map(String::trim).toArray();
+                arguments[i] = convertArray(values, type);
+            } else {
+                arguments[i] = convertValue(value, type);
+            }
+        }
+        return arguments;
+    }
 
-	private static Object convertArray(Object array, Class<?> targetType) {
-		Object[] values = (Object[]) array;
-		Object convertedValuesArray = Array.newInstance(targetType.getComponentType(), values.length);
-		for (int i = 0; i < values.length; i++) {
-			Array.set(convertedValuesArray, i, convertValue((String) values[i], targetType.getComponentType()));
-		}
-		return convertedValuesArray;
-	}
+    private static Object convertArray(Object array, Class<?> targetType) {
+        Object[] values = (Object[]) array;
+        Object convertedValuesArray = Array.newInstance(targetType.getComponentType(), values.length);
+        for (int i = 0; i < values.length; i++) {
+            Array.set(convertedValuesArray, i, convertValue((String) values[i], targetType.getComponentType()));
+        }
+        return convertedValuesArray;
+    }
 
-	private static Object convertValue(String value, Class<?> targetType) {
-		if(Boolean.class.equals(targetType) || Boolean.TYPE.equals(targetType)) return Boolean.parseBoolean(value);
-		if(Byte.class.equals(targetType) || Byte.TYPE.equals(targetType)) return Byte.parseByte(value);
-		if(Short.class.equals(targetType) || Short.TYPE.equals(targetType)) return Short.parseShort(value);
-		if(Integer.class.equals(targetType) || Integer.TYPE.equals(targetType)) return Integer.parseInt(value);
-		if(Long.class.equals(targetType) || Long.TYPE.equals(targetType)) return Long.parseLong(value);
-		if(Float.class.equals(targetType) || Float.TYPE.equals(targetType)) return Float.parseFloat(value);
-		if(Double.class.equals(targetType) || Double.TYPE.equals(targetType)) return Double.parseDouble(value);
-		if(BigInteger.class.equals(targetType)) return new BigInteger(value);
-		if(BigDecimal.class.equals(targetType)) return new BigDecimal(value);
-		if(Date.class.equals(targetType)) return Date.from(parseDate(value).toInstant(ZoneOffset.UTC));
-		if(java.sql.Date.class.equals(targetType)) return java.sql.Date.valueOf(value);
-		if(java.sql.Time.class.equals(targetType)) return java.sql.Time.valueOf(value);
-		if(java.sql.Timestamp.class.equals(targetType)) return java.sql.Timestamp.valueOf(value);
-		if(LocalDate.class.equals(targetType)) return LocalDate.parse(value);
-		if(LocalTime.class.equals(targetType)) return LocalTime.parse(value);
-		if(LocalDateTime.class.equals(targetType)) return LocalDateTime.parse(value);
-		return value;
-	}
-	
-	private static LocalDateTime parseDate(String value) {
-		return LocalDateTime.parse(value, DateTimeFormatter.ofPattern(DATE_PATTERN));
-	}
+    private static Object convertValue(String value, Class<?> targetType) {
+        if (Boolean.class.equals(targetType) || Boolean.TYPE.equals(targetType)) return Boolean.parseBoolean(value);
+        if (Byte.class.equals(targetType) || Byte.TYPE.equals(targetType)) return Byte.parseByte(value);
+        if (Short.class.equals(targetType) || Short.TYPE.equals(targetType)) return Short.parseShort(value);
+        if (Integer.class.equals(targetType) || Integer.TYPE.equals(targetType)) return Integer.parseInt(value);
+        if (Long.class.equals(targetType) || Long.TYPE.equals(targetType)) return Long.parseLong(value);
+        if (Float.class.equals(targetType) || Float.TYPE.equals(targetType)) return Float.parseFloat(value);
+        if (Double.class.equals(targetType) || Double.TYPE.equals(targetType)) return Double.parseDouble(value);
+        if (BigInteger.class.equals(targetType)) return new BigInteger(value);
+        if (BigDecimal.class.equals(targetType)) return new BigDecimal(value);
+        if (Date.class.equals(targetType)) return Date.from(parseDate(value).toInstant(ZoneOffset.UTC));
+        if (java.sql.Date.class.equals(targetType)) return java.sql.Date.valueOf(value);
+        if (java.sql.Time.class.equals(targetType)) return java.sql.Time.valueOf(value);
+        if (java.sql.Timestamp.class.equals(targetType)) return java.sql.Timestamp.valueOf(value);
+        if (LocalDate.class.equals(targetType)) return LocalDate.parse(value);
+        if (LocalTime.class.equals(targetType)) return LocalTime.parse(value);
+        if (LocalDateTime.class.equals(targetType)) return LocalDateTime.parse(value);
+        return value;
+    }
+
+    private static LocalDateTime parseDate(String value) {
+        return LocalDateTime.parse(value, DateTimeFormatter.ofPattern(DATE_PATTERN));
+    }
 }

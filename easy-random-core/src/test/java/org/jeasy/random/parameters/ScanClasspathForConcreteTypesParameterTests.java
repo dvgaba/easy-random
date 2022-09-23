@@ -28,12 +28,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.Date;
-
 import org.assertj.core.api.Assertions;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.beans.Ape;
 import org.jeasy.random.beans.Bar;
@@ -45,6 +42,7 @@ import org.jeasy.random.beans.Human;
 import org.jeasy.random.beans.Mamals;
 import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.SocialPerson;
+import org.junit.jupiter.api.Test;
 
 class ScanClasspathForConcreteTypesParameterTests {
 
@@ -124,8 +122,7 @@ class ScanClasspathForConcreteTypesParameterTests {
 
     @Test
     void testScanClasspathForConcreteTypes_whenConcreteTypeIsAnInnerClass() {
-        EasyRandomParameters parameters =
-                new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         Foobar foobar = easyRandom.nextObject(Foobar.class);
@@ -146,5 +143,4 @@ class ScanClasspathForConcreteTypesParameterTests {
             return toto;
         }
     }
-
 }

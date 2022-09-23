@@ -23,16 +23,15 @@
  */
 package org.jeasy.random.randomizers.registry;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.annotation.Priority;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.util.ReflectionUtils;
-
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A {@link RandomizerRegistry} for fields annotated with {@link org.jeasy.random.annotation.Randomizer}.
@@ -60,7 +59,9 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
         if (field.isAnnotationPresent(org.jeasy.random.annotation.Randomizer.class)) {
             Randomizer<?> randomizer = customFieldRandomizersRegistry.get(field);
             if (randomizer == null) {
-                org.jeasy.random.annotation.Randomizer annotation = field.getAnnotation(org.jeasy.random.annotation.Randomizer.class);
+                org.jeasy.random.annotation.Randomizer annotation = field.getAnnotation(
+                    org.jeasy.random.annotation.Randomizer.class
+                );
                 Class<?> type = annotation.value();
                 RandomizerArgument[] arguments = annotation.args();
                 randomizer = ReflectionUtils.newInstance(type, arguments);

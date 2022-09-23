@@ -29,7 +29,6 @@ package org.jeasy.random.annotation;
  * @author Dovid Kopel (https://github.com/dovidkopel)
  */
 public @interface RandomizerArgument {
-
     /**
      * The value of the argument.
      * @return value of the argument

@@ -23,13 +23,12 @@
  */
 package org.jeasy.random;
 
+import java.lang.reflect.Field;
+import java.util.*;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerContext;
 import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.api.RandomizerRegistry;
-
-import java.lang.reflect.Field;
-import java.util.*;
 
 /**
  * Central class to get registered randomizers by Field or by Type.
@@ -59,11 +58,13 @@ class RegistriesRandomizerProvider implements RandomizerProvider {
     }
 
     private Randomizer<?> getRandomizer(final Provider provider) {
-        return registries.stream()
-                .map(provider::getRandomizer)
-                .filter(Objects::nonNull)
-                .sorted(priorityComparator)
-                .findFirst().orElse(null);
+        return registries
+            .stream()
+            .map(provider::getRandomizer)
+            .filter(Objects::nonNull)
+            .sorted(priorityComparator)
+            .findFirst()
+            .orElse(null);
     }
 
     @FunctionalInterface

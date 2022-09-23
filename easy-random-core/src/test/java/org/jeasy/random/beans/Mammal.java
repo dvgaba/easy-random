@@ -24,7 +24,6 @@
 package org.jeasy.random.beans;
 
 public interface Mammal {
-
     String getName();
 
     void setName(String name);

@@ -23,10 +23,9 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * Generate a random {@link BigDecimal} in the given range.
@@ -80,7 +79,12 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      */
-    public BigDecimalRangeRandomizer(final Double min, final Double max, final Integer scale, final RoundingMode roundingMode) {
+    public BigDecimalRangeRandomizer(
+        final Double min,
+        final Double max,
+        final Integer scale,
+        final RoundingMode roundingMode
+    ) {
         delegate = new DoubleRangeRandomizer(min, max);
         this.scale = scale;
         this.roundingMode = roundingMode;
@@ -108,7 +112,13 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      */
-    public BigDecimalRangeRandomizer(final Double min, final Double max, final long seed, final Integer scale, final RoundingMode roundingMode) {
+    public BigDecimalRangeRandomizer(
+        final Double min,
+        final Double max,
+        final long seed,
+        final Integer scale,
+        final RoundingMode roundingMode
+    ) {
         delegate = new DoubleRangeRandomizer(min, max, seed);
         this.scale = scale;
         this.roundingMode = roundingMode;

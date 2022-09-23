@@ -24,7 +24,6 @@
 package org.jeasy.random.validation;
 
 import java.util.List;
-
 import javax.validation.constraints.Size;
 
 public class EmbeddedBean {

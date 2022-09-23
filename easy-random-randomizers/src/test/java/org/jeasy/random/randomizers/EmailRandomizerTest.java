@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
 import org.junit.jupiter.api.Test;
 
 class EmailRandomizerTest {
@@ -58,5 +57,4 @@ class EmailRandomizerTest {
         // then
         assertThat(expectedDomains).contains(actualDomain);
     }
-
 }

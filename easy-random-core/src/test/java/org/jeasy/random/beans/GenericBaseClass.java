@@ -24,6 +24,7 @@
 package org.jeasy.random.beans;
 
 public abstract class GenericBaseClass<T> {
+
     private final T x;
 
     public GenericBaseClass(T x) {

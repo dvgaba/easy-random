@@ -28,17 +28,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
-
+import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerContext;
+import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.beans.Foo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerRegistry;
-import org.jeasy.random.beans.Foo;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
@@ -46,8 +44,10 @@ class RegistriesRandomizerProviderTest {
 
     @Mock
     private RandomizerRegistry randomizerRegistry;
+
     @Mock
     private Randomizer randomizer;
+
     @Mock
     private RandomizerContext context;
 

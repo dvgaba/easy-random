@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.randomizers;
 
-import org.jeasy.random.api.Randomizer;
-
 import java.util.Locale;
+import org.jeasy.random.api.Randomizer;
 
 /**
  * A {@link Randomizer} that generates random latitudes.
@@ -37,8 +36,7 @@ public class LatitudeRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link LatitudeRandomizer}.
      */
-    public LatitudeRandomizer() {
-    }
+    public LatitudeRandomizer() {}
 
     /**
      * Create a new {@link LatitudeRandomizer}.

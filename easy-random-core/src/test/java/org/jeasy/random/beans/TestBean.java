@@ -24,6 +24,7 @@
 package org.jeasy.random.beans;
 
 public class TestBean {
+
     private Exception exception; // contains a field of type Class via StackTraceElement
     private Class<?> clazz;
 

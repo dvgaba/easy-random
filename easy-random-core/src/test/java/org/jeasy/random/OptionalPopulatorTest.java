@@ -23,9 +23,10 @@
  */
 package org.jeasy.random;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.lang.reflect.Field;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,54 +34,55 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @ExtendWith(MockitoExtension.class)
 public class OptionalPopulatorTest {
 
-	@Mock
-	private EasyRandom easyRandom;
-	@Mock
-	private RandomizationContext context;
+    @Mock
+    private EasyRandom easyRandom;
 
-	private OptionalPopulator optionalPopulator;
+    @Mock
+    private RandomizationContext context;
 
-	@BeforeEach
-	void setUp() {
-		optionalPopulator = new OptionalPopulator(easyRandom);
-	}
+    private OptionalPopulator optionalPopulator;
 
-	@Test
-	void testOptionalRandomization() throws Exception {
-		// given
-		Field field = Foo.class.getDeclaredField("name");
-		Mockito.when(easyRandom.doPopulateBean(String.class, context)).thenReturn("foobar");
+    @BeforeEach
+    void setUp() {
+        optionalPopulator = new OptionalPopulator(easyRandom);
+    }
 
-		//when
-		Optional<?> randomOptional = optionalPopulator.getRandomOptional(field, context);
+    @Test
+    void testOptionalRandomization() throws Exception {
+        // given
+        Field field = Foo.class.getDeclaredField("name");
+        Mockito.when(easyRandom.doPopulateBean(String.class, context)).thenReturn("foobar");
 
-		// then
-		assertThat(randomOptional).isPresent();
-		assertThat(randomOptional.get()).isEqualTo("foobar");
-	}
+        //when
+        Optional<?> randomOptional = optionalPopulator.getRandomOptional(field, context);
 
-	@Test
-	void rawOptionalShouldBeGeneratedAsEmpty() throws Exception {
-		// given
-		Field field = Bar.class.getDeclaredField("name");
+        // then
+        assertThat(randomOptional).isPresent();
+        assertThat(randomOptional.get()).isEqualTo("foobar");
+    }
 
-		//when
-		Optional<?> randomOptional = optionalPopulator.getRandomOptional(field, context);
+    @Test
+    void rawOptionalShouldBeGeneratedAsEmpty() throws Exception {
+        // given
+        Field field = Bar.class.getDeclaredField("name");
 
-		// then
-		assertThat(randomOptional).isEmpty();
-	}
+        //when
+        Optional<?> randomOptional = optionalPopulator.getRandomOptional(field, context);
 
-	static class Foo {
-		Optional<String> name;
-	}
-	
-	static class Bar {
-		Optional name;
-	}
+        // then
+        assertThat(randomOptional).isEmpty();
+    }
+
+    static class Foo {
+
+        Optional<String> name;
+    }
+
+    static class Bar {
+
+        Optional name;
+    }
 }

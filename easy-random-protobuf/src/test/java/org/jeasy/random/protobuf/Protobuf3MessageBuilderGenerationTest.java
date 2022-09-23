@@ -26,10 +26,10 @@ package org.jeasy.random.protobuf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.protobuf.StringValue;
-import org.jeasy.random.protobuf.testing.proto3.Proto3Enum;
-import org.jeasy.random.protobuf.testing.proto3.Proto3Message;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.protobuf.testing.proto3.Proto3Enum;
+import org.jeasy.random.protobuf.testing.proto3.Proto3Message;
 import org.junit.jupiter.api.Test;
 
 class Protobuf3MessageBuilderGenerationTest {
@@ -101,12 +101,10 @@ class Protobuf3MessageBuilderGenerationTest {
 
         assertThat(protoBuilderInstance.hasEmbeddedMessage()).isTrue();
         assertThat(protoBuilderInstance.getEmbeddedMessage())
-            .satisfies(
-                embeddedMessage -> {
-                    assertThat(embeddedMessage.getStringField()).isEqualTo("LRHCsQ");
-                    assertThat(embeddedMessage.getEnumField()).isEqualTo(Proto3Enum.UNKNOWN);
-                }
-            );
+            .satisfies(embeddedMessage -> {
+                assertThat(embeddedMessage.getStringField()).isEqualTo("LRHCsQ");
+                assertThat(embeddedMessage.getEnumField()).isEqualTo(Proto3Enum.UNKNOWN);
+            });
         assertThat(protoBuilderInstance.getOneofFieldCase()).isEqualTo(Proto3Message.OneofFieldCase.FIRSTCHOICE);
         assertThat(protoBuilderInstance.getMapFieldMap())
             .hasSize(4)
@@ -146,12 +144,10 @@ class Protobuf3MessageBuilderGenerationTest {
 
         assertThat(firstInstance.hasEmbeddedMessage()).isTrue();
         assertThat(firstInstance.getEmbeddedMessage())
-            .satisfies(
-                embeddedMessage -> {
-                    assertThat(embeddedMessage.getStringField())
-                        .isNotEqualTo(secondInstance.getEmbeddedMessage().getStringField());
-                }
-            );
+            .satisfies(embeddedMessage -> {
+                assertThat(embeddedMessage.getStringField())
+                    .isNotEqualTo(secondInstance.getEmbeddedMessage().getStringField());
+            });
         assertThat(firstInstance.getMapFieldMap()).isNotEqualTo(secondInstance.getMapFieldMap());
     }
 }

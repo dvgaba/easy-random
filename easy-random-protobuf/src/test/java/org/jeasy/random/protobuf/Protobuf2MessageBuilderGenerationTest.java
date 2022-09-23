@@ -26,11 +26,11 @@ package org.jeasy.random.protobuf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.protobuf.StringValue;
-import org.jeasy.random.protobuf.testing.proto2.EmbeddedProto2Message;
-import org.jeasy.random.protobuf.testing.proto2.Proto2Message;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.protobuf.testing.proto2.EmbeddedProto2Message;
 import org.jeasy.random.protobuf.testing.proto2.Proto2Enum;
+import org.jeasy.random.protobuf.testing.proto2.Proto2Message;
 import org.jeasy.random.protobuf.testing.proto2.Proto2Message.Builder;
 import org.junit.jupiter.api.Test;
 
@@ -103,12 +103,10 @@ class Protobuf2MessageBuilderGenerationTest {
 
         assertThat(protoBuilderInstance.hasEmbeddedMessage()).isTrue();
         assertThat(protoBuilderInstance.getEmbeddedMessage())
-            .satisfies(
-                embeddedMessage -> {
-                    assertThat(embeddedMessage.getStringField()).isEqualTo("LRHCsQ");
-                    assertThat(embeddedMessage.getEnumField()).isEqualTo(Proto2Enum.THIRD_VALUE);
-                }
-            );
+            .satisfies(embeddedMessage -> {
+                assertThat(embeddedMessage.getStringField()).isEqualTo("LRHCsQ");
+                assertThat(embeddedMessage.getEnumField()).isEqualTo(Proto2Enum.THIRD_VALUE);
+            });
         assertThat(protoBuilderInstance.getOneofFieldCase().getNumber())
             .isNotEqualTo(Proto2Message.OneofFieldCase.ONEOFFIELD_NOT_SET);
         assertThat(protoBuilderInstance.getMapFieldMap())

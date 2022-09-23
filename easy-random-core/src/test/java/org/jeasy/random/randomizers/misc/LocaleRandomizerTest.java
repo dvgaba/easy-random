@@ -27,10 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.util.Locale;
-
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.api.Test;
 
 class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
 
@@ -52,7 +50,7 @@ class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
             assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CA"));
         } else if (javaVersion.compareTo(new BigDecimal("14")) >= 0) {
             assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CA"));
-        }  else if (javaVersion.compareTo(new BigDecimal("13")) >= 0) {
+        } else if (javaVersion.compareTo(new BigDecimal("13")) >= 0) {
             assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("zh", "CN"));
         } else if (javaVersion.compareTo(new BigDecimal("11")) >= 0) {
             assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CK"));

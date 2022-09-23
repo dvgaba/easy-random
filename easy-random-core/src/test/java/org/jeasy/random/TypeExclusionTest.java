@@ -23,12 +23,12 @@
  */
 package org.jeasy.random;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.jeasy.random.TypePredicates.*;
+
 import org.jeasy.random.beans.Address;
 import org.jeasy.random.beans.Website;
 import org.junit.jupiter.api.Test;
-
-import static org.jeasy.random.TypePredicates.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TypeExclusionTest {
 
@@ -36,11 +36,7 @@ class TypeExclusionTest {
     void testTypeExclusion() {
         // given
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .excludeType(
-                        inPackage("org.jeasy.random.beans")
-                                .or(isInterface())
-                                .or(isAbstract())
-                );
+            .excludeType(inPackage("org.jeasy.random.beans").or(isInterface()).or(isAbstract()));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
@@ -57,57 +53,57 @@ class TypeExclusionTest {
     }
 
     static class Foo {
+
         private String name;
         private Address address;
         private Website website;
         private Bar bar;
         private Baz baz;
 
-		public Foo() {
-		}
+        public Foo() {}
 
-		public String getName() {
-			return this.name;
-		}
+        public String getName() {
+            return this.name;
+        }
 
-		public Address getAddress() {
-			return this.address;
-		}
+        public Address getAddress() {
+            return this.address;
+        }
 
-		public Website getWebsite() {
-			return this.website;
-		}
+        public Website getWebsite() {
+            return this.website;
+        }
 
-		public Bar getBar() {
-			return this.bar;
-		}
+        public Bar getBar() {
+            return this.bar;
+        }
 
-		public Baz getBaz() {
-			return this.baz;
-		}
+        public Baz getBaz() {
+            return this.baz;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-		public void setAddress(Address address) {
-			this.address = address;
-		}
+        public void setAddress(Address address) {
+            this.address = address;
+        }
 
-		public void setWebsite(Website website) {
-			this.website = website;
-		}
+        public void setWebsite(Website website) {
+            this.website = website;
+        }
 
-		public void setBar(Bar bar) {
-			this.bar = bar;
-		}
+        public void setBar(Bar bar) {
+            this.bar = bar;
+        }
 
-		public void setBaz(Baz baz) {
-			this.baz = baz;
-		}
-	}
+        public void setBaz(Baz baz) {
+            this.baz = baz;
+        }
+    }
 
-    interface Bar { }
+    interface Bar {}
 
-    abstract class Baz { }
+    abstract class Baz {}
 }

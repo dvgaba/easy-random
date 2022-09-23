@@ -103,9 +103,7 @@ public class CustomList implements List<String> {
     }
 
     @Override
-    public void clear() {
-
-    }
+    public void clear() {}
 
     @Override
     public String get(int index) {
@@ -118,9 +116,7 @@ public class CustomList implements List<String> {
     }
 
     @Override
-    public void add(int index, String element) {
-
-    }
+    public void add(int index, String element) {}
 
     @Override
     public String remove(int index) {

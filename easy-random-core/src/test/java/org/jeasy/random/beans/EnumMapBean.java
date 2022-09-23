@@ -27,26 +27,25 @@ import java.util.EnumMap;
 
 public class EnumMapBean {
 
-    private EnumMap<Gender,String> typedEnumMap;
+    private EnumMap<Gender, String> typedEnumMap;
 
     private EnumMap untypedEnumMap;
 
-	public EnumMapBean() {
-	}
+    public EnumMapBean() {}
 
-	public EnumMap<Gender, String> getTypedEnumMap() {
-		return this.typedEnumMap;
-	}
+    public EnumMap<Gender, String> getTypedEnumMap() {
+        return this.typedEnumMap;
+    }
 
-	public EnumMap getUntypedEnumMap() {
-		return this.untypedEnumMap;
-	}
+    public EnumMap getUntypedEnumMap() {
+        return this.untypedEnumMap;
+    }
 
-	public void setTypedEnumMap(EnumMap<Gender, String> typedEnumMap) {
-		this.typedEnumMap = typedEnumMap;
-	}
+    public void setTypedEnumMap(EnumMap<Gender, String> typedEnumMap) {
+        this.typedEnumMap = typedEnumMap;
+    }
 
-	public void setUntypedEnumMap(EnumMap untypedEnumMap) {
-		this.untypedEnumMap = untypedEnumMap;
-	}
+    public void setUntypedEnumMap(EnumMap untypedEnumMap) {
+        this.untypedEnumMap = untypedEnumMap;
+    }
 }
