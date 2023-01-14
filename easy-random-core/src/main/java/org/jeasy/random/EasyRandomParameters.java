@@ -127,6 +127,7 @@ public class EasyRandomParameters {
         typeExclusionPredicates = new HashSet<>();
         exclusionPolicy = new DefaultExclusionPolicy();
         objectFactory = new ObjenesisObjectFactory();
+
     }
 
     public Range<Integer> getCollectionSizeRange() {
@@ -255,7 +256,6 @@ public class EasyRandomParameters {
     }
 
     public void setRandomizerProvider(RandomizerProvider randomizerProvider) {
-        Objects.requireNonNull(objectFactory, "Randomizer provider must not be null");
         this.randomizerProvider = randomizerProvider;
     }
 
