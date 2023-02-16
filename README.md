@@ -22,7 +22,7 @@
 Active
 
 ## Latest news
-* 10/29/2922 6.1.2 Patch release to bump protobuf version to vulnerability
+* 10/29/2022 6.1.2 Patch release to bump protobuf version to vulnerability
 * 9/23/2022 6.1.1 Added support to generate random protobuf data, this is based on [murdos/easy-random-protobuf](https://github.com/murdos/easy-random-protobuf)
 * 8/10/2022 Added a fork with JDK 11 support [easy-random-jdk11](https://github.com/dvgaba/easy-random-jdk11) package is available in maven centeral. 
 * 8/3/2022: Added support to JDK 16 and Java Record and minor bug fixes
