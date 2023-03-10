@@ -127,7 +127,6 @@ public class EasyRandomParameters {
         typeExclusionPredicates = new HashSet<>();
         exclusionPolicy = new DefaultExclusionPolicy();
         objectFactory = new ObjenesisObjectFactory();
-
     }
 
     public Range<Integer> getCollectionSizeRange() {

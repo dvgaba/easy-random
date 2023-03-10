@@ -23,8 +23,14 @@
  */
 package org.jeasy.random;
 
+import static org.jeasy.random.util.ReflectionUtils.isArrayType;
+import static org.jeasy.random.util.ReflectionUtils.isCollectionType;
+import static org.jeasy.random.util.ReflectionUtils.isMapType;
+import static org.jeasy.random.util.ReflectionUtils.isOptionalType;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.RecordComponent;
+import java.lang.reflect.Type;
 import org.jeasy.random.api.RandomizerContext;
 
 public class RecordFactory extends ObjenesisObjectFactory {
@@ -36,15 +42,33 @@ public class RecordFactory extends ObjenesisObjectFactory {
         if (easyRandom == null) {
             easyRandom = new EasyRandom(context.getParameters());
         }
-        return createRandomRecord(type);
+        return createRandomRecord(type, context);
     }
 
-    private <T> T createRandomRecord(Class<T> recordType) {
+    private <T> T createRandomRecord(Class<T> recordType, RandomizerContext context) {
         // generate random values for record components
         RecordComponent[] recordComponents = recordType.getRecordComponents();
         Object[] randomValues = new Object[recordComponents.length];
+
         for (int i = 0; i < recordComponents.length; i++) {
-            randomValues[i] = easyRandom.nextObject(recordComponents[i].getType());
+            Class<?> type = recordComponents[i].getType();
+            Type genericType = recordComponents[i].getGenericType();
+            if (isArrayType(type)) {
+                randomValues[i] = new ArrayPopulator(easyRandom).getRandomArray(type, (RandomizationContext) context);
+            } else if (isMapType(type)) {
+                randomValues[i] =
+                    new MapPopulator(easyRandom, context.getParameters().getObjectFactory())
+                        .getRandomMap(genericType, type, (RandomizationContext) context);
+            } else if (isOptionalType(type)) {
+                randomValues[i] =
+                    new OptionalPopulator(easyRandom).getRandomOptional(genericType, (RandomizationContext) context);
+            } else if (isCollectionType(type)) {
+                randomValues[i] =
+                    new CollectionPopulator(easyRandom)
+                        .getRandomCollection(genericType, type, (RandomizationContext) context);
+            } else {
+                randomValues[i] = easyRandom.nextObject(type);
+            }
         }
         // create a random instance with random values
         try {

@@ -24,18 +24,5 @@
 package org.jeasy.random.beans;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-public record TestRecord(
-    int id,
-    String name,
-    String section,
-    String className,
-    int age,
-    List<String> stringList,
-    Map<String, String> stringMap,
-    Optional<String> optionalS,
-
-    TestNestedRecord testNestedRecord
-) {}
+public record TestNestedRecord(int id, List<String> stringList) {}

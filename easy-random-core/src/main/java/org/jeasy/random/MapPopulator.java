@@ -55,9 +55,13 @@ class MapPopulator {
 
     @SuppressWarnings("unchecked")
     Map<?, ?> getRandomMap(final Field field, final RandomizationContext context) {
-        int randomSize = getRandomMapSize(context.getParameters());
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
+        return getRandomMap(fieldGenericType, fieldType, context);
+    }
+
+    Map<Object, Object> getRandomMap(Type fieldGenericType, Class<?> fieldType, RandomizationContext context) {
+        int randomSize = getRandomMapSize(context.getParameters());
         Map<Object, Object> map;
 
         if (isInterface(fieldType)) {
