@@ -46,6 +46,10 @@ class OptionalPopulator {
 
     Optional<?> getRandomOptional(final Field field, final RandomizationContext context) {
         Type fieldGenericType = field.getGenericType();
+        return getRandomOptional(fieldGenericType, context);
+    }
+
+    Optional<?> getRandomOptional(Type fieldGenericType, RandomizationContext context) {
         if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type genericType = parameterizedType.getActualTypeArguments()[0];

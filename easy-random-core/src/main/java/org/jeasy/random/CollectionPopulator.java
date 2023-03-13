@@ -46,9 +46,13 @@ class CollectionPopulator {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Collection<?> getRandomCollection(final Field field, final RandomizationContext context) {
-        int randomSize = getRandomCollectionSize(context.getParameters());
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
+        return getRandomCollection(fieldGenericType, fieldType, context);
+    }
+
+    Collection getRandomCollection(Type fieldGenericType, Class<?> fieldType, RandomizationContext context) {
+        int randomSize = getRandomCollectionSize(context.getParameters());
         Collection collection;
 
         if (isInterface(fieldType)) {

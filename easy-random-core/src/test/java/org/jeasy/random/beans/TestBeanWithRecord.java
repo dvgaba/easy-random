@@ -34,4 +34,12 @@ public class TestBeanWithRecord {
     public void setTestRecord(TestRecord testRecord) {
         this.testRecord = testRecord;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TestBeanWithRecord{");
+        sb.append("testRecord=").append(testRecord);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -257,9 +257,15 @@ class EasyRandomTest {
         try {
             TestBeanWithRecord testBean = easyRandom.nextObject(TestBeanWithRecord.class);
             assertThat(testBean.getTestRecord()).isNotNull();
+            assertThat(testBean.getTestRecord().stringList()).isNotNull().isNotEmpty();
+            assertThat(testBean.getTestRecord().stringMap()).isNotNull().isNotEmpty();
+            assertThat(testBean.getTestRecord().optionalS()).isNotNull().isNotEmpty();
             assertThat(testBean.getTestRecord().id()).isNotNull();
+            assertThat(testBean.getTestRecord().testNestedRecord()).isNotNull();
+            assertThat(testBean.getTestRecord().testNestedRecord().id()).isNotNull();
+            assertThat(testBean.getTestRecord().testNestedRecord().stringList()).isNotNull().isNotEmpty();
         } catch (Exception e) {
-            fail("Should skip fields of type Class");
+            fail("Should skip fields of type Class", e);
         }
     }
 
