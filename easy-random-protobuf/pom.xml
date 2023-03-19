@@ -99,11 +99,6 @@
   <name>Easy Random ProtoBuf support</name>
 
   <properties>
-    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
-    <protobuf.version>3.19.4</protobuf.version>
   </properties>
 
   <scm>
