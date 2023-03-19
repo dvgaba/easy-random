@@ -22,6 +22,7 @@
 Active
 
 ## Latest news
+* 3/19/2023 6.1.5 Patch release to bump protobuf-java and snakeyaml and fix bug preventing custom randomizers on Record Types. Thanks [carborgar](https://github.com/carborgar)
 * 3/12/2023 6.1.3 Patch release to fix bug preventing Collections field population
 * 10/29/2022 6.1.2 Patch release to bump protobuf version to vulnerability
 * 9/23/2022 6.1.1 Added support to generate random protobuf data, this is based on [murdos/easy-random-protobuf](https://github.com/murdos/easy-random-protobuf)
