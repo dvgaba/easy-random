@@ -32,7 +32,8 @@ import static org.jeasy.random.FieldPredicates.*;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Stream;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.*;
@@ -48,9 +49,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class EasyRandomTest {
 
     private static final String FOO = "foo";
+    private static final TestNestedRecord TEST_NESTED_RECORD = new TestNestedRecord(1, List.of("one", "two"));
 
     @Mock
     private Randomizer<String> randomizer;
+
+    @Mock
+    private Randomizer<TestNestedRecord> nestedRecordRandomizer;
 
     private EasyRandom easyRandom;
 
@@ -264,6 +269,22 @@ class EasyRandomTest {
             assertThat(testBean.getTestRecord().testNestedRecord()).isNotNull();
             assertThat(testBean.getTestRecord().testNestedRecord().id()).isNotNull();
             assertThat(testBean.getTestRecord().testNestedRecord().stringList()).isNotNull().isNotEmpty();
+        } catch (Exception e) {
+            fail("Should skip fields of type Class", e);
+        }
+    }
+
+    @Test
+    void customRandomzierForTypeRecordShouldBeUsedToPopulateObjects() {
+        when(nestedRecordRandomizer.getRandomValue()).thenReturn(TEST_NESTED_RECORD);
+
+        EasyRandomParameters parameters = new EasyRandomParameters()
+            .randomize(TestNestedRecord.class, nestedRecordRandomizer);
+        easyRandom = new EasyRandom(parameters);
+
+        try {
+            TestBeanWithRecord testBean = easyRandom.nextObject(TestBeanWithRecord.class);
+            assertThat(testBean.getTestRecord().testNestedRecord()).isEqualTo(TEST_NESTED_RECORD);
         } catch (Exception e) {
             fail("Should skip fields of type Class", e);
         }

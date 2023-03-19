@@ -131,9 +131,6 @@ public class EasyRandom extends Random {
         if (exclusionPolicy.shouldBeExcluded(type, context)) {
             return null;
         }
-        if (isRecord(type)) {
-            return new RecordFactory().createInstance(type, context);
-        }
 
         T result;
         try {
@@ -143,6 +140,10 @@ public class EasyRandom extends Random {
                     ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
                 }
                 return (T) randomizer.getRandomValue();
+            }
+
+            if (isRecord(type)) {
+                return new RecordFactory().createInstance(type, context);
             }
 
             // Collection types are randomized without introspection for internal fields
