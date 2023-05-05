@@ -68,4 +68,10 @@ public interface RandomizerContext {
      * @return currently used parameters
      */
     EasyRandomParameters getParameters();
+
+    /**
+     * Checks if the current randomization depth reached the configured maximum
+     * @return true when on the deepest level
+     */
+    boolean hasExceededRandomizationDepth();
 }
