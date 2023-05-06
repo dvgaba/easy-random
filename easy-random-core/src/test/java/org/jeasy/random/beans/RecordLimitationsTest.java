@@ -1,13 +1,12 @@
 package org.jeasy.random.beans;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class RecordLimitationsTest {
 
@@ -18,7 +17,9 @@ public class RecordLimitationsTest {
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         //when
-        WrapperOfNonPublic.NonPublicClass ordinaryClass = easyRandom.nextObject(WrapperOfNonPublic.NonPublicClass.class);
+        WrapperOfNonPublic.NonPublicClass ordinaryClass = easyRandom.nextObject(
+            WrapperOfNonPublic.NonPublicClass.class
+        );
 
         //then
         assertThat(ordinaryClass.name).isNotEmpty();
@@ -52,8 +53,8 @@ public class RecordLimitationsTest {
         //then
         assertThat(actual.value()).isNotNull();
         assertThat(actual.child().child().child())
-                .as("On the 3rd level, the field values should equal null, i.e. end of nesting.")
-                .isEqualTo(new DirectlyNested(null,null));
+            .as("On the 3rd level, the field values should equal null, i.e. end of nesting.")
+            .isEqualTo(new DirectlyNested(null, null));
         assertThat(actual.child().child().value()).isNotNull();
     }
 
@@ -63,7 +64,7 @@ public class RecordLimitationsTest {
         //given
         EasyRandomParameters parameters = new EasyRandomParameters();
         parameters.randomizationDepth(1);
-        parameters.setCollectionSizeRange(new EasyRandomParameters.Range<>(1,2));
+        parameters.setCollectionSizeRange(new EasyRandomParameters.Range<>(1, 2));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         //when
@@ -72,7 +73,7 @@ public class RecordLimitationsTest {
         //then
         assertThat(actual.children()).isNotEmpty();
         assertThat(actual.children().get(0).children().get(0))
-                .as("On the 2nd level, the field should be initialized with empty list, i.e. end of nesting.")
-                .isEqualTo(new NestedRecordThroughCollection(List.of()));
+            .as("On the 2nd level, the field should be initialized with empty list, i.e. end of nesting.")
+            .isEqualTo(new NestedRecordThroughCollection(List.of()));
     }
 }

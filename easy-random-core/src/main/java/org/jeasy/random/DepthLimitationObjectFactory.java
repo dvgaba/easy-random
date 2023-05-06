@@ -1,10 +1,10 @@
 package org.jeasy.random;
 
+import java.lang.reflect.Array;
 import org.jeasy.random.util.ReflectionUtils;
 
-import java.lang.reflect.Array;
-
 class DepthLimitationObjectFactory {
+
     static Object produceEmptyValueForField(Class<?> fieldType) {
         if (ReflectionUtils.isArrayType(fieldType)) {
             return Array.newInstance(fieldType.getComponentType(), 0);

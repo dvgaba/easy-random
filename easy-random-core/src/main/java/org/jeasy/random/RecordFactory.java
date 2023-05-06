@@ -31,7 +31,6 @@ import static org.jeasy.random.util.ReflectionUtils.isOptionalType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.RecordComponent;
 import java.lang.reflect.Type;
-
 import org.jeasy.random.api.RandomizerContext;
 
 /**
@@ -77,15 +76,13 @@ public class RecordFactory extends ObjenesisObjectFactory {
                     randomValues[i] = new ArrayPopulator(easyRandom).getRandomArray(type, context);
                 } else if (isMapType(type)) {
                     randomValues[i] =
-                            new MapPopulator(easyRandom, context.getParameters().getObjectFactory())
-                                    .getRandomMap(genericType, type, context);
+                        new MapPopulator(easyRandom, context.getParameters().getObjectFactory())
+                            .getRandomMap(genericType, type, context);
                 } else if (isOptionalType(type)) {
-                    randomValues[i] =
-                            new OptionalPopulator(easyRandom).getRandomOptional(genericType, context);
+                    randomValues[i] = new OptionalPopulator(easyRandom).getRandomOptional(genericType, context);
                 } else if (isCollectionType(type)) {
                     randomValues[i] =
-                            new CollectionPopulator(easyRandom)
-                                    .getRandomCollection(genericType, type, context);
+                        new CollectionPopulator(easyRandom).getRandomCollection(genericType, type, context);
                 } else {
                     randomValues[i] = easyRandom.doPopulateBean(type, context);
                 }
