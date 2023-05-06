@@ -143,7 +143,7 @@ public class EasyRandom extends Random {
             }
 
             if (isRecord(type)) {
-                return new RecordFactory().createInstance(type, context);
+                return new RecordFactory(context).createInstance(type, context);
             }
 
             // Collection types are randomized without introspection for internal fields
