@@ -22,7 +22,7 @@
 Active
 
 ## Latest news
-* 5/6/2023 6.1.6 Patch release to improve record support, thanks @[mjureczko](https://github.com/mjureczko) and minor 3PP fixes.
+* 5/12/2023 6.1.7 Patch release to improve record support, thanks @[mjureczko](https://github.com/mjureczko) and minor 3PP fixes.
 * 3/19/2023 6.1.5 Patch release to bump protobuf-java and snakeyaml and fix bug preventing custom randomizers on Record Types. Thanks [carborgar](https://github.com/carborgar)
 * 3/12/2023 6.1.3 Patch release to fix bug preventing Collections field population
 * 10/29/2022 6.1.2 Patch release to bump protobuf version to vulnerability
