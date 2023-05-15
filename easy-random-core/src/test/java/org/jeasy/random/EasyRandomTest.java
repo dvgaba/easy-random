@@ -23,18 +23,6 @@
  */
 package org.jeasy.random;
 
-import static java.sql.Timestamp.valueOf;
-import static java.time.LocalDateTime.of;
-import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.jeasy.random.FieldPredicates.*;
-import static org.mockito.Mockito.when;
-
-import java.lang.reflect.Modifier;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Stream;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.*;
 import org.jeasy.random.util.ReflectionUtils;
@@ -44,6 +32,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.lang.reflect.Modifier;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static java.sql.Timestamp.valueOf;
+import static java.time.LocalDateTime.of;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.jeasy.random.FieldPredicates.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EasyRandomTest {
@@ -76,18 +77,18 @@ class EasyRandomTest {
         Throwable thrown = catchThrowable(() -> easyRandom.nextObject(Salary.class));
 
         assertThat(thrown)
-            .isInstanceOf(ObjectCreationException.class)
-            .hasMessageContaining("Unable to create a random instance of type class org.jeasy.random.beans.Salary");
+                .isInstanceOf(ObjectCreationException.class)
+                .hasMessageContaining("Unable to create a random instance of type class org.jeasy.random.beans.Salary");
 
         Throwable cause = thrown.getCause();
         assertThat(cause)
-            .isInstanceOf(ObjectCreationException.class)
-            .hasMessageContaining("Unable to invoke setter for field amount of class org.jeasy.random.beans.Salary");
+                .isInstanceOf(ObjectCreationException.class)
+                .hasMessageContaining("Unable to invoke setter for field amount of class org.jeasy.random.beans.Salary");
 
         Throwable rootCause = cause.getCause();
         assertThat(rootCause)
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Amount must be positive");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Amount must be positive");
     }
 
     @Test
@@ -126,7 +127,7 @@ class EasyRandomTest {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         EasyRandomParameters parameters = new EasyRandomParameters()
-            .randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer);
+                .randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer);
         easyRandom = new EasyRandom(parameters);
 
         Person person = easyRandom.nextObject(Person.class);
@@ -141,7 +142,7 @@ class EasyRandomTest {
 
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters()
-            .randomize(hasModifiers(Modifier.TRANSIENT).and(ofType(String.class)), randomizer);
+                .randomize(hasModifiers(Modifier.TRANSIENT).and(ofType(String.class)), randomizer);
         easyRandom = new EasyRandom(parameters);
 
         // When
@@ -158,7 +159,7 @@ class EasyRandomTest {
         when(randomizer.getRandomValue()).thenReturn(FOO);
         int modifiers = Modifier.TRANSIENT | Modifier.PROTECTED;
         EasyRandomParameters parameters = new EasyRandomParameters()
-            .randomize(hasModifiers(modifiers).and(ofType(String.class)), randomizer);
+                .randomize(hasModifiers(modifiers).and(ofType(String.class)), randomizer);
         easyRandom = new EasyRandom(parameters);
 
         // When
@@ -279,7 +280,7 @@ class EasyRandomTest {
         when(nestedRecordRandomizer.getRandomValue()).thenReturn(TEST_NESTED_RECORD);
 
         EasyRandomParameters parameters = new EasyRandomParameters()
-            .randomize(TestNestedRecord.class, nestedRecordRandomizer);
+                .randomize(TestNestedRecord.class, nestedRecordRandomizer);
         easyRandom = new EasyRandom(parameters);
 
         try {
@@ -288,6 +289,17 @@ class EasyRandomTest {
         } catch (Exception e) {
             fail("Should skip fields of type Class", e);
         }
+    }
+
+    @Test
+    void typeRecordListShouldBePopulatedWithDifferentValues() {
+        List<TestRecord> recordList = easyRandom.objects(TestRecord.class, 2).toList();
+
+        TestRecord rnd1 = recordList.get(0);
+        TestRecord rnd2 = recordList.get(1);
+
+        assertThat(rnd1).isNotEqualTo(rnd2);
+
     }
 
     @Test
@@ -329,7 +341,8 @@ class EasyRandomTest {
 
             T t;
         }
-        class Concrete extends Base<String> {}
+        class Concrete extends Base<String> {
+        }
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
@@ -347,7 +360,8 @@ class EasyRandomTest {
             T t;
             S s;
         }
-        class Concrete extends Base<String, Long> {}
+        class Concrete extends Base<String, Long> {
+        }
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
@@ -486,13 +500,14 @@ class EasyRandomTest {
 
             T t;
         }
-        class Concrete extends Base<List<String>> {}
+        class Concrete extends Base<List<String>> {
+        }
 
         assertThatThrownBy(() -> easyRandom.nextObject(Concrete.class) // when
-            )
-            // then
-            .isInstanceOf(ObjectCreationException.class)
-            .hasMessage("Unable to create a random instance of type class org.jeasy.random.EasyRandomTest$7Concrete");
+        )
+                // then
+                .isInstanceOf(ObjectCreationException.class)
+                .hasMessage("Unable to create a random instance of type class org.jeasy.random.EasyRandomTest$7Concrete");
     }
 
     @Test

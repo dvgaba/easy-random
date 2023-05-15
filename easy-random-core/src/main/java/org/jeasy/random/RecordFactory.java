@@ -23,15 +23,13 @@
  */
 package org.jeasy.random;
 
-import static org.jeasy.random.util.ReflectionUtils.isArrayType;
-import static org.jeasy.random.util.ReflectionUtils.isCollectionType;
-import static org.jeasy.random.util.ReflectionUtils.isMapType;
-import static org.jeasy.random.util.ReflectionUtils.isOptionalType;
+import org.jeasy.random.api.RandomizerContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.RecordComponent;
 import java.lang.reflect.Type;
-import org.jeasy.random.api.RandomizerContext;
+
+import static org.jeasy.random.util.ReflectionUtils.*;
 
 /**
  * What is the justification for extending ObjenesisObjectFactory?
@@ -43,18 +41,14 @@ import org.jeasy.random.api.RandomizerContext;
 public class RecordFactory extends ObjenesisObjectFactory {
 
     private EasyRandom easyRandom;
-    private final RandomizationContext contextImpl;
-
-    public RecordFactory(RandomizationContext contextImpl) {
-        this.contextImpl = contextImpl;
-    }
 
     @Override
     public <T> T createInstance(Class<T> type, RandomizerContext context) {
         if (easyRandom == null) {
-            easyRandom = new EasyRandom(contextImpl.getParameters());
+            easyRandom = new EasyRandom(context.getParameters());
         }
-        return createRandomRecord(type, contextImpl);
+
+        return createRandomRecord(type, (RandomizationContext) context);
     }
 
     private <T> T createRandomRecord(Class<T> recordType, RandomizationContext context) {

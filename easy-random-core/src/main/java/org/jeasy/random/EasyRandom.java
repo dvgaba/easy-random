@@ -55,6 +55,8 @@ public class EasyRandom extends Random {
 
     private final ExclusionPolicy exclusionPolicy;
 
+    private final RecordFactory recordFactory;
+
     /**
      * Create a new {@link EasyRandom} instance with default parameters.
      */
@@ -92,6 +94,7 @@ public class EasyRandom extends Random {
             );
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
+        recordFactory=new RecordFactory();
     }
 
     /**
@@ -143,7 +146,7 @@ public class EasyRandom extends Random {
             }
 
             if (isRecord(type)) {
-                return new RecordFactory(context).createInstance(type, context);
+                return recordFactory.createInstance(type, context);
             }
 
             // Collection types are randomized without introspection for internal fields
