@@ -23,11 +23,9 @@
  */
 package org.jeasy.random;
 
-import static org.jeasy.random.util.ReflectionUtils.*;
-
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.RecordComponent;
-import java.lang.reflect.Type;
 import org.jeasy.random.api.RandomizerContext;
 
 /**
@@ -39,22 +37,36 @@ import org.jeasy.random.api.RandomizerContext;
  */
 public class RecordFactory extends ObjenesisObjectFactory {
 
-    private EasyRandom easyRandom;
+    private final EasyRandom easyRandom;
+    private final RecordFieldPopulator recordFieldPopulator;
+
+    public RecordFactory(EasyRandom easyRandom) {
+        this.easyRandom = easyRandom;
+        recordFieldPopulator =
+            new RecordFieldPopulator(
+                easyRandom,
+                easyRandom.getRandomizerProvider(),
+                new ArrayPopulator(easyRandom),
+                new CollectionPopulator(easyRandom),
+                new MapPopulator(easyRandom, easyRandom.getObjectFactory()),
+                new OptionalPopulator(easyRandom)
+            );
+    }
 
     @Override
     public <T> T createInstance(Class<T> type, RandomizerContext context) {
-        if (easyRandom == null) {
-            easyRandom = new EasyRandom(context.getParameters());
-        }
-
         return createRandomRecord(type, (RandomizationContext) context);
+    }
+
+    private <T> boolean isRecord(final Class<T> type) {
+        return type.isRecord();
     }
 
     private <T> T createRandomRecord(Class<T> recordType, RandomizationContext context) {
         // generate random values for record components
+        Field[] fields = recordType.getDeclaredFields();
         RecordComponent[] recordComponents = recordType.getRecordComponents();
         Object[] randomValues = new Object[recordComponents.length];
-
         if (context.hasExceededRandomizationDepth()) {
             for (int i = 0; i < recordComponents.length; i++) {
                 Class<?> type = recordComponents[i].getType();
@@ -64,25 +76,21 @@ public class RecordFactory extends ObjenesisObjectFactory {
             for (int i = 0; i < recordComponents.length; i++) {
                 context.pushStackItem(new RandomizationContextStackItem(recordType, null));
                 Class<?> type = recordComponents[i].getType();
-                Type genericType = recordComponents[i].getGenericType();
-                if (isArrayType(type)) {
-                    randomValues[i] = new ArrayPopulator(easyRandom).getRandomArray(type, context);
-                } else if (isMapType(type)) {
-                    randomValues[i] =
-                        new MapPopulator(easyRandom, context.getParameters().getObjectFactory())
-                            .getRandomMap(genericType, type, context);
-                } else if (isOptionalType(type)) {
-                    randomValues[i] = new OptionalPopulator(easyRandom).getRandomOptional(genericType, context);
-                } else if (isCollectionType(type)) {
-                    randomValues[i] =
-                        new CollectionPopulator(easyRandom).getRandomCollection(genericType, type, context);
-                } else {
-                    randomValues[i] = easyRandom.doPopulateBean(type, context);
+                try {
+                    if (isRecord(type)) {
+                        randomValues[i] = easyRandom.doPopulateBean(type, context);
+                    } else {
+                        randomValues[i] = this.recordFieldPopulator.populateField(fields[i], recordType, context);
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new ObjectCreationException(
+                        "Unable to create a random instance of recordType " + recordType,
+                        e
+                    );
                 }
                 context.popStackItem();
             }
         }
-
         // create a random instance with random values
         try {
             Constructor<T> canonicalConstructor = getCanonicalConstructor(recordType);
@@ -107,7 +115,7 @@ public class RecordFactory extends ObjenesisObjectFactory {
             // should not happen, from Record javadoc:
             // "A record class has the following mandated members: a public canonical constructor ,
             // whose descriptor is the same as the record descriptor;"
-            throw new RuntimeException("Invalid record definition", e);
+            throw new ObjectCreationException("Invalid record definition", e);
         }
     }
 }
