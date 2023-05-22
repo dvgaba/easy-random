@@ -94,7 +94,7 @@ public class EasyRandom extends Random {
             );
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
-        recordFactory=new RecordFactory();
+        recordFactory = new RecordFactory();
     }
 
     /**

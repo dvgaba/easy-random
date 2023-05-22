@@ -23,13 +23,12 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.RandomizerContext;
+import static org.jeasy.random.util.ReflectionUtils.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.RecordComponent;
 import java.lang.reflect.Type;
-
-import static org.jeasy.random.util.ReflectionUtils.*;
+import org.jeasy.random.api.RandomizerContext;
 
 /**
  * What is the justification for extending ObjenesisObjectFactory?
