@@ -94,7 +94,7 @@ public class EasyRandom extends Random {
             );
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
-        recordFactory = new RecordFactory();
+        recordFactory = new RecordFactory(this);
     }
 
     /**
@@ -245,5 +245,13 @@ public class EasyRandom extends Random {
         List<RandomizerRegistry> registries = new ArrayList<>();
         ServiceLoader.load(RandomizerRegistry.class).forEach(registries::add);
         return registries;
+    }
+
+    public RandomizerProvider getRandomizerProvider() {
+        return randomizerProvider;
+    }
+
+    public ObjectFactory getObjectFactory() {
+        return objectFactory;
     }
 }
