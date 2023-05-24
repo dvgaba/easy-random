@@ -22,6 +22,7 @@
 Active
 
 ## Latest news
+* 5/23/2023 6.1.8 Patch release to fix [#26](https://github.com/dvgaba/easy-random/issues/26) and [#28](https://github.com/dvgaba/easy-random/issues/28), thanks @[carborgar](https://github.com/carborgar).
 * 5/12/2023 6.1.7 Patch release to improve record support, thanks @[mjureczko](https://github.com/mjureczko) and minor 3PP fixes.
 * 3/19/2023 6.1.5 Patch release to bump protobuf-java and snakeyaml and fix bug preventing custom randomizers on Record Types. Thanks [carborgar](https://github.com/carborgar)
 * 3/12/2023 6.1.3 Patch release to fix bug preventing Collections field population
