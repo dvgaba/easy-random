@@ -26,7 +26,6 @@ package org.jeasy.random;
 import static org.jeasy.random.util.ReflectionUtils.*;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -48,7 +47,7 @@ import org.jeasy.random.randomizers.misc.SkipRandomizer;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-class FieldPopulator {
+class RecordFieldPopulator {
 
     private final EasyRandom easyRandom;
 
@@ -62,7 +61,7 @@ class FieldPopulator {
 
     private final RandomizerProvider randomizerProvider;
 
-    FieldPopulator(
+    RecordFieldPopulator(
         final EasyRandom easyRandom,
         final RandomizerProvider randomizerProvider,
         final ArrayPopulator arrayPopulator,
@@ -78,13 +77,13 @@ class FieldPopulator {
         this.optionalPopulator = optionalPopulator;
     }
 
-    void populateField(final Object target, final Field field, final RandomizationContext context)
+    Object populateField(final Field field, Class<?> enclosingType, final RandomizationContext context)
         throws IllegalAccessException {
-        Randomizer<?> randomizer = getRandomizer(field, context, target.getClass());
+        Randomizer<?> randomizer = getRandomizer(field, context, enclosingType);
         if (randomizer instanceof SkipRandomizer) {
-            return;
+            return null;
         }
-        context.pushStackItem(new RandomizationContextStackItem(target, field));
+        //context.pushStackItem(new RandomizationContextStackItem(null, field));
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }
@@ -100,28 +99,16 @@ class FieldPopulator {
                         "Unable to create type: %s for field: %s of class: %s",
                         field.getType().getName(),
                         field.getName(),
-                        target.getClass().getName()
+                        enclosingType.getName()
                     );
                     // FIXME catch ObjectCreationException and throw ObjectCreationException ?
                     throw new ObjectCreationException(exceptionMessage, e);
                 }
             }
-            if (context.getParameters().isBypassSetters()) {
-                setFieldValue(target, field, value);
-            } else {
-                try {
-                    setProperty(target, field, value);
-                } catch (InvocationTargetException e) {
-                    String exceptionMessage = String.format(
-                        "Unable to invoke setter for field %s of class %s",
-                        field.getName(),
-                        target.getClass().getName()
-                    );
-                    throw new ObjectCreationException(exceptionMessage, e.getCause());
-                }
-            }
+            return value;
         }
-        context.popStackItem();
+        //context.popStackItem();
+        return null;
     }
 
     private Randomizer<?> getRandomizer(Field field, RandomizationContext context, Class<?> fieldTargetType) {
