@@ -72,7 +72,9 @@ public class RecordFactory extends ObjenesisObjectFactory {
             context.pushStackItem(new RandomizationContextStackItem(recordType, null));
             Class<?> type = recordComponents[i].getType();
             try {
-                if (isRecord(type)) {
+                if (context.hasExceededRandomizationDepth()) {
+                    randomValues[i] = DepthLimitationObjectFactory.produceEmptyValueForField(type);
+                } else if (isRecord(type)) {
                     randomValues[i] = easyRandom.doPopulateBean(type, context);
                 } else {
                     randomValues[i] = this.recordFieldPopulator.populateField(fields[i], recordType, context);

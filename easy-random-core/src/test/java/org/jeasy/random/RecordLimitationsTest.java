@@ -55,10 +55,26 @@ public class RecordLimitationsTest {
         //then
         assertThat(actual).isNotNull();
         assertThat(actual.value()).isNotNull();
-        assertThat(actual.child().child().child())
-            .as("On the 3rd level, the field values should equal null, i.e. end of nesting.")
-            .isEqualTo(new DirectlyNested(null, null));
+        assertThat(actual.child().child().child()).as("On the 3rd level, the object should be null.").isEqualTo(null);
         assertThat(actual.child().child().value()).isNull();
+    }
+
+    @Test
+    @Timeout(3)
+    void shouldLimitTheNestingLevel_whenInDirectlyRecursiveStructures_non_record() {
+        //given
+        EasyRandomParameters parameters = new EasyRandomParameters();
+        parameters.randomizationDepth(2);
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        //when
+        Nested actual = easyRandom.nextObject(Nested.class);
+
+        //then
+        assertThat(actual).isNotNull();
+        assertThat(actual.value).isNotNull();
+        assertThat(actual.nested.nested.nested).as("On the 3rd level, the object should be null.").isEqualTo(null);
+        assertThat(actual.nested.nested.value).isNull();
     }
 
     @Test
