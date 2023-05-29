@@ -57,7 +57,7 @@ public class RecordLimitationsTest {
         assertThat(actual.value()).isNotNull();
         assertThat(actual.child().child().child())
             .as("On the 3rd level, the field values should equal null, i.e. end of nesting.")
-            .isEqualTo(new DirectlyNested(null, null));
+            .isNull();
         assertThat(actual.child().child().value()).isNull();
     }
 
