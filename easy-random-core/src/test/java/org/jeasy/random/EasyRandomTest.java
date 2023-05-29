@@ -291,6 +291,16 @@ class EasyRandomTest {
     }
 
     @Test
+    void typeRecordListShouldBePopulatedWithDifferentValues() {
+        List<TestRecord> recordList = easyRandom.objects(TestRecord.class, 2).toList();
+
+        TestRecord rnd1 = recordList.get(0);
+        TestRecord rnd2 = recordList.get(1);
+
+        assertThat(rnd1).isNotEqualTo(rnd2);
+    }
+
+    @Test
     void differentCollectionsShouldBeRandomizedWithDifferentSizes() {
         // given
         class Foo {
