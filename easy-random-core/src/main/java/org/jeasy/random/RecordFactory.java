@@ -26,7 +26,6 @@ package org.jeasy.random;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.RecordComponent;
-
 import org.jeasy.random.api.RandomizerContext;
 
 /**
@@ -44,14 +43,14 @@ public class RecordFactory extends ObjenesisObjectFactory {
     public RecordFactory(EasyRandom easyRandom) {
         this.easyRandom = easyRandom;
         recordFieldPopulator =
-                new RecordFieldPopulator(
-                        easyRandom,
-                        easyRandom.getRandomizerProvider(),
-                        new ArrayPopulator(easyRandom),
-                        new CollectionPopulator(easyRandom),
-                        new MapPopulator(easyRandom, easyRandom.getObjectFactory()),
-                        new OptionalPopulator(easyRandom)
-                );
+            new RecordFieldPopulator(
+                easyRandom,
+                easyRandom.getRandomizerProvider(),
+                new ArrayPopulator(easyRandom),
+                new CollectionPopulator(easyRandom),
+                new MapPopulator(easyRandom, easyRandom.getObjectFactory()),
+                new OptionalPopulator(easyRandom)
+            );
     }
 
     @Override
@@ -79,10 +78,7 @@ public class RecordFactory extends ObjenesisObjectFactory {
                     randomValues[i] = this.recordFieldPopulator.populateField(fields[i], recordType, context);
                 }
             } catch (IllegalAccessException e) {
-                throw new ObjectCreationException(
-                        "Unable to create a random instance of recordType " + recordType,
-                        e
-                );
+                throw new ObjectCreationException("Unable to create a random instance of recordType " + recordType, e);
             }
             context.popStackItem();
         }
