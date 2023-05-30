@@ -86,24 +86,20 @@ class RecordFieldPopulator {
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }
-        if (context.hasExceededRandomizationDepth()) {
-            return DepthLimitationObjectFactory.produceEmptyValueForField(field.getType());
+        if (randomizer != null) {
+            return randomizer.getRandomValue();
         } else {
-            if (randomizer != null) {
-                return randomizer.getRandomValue();
-            } else {
-                try {
-                    return generateRandomValue(field, context);
-                } catch (ObjectCreationException e) {
-                    String exceptionMessage = String.format(
+            try {
+                return generateRandomValue(field, context);
+            } catch (ObjectCreationException e) {
+                String exceptionMessage = String.format(
                         "Unable to create type: %s for field: %s of record: %s",
                         field.getType().getName(),
                         field.getName(),
                         enclosingType.getName()
-                    );
-                    // FIXME catch ObjectCreationException and throw ObjectCreationException ?
-                    throw new ObjectCreationException(exceptionMessage, e);
-                }
+                );
+                // FIXME catch ObjectCreationException and throw ObjectCreationException ?
+                throw new ObjectCreationException(exceptionMessage, e);
             }
         }
     }

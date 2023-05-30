@@ -72,14 +72,14 @@ public class RecordFactory extends ObjenesisObjectFactory {
             context.pushStackItem(new RandomizationContextStackItem(recordType, null));
             Class<?> type = recordComponents[i].getType();
             try {
-                if (isRecord(type)) {
-                    if (context.hasExceededRandomizationDepth()) {
-                        randomValues[i] = DepthLimitationObjectFactory.produceEmptyValueForField(type);
-                    } else {
-                        randomValues[i] = easyRandom.doPopulateBean(type, context);
-                    }
+                if (context.hasExceededRandomizationDepth()) {
+                    randomValues[i] = DepthLimitationObjectFactory.produceEmptyValueForField(type);
                 } else {
-                    randomValues[i] = recordFieldPopulator.populateField(fields[i], recordType, context);
+                    if (isRecord(type)) {
+                        randomValues[i] = easyRandom.doPopulateBean(type, context);
+                    } else {
+                        randomValues[i] = recordFieldPopulator.populateField(fields[i], recordType, context);
+                    }
                 }
             } catch (IllegalAccessException e) {
                 throw new ObjectCreationException("Unable to create a random instance of recordType " + recordType, e);
