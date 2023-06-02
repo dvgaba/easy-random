@@ -266,7 +266,7 @@ public class EasyRandomParameters {
         return typeExclusionPredicates;
     }
 
-    CustomRandomizerRegistry getCustomRandomizerRegistry() {
+    public CustomRandomizerRegistry getCustomRandomizerRegistry() {
         return customRandomizerRegistry;
     }
 

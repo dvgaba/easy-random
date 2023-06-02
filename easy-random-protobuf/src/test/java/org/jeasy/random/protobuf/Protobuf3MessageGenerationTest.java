@@ -210,4 +210,15 @@ class Protobuf3MessageGenerationTest {
         assertThat(protoInstance.hasEmbeddedMessage()).isTrue();
         assertThat(protoInstance.getEmbeddedMessage()).isEqualTo(customEmbeddedMessage);
     }
+
+    @Test
+    void shouldUseCustomProviderRegistryToFillFields(){
+        EasyRandomParameters parameters = new EasyRandomParameters().randomize(ProtobufPredicates.named("int32Field"), () -> 42);
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
+
+        assertThat(protoInstance.getInt32Field()).isEqualTo(42);
+    }
+
 }
