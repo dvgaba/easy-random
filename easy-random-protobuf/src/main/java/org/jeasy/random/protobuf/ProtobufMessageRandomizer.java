@@ -133,15 +133,24 @@ public class ProtobufMessageRandomizer implements ContextAwareRandomizer<Message
             if (this.parameters.getExclusionPolicy().shouldBeExcluded(javaField, context, field)) {
                 return;
             }
+            if (this.parameters.getCustomRandomizerRegistry() instanceof ProtobufCustomRandomizerRegistry) {
+                Randomizer<?> customRandomizer =
+                    this.parameters.getCustomRandomizerRegistry().getRandomizer(javaField, field);
+                if (customRandomizer != null) {
+                    if (customRandomizer instanceof ContextAwareRandomizer) {
+                        ((ContextAwareRandomizer<?>) customRandomizer).setRandomizerContext(context);
+                    }
+                    Object generated = customRandomizer.getRandomValue();
+                    if (generated != null) {
+                        containingBuilder.setField(field, generated);
+                    }
 
-            Randomizer<?> customRandomizer = this.parameters.getCustomRandomizerRegistry().getRandomizer(javaField);
-            if(customRandomizer != null) {
-                Object generated = customRandomizer.getRandomValue();
-                containingBuilder.setField(field, generated);
-                return;
+                    return;
+                }
             }
-
-        } catch (NoSuchFieldException e) {}
+        } catch (NoSuchFieldException e) {
+            //Bypassing
+        }
         BiFunction<FieldDescriptor, Message.Builder, Object> fieldGenerator;
         if (field.isMapField()) {
             fieldGenerator =

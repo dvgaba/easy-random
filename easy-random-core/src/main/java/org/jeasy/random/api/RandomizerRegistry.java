@@ -48,6 +48,10 @@ public interface RandomizerRegistry {
      */
     Randomizer<?> getRandomizer(final Field field);
 
+    default Randomizer<?> getRandomizer(final Field field, Object additionalData) {
+        return this.getRandomizer(field, null);
+    }
+
     /**
      * Retrieves a randomizer for a given type.
      *

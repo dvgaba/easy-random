@@ -236,9 +236,10 @@ public class EasyRandomParameters {
         return exclusionPolicy;
     }
 
-    public void setExclusionPolicy(ExclusionPolicy exclusionPolicy) {
+    public EasyRandomParameters setExclusionPolicy(ExclusionPolicy exclusionPolicy) {
         Objects.requireNonNull(exclusionPolicy, "Exclusion policy must not be null");
         this.exclusionPolicy = exclusionPolicy;
+        return this;
     }
 
     public ObjectFactory getObjectFactory() {
@@ -264,6 +265,13 @@ public class EasyRandomParameters {
 
     public Set<Predicate<Class<?>>> getTypeExclusionPredicates() {
         return typeExclusionPredicates;
+    }
+
+    public EasyRandomParameters setCustomRandomizerRegistry(CustomRandomizerRegistry customRandomizerRegistry) {
+        Objects.requireNonNull(customRandomizerRegistry, "Custom Randomizer registry must not be null");
+        customRandomizerRegistry.init(this);
+        this.customRandomizerRegistry = customRandomizerRegistry;
+        return this;
     }
 
     public CustomRandomizerRegistry getCustomRandomizerRegistry() {
