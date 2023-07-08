@@ -17,11 +17,12 @@ import java.util.regex.Pattern;
 
 public class ProtobufPredicates {
 
-    private ProtobufPredicates() {
-    }
+    private ProtobufPredicates() {}
 
-    private static final EnumMap<FieldDescriptor.Type, Class<?>> PROTO_TO_JAVA_TYPE_MAP = new EnumMap<>(FieldDescriptor.Type.class);
-    public static final String PROTO_FIELD_SEPERATOR = "_";
+    private static final EnumMap<FieldDescriptor.Type, Class<?>> PROTO_TO_JAVA_TYPE_MAP = new EnumMap<>(
+        FieldDescriptor.Type.class
+    );
+    public static final String PROTO_FIELD_SEPARATOR = "_";
 
     static {
         PROTO_TO_JAVA_TYPE_MAP.put(FieldDescriptor.Type.INT32, Int32Value.class);
@@ -40,7 +41,7 @@ public class ProtobufPredicates {
     }
 
     public static BiPredicate<Field, Object> named(final String name) {
-        final Pattern pattern = Pattern.compile(name + PROTO_FIELD_SEPERATOR);
+        final Pattern pattern = Pattern.compile(name + PROTO_FIELD_SEPARATOR);
         return (field, fieldDescriptor) -> pattern.matcher(field.getName()).matches();
     }
 
