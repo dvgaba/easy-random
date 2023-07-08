@@ -96,6 +96,14 @@ which provides common predicates you can use in combination to define exactly wh
 A similar class called [`TypePredicates`](https://github.com/j-easy/easy-random/blob/master/easy-random-core/src/main/java/org/jeasy/random/TypePredicates.java) can be used to define which types to exclude from the object graph.
 You can of course use your own `java.util.function.Predicate` in combination with those predefined predicates. 
 
+#Easy Random for Protobuf
+easy-random-protobuf module provides support for generating random data for protobuf message objects. 
+For full support for easy-random capabilities it is advised to rely on 
+```java
+ProtoEasyRandom easyRanom  = new ProtoEasyRandom();
+```
+
+
 # Why Easy Random ?
 
 Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes. In the previous example, let's suppose the `Person` type is defined as follows:

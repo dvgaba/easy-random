@@ -29,13 +29,12 @@ import org.junit.jupiter.api.Test;
 
 class Protobuf2MessageGenerationTest {
 
+    EasyRandomParameters parameters = new ProtobufEasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
+
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
         EasyRandom easyRandom = new EasyRandom(parameters);
-
         Proto2Message protoInstance = easyRandom.nextObject(Proto2Message.class);
-
         assertThat(protoInstance.getDoubleField()).isEqualTo(0.7231742029971469);
         assertThat(protoInstance.getFloatField()).isEqualTo(0.99089885f);
         assertThat(protoInstance.getInt32Field()).isEqualTo(1295249578);

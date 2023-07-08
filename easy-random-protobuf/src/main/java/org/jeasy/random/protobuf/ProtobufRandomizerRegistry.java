@@ -18,19 +18,18 @@
 package org.jeasy.random.protobuf;
 
 import com.google.protobuf.Message;
-import java.lang.reflect.Field;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.annotation.Priority;
 import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
 
 /**
  * A registry of randomizers for Protobuf messages.
  *
  */
 @Priority(-2)
-public class ProtobufRandomizerRegistry implements RandomizerRegistry {
+public class ProtobufRandomizerRegistry extends CustomRandomizerRegistry {
 
     private EasyRandom easyRandom;
     private EasyRandomParameters parameters;
@@ -38,11 +37,6 @@ public class ProtobufRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void init(EasyRandomParameters parameters) {
         this.parameters = parameters;
-    }
-
-    @Override
-    public Randomizer<?> getRandomizer(Field field) {
-        return null;
     }
 
     @Override

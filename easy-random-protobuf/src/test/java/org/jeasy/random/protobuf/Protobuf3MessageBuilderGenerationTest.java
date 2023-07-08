@@ -30,7 +30,7 @@ class Protobuf3MessageBuilderGenerationTest {
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
+        EasyRandomParameters parameters = new ProtobufEasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         Proto3Message.Builder protoBuilderInstance = easyRandom.nextObject(Proto3Message.Builder.class);
@@ -110,7 +110,7 @@ class Protobuf3MessageBuilderGenerationTest {
 
     @Test
     void shouldSequentiallyGenerateDifferentObjects() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
+        EasyRandomParameters parameters = new ProtobufEasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         Proto3Message.Builder firstInstance = easyRandom.nextObject(Proto3Message.Builder.class);

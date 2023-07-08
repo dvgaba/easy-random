@@ -1,0 +1,1 @@
+Original code is inspired/copied from https://github.com/murdos/easy-random-protobuf and extended to support other easy random capabilities.

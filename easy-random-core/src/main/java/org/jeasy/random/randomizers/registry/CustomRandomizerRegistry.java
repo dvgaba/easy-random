@@ -41,8 +41,8 @@ import org.jeasy.random.util.ReflectionUtils;
 @Priority(-1)
 public class CustomRandomizerRegistry implements RandomizerRegistry {
 
-    private final Map<BiPredicate<Field, Object>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
-    private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
+    protected final Map<BiPredicate<Field, Object>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
+    protected final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
 
     @Override
     public void init(EasyRandomParameters parameters) {

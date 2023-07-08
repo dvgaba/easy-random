@@ -19,6 +19,7 @@ package org.jeasy.random.protobuf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.google.protobuf.Int32Value;
 import com.google.protobuf.StringValue;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -29,11 +30,12 @@ import org.junit.jupiter.api.Test;
 
 class Protobuf3MessageGenerationTest {
 
+    EasyRandomParameters parameters = new ProtobufEasyRandomParameters();
+
     @Test
     void generatedValuesShouldBeValidAccordingToValidationConstraints() {
-        EasyRandom easyRandom = new EasyRandom();
+        EasyRandom easyRandom = new ProtoEasyRandom();
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
-
         assertThat(protoInstance.getDoubleField()).isNotZero();
         assertThat(protoInstance.getFloatField()).isNotZero();
         assertThat(protoInstance.getInt32Field()).isNotZero();
@@ -65,19 +67,17 @@ class Protobuf3MessageGenerationTest {
 
     @Test
     void shouldUseCollectionSizeRangeParameters() {
-        EasyRandomParameters parameters = new EasyRandomParameters().collectionSizeRange(3, 3);
-        EasyRandom easyRandom = new EasyRandom(parameters);
-
+        parameters.collectionSizeRange(3, 3);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
-
         assertThat(protoInstance.getRepeatedStringFieldList()).hasSize(3);
         assertThat(protoInstance.getMapFieldMap()).hasSize(3);
     }
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
-        EasyRandom easyRandom = new EasyRandom(parameters);
+        parameters.seed(123L).collectionSizeRange(3, 10);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
 
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
 
@@ -153,8 +153,8 @@ class Protobuf3MessageGenerationTest {
 
     @Test
     void shouldSequentiallyGenerateDifferentObjects() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
-        EasyRandom easyRandom = new EasyRandom(parameters);
+        parameters.seed(123L).collectionSizeRange(3, 10);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
 
         Proto3Message firstInstance = easyRandom.nextObject(Proto3Message.class);
         Proto3Message secondInstance = easyRandom.nextObject(Proto3Message.class);
@@ -195,13 +195,32 @@ class Protobuf3MessageGenerationTest {
             .setStringField("custom string value")
             .setEnumField(Proto3Enum.FIRST_VALUE)
             .build();
-        EasyRandomParameters parameters = new EasyRandomParameters()
-            .randomize(EmbeddedProto3Message.class, () -> customEmbeddedMessage);
-        EasyRandom easyRandom = new EasyRandom(parameters);
+        parameters.randomize(EmbeddedProto3Message.class, () -> customEmbeddedMessage);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
 
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
 
         assertThat(protoInstance.hasEmbeddedMessage()).isTrue();
         assertThat(protoInstance.getEmbeddedMessage()).isEqualTo(customEmbeddedMessage);
+    }
+
+    @Test
+    void shouldUseCustomProviderRegistryToFillFieldsByName() {
+        parameters
+            .setCustomRandomizerRegistry(new ProtobufCustomRandomizerRegistry())
+            .randomize(ProtobufPredicates.named("int32Field"), () -> 42);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
+        Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
+        assertThat(protoInstance.getInt32Field()).isEqualTo(42);
+    }
+
+    @Test
+    void shouldUseCustomProviderRegistryToFillFieldByType() {
+        parameters
+            .setCustomRandomizerRegistry(new ProtobufCustomRandomizerRegistry())
+            .randomize(ProtobufPredicates.ofProtobufType(Int32Value.class), () -> 42);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
+        Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
+        assertThat(protoInstance.getInt32Field()).isEqualTo(42);
     }
 }

@@ -43,6 +43,7 @@ import java.util.function.BiFunction;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.ContextAwareRandomizer;
+import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerContext;
 import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 import org.jeasy.random.randomizers.text.StringRandomizer;
@@ -126,7 +127,24 @@ public class ProtobufMessageRandomizer implements ContextAwareRandomizer<Message
             if (this.parameters.getExclusionPolicy().shouldBeExcluded(javaField, context, field)) {
                 return;
             }
-        } catch (NoSuchFieldException e) {}
+            if (this.parameters.getCustomRandomizerRegistry() instanceof ProtobufCustomRandomizerRegistry) {
+                Randomizer<?> customRandomizer =
+                    this.parameters.getCustomRandomizerRegistry().getRandomizer(javaField, field);
+                if (customRandomizer != null) {
+                    if (customRandomizer instanceof ContextAwareRandomizer) {
+                        ((ContextAwareRandomizer<?>) customRandomizer).setRandomizerContext(context);
+                    }
+                    Object generated = customRandomizer.getRandomValue();
+                    if (generated != null) {
+                        containingBuilder.setField(field, generated);
+                    }
+
+                    return;
+                }
+            }
+        } catch (NoSuchFieldException e) {
+            //Bypassing
+        }
         BiFunction<FieldDescriptor, Message.Builder, Object> fieldGenerator;
         if (field.isMapField()) {
             fieldGenerator =

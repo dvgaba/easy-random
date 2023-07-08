@@ -48,6 +48,10 @@ public interface RandomizerRegistry {
      */
     Randomizer<?> getRandomizer(final Field field);
 
+    default Randomizer<?> getRandomizer(final Field field, Object additionalData) {
+        throw new IllegalStateException("Default implementation needs to be overridden");
+    }
+
     /**
      * Retrieves a randomizer for a given type.
      *

@@ -32,11 +32,9 @@ class Protobuf2MessageBuilderGenerationTest {
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
+        EasyRandomParameters parameters = new ProtobufEasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
         EasyRandom easyRandom = new EasyRandom(parameters);
-
         Builder protoBuilderInstance = easyRandom.nextObject(Builder.class);
-
         assertThat(protoBuilderInstance.getDoubleField()).isEqualTo(0.7231742029971469);
         assertThat(protoBuilderInstance.getFloatField()).isEqualTo(0.99089885f);
         assertThat(protoBuilderInstance.getInt32Field()).isEqualTo(1295249578);
