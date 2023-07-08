@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class ProtobufPredicates {
 
-    private static final EnumMap<Type, Class<?>> PROTO_TO_JAVA_TYPE_MAP = new EnumMap<>(FieldDescriptor.Type.class);
+    private static final EnumMap<FieldDescriptor.Type, Class<?>> PROTO_TO_JAVA_TYPE_MAP = new EnumMap<>(FieldDescriptor.Type.class);
     public static final String PROTO_FIELD_SEPERATOR = "_";
 
     static {
