@@ -67,30 +67,26 @@ public class RecordFactory extends ObjenesisObjectFactory {
         Field[] fields = recordType.getDeclaredFields();
         RecordComponent[] recordComponents = recordType.getRecordComponents();
         Object[] randomValues = new Object[recordComponents.length];
-        if (context.hasExceededRandomizationDepth()) {
-            for (int i = 0; i < recordComponents.length; i++) {
-                Class<?> type = recordComponents[i].getType();
-                randomValues[i] = DepthLimitationObjectFactory.produceEmptyValueForField(type);
-            }
-        } else {
-            for (int i = 0; i < recordComponents.length; i++) {
-                context.pushStackItem(new RandomizationContextStackItem(recordType, null));
-                Class<?> type = recordComponents[i].getType();
-                try {
+
+        for (int i = 0; i < recordComponents.length; i++) {
+            context.pushStackItem(new RandomizationContextStackItem(recordType, null));
+            Class<?> type = recordComponents[i].getType();
+            try {
+                if (context.hasExceededRandomizationDepth()) {
+                    randomValues[i] = DepthLimitationObjectFactory.produceEmptyValueForField(type);
+                } else {
                     if (isRecord(type)) {
                         randomValues[i] = easyRandom.doPopulateBean(type, context);
                     } else {
-                        randomValues[i] = this.recordFieldPopulator.populateField(fields[i], recordType, context);
+                        randomValues[i] = recordFieldPopulator.populateField(fields[i], recordType, context);
                     }
-                } catch (IllegalAccessException e) {
-                    throw new ObjectCreationException(
-                        "Unable to create a random instance of recordType " + recordType,
-                        e
-                    );
                 }
-                context.popStackItem();
+            } catch (IllegalAccessException e) {
+                throw new ObjectCreationException("Unable to create a random instance of recordType " + recordType, e);
             }
+            context.popStackItem();
         }
+
         // create a random instance with random values
         try {
             Constructor<T> canonicalConstructor = getCanonicalConstructor(recordType);

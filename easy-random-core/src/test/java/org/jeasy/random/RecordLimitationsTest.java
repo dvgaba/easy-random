@@ -3,6 +3,7 @@ package org.jeasy.random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.jeasy.random.FieldPredicates.ofType;
 
+import java.util.List;
 import java.util.Objects;
 import org.jeasy.random.beans.DirectlyNested;
 import org.jeasy.random.beans.NestedRecordThroughCollection;
@@ -56,7 +57,7 @@ public class RecordLimitationsTest {
         assertThat(actual.value()).isNotNull();
         assertThat(actual.child().child().child())
             .as("On the 3rd level, the field values should equal null, i.e. end of nesting.")
-            .isEqualTo(new DirectlyNested(null, null));
+            .isNull();
         assertThat(actual.child().child().value()).isNull();
     }
 
@@ -76,7 +77,7 @@ public class RecordLimitationsTest {
         assertThat(actual.children()).isNotEmpty();
         assertThat(actual.children().get(0))
             .as("On the 2nd level, the field should be initialized with empty list, i.e. end of nesting.")
-            .isEqualTo(new NestedRecordThroughCollection(null));
+            .isEqualTo(new NestedRecordThroughCollection(List.of()));
     }
 
     @Test
