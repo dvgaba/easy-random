@@ -93,10 +93,10 @@ class RecordFieldPopulator {
                 return generateRandomValue(field, context);
             } catch (ObjectCreationException e) {
                 String exceptionMessage = String.format(
-                        "Unable to create type: %s for field: %s of record: %s",
-                        field.getType().getName(),
-                        field.getName(),
-                        enclosingType.getName()
+                    "Unable to create type: %s for field: %s of record: %s",
+                    field.getType().getName(),
+                    field.getName(),
+                    enclosingType.getName()
                 );
                 // FIXME catch ObjectCreationException and throw ObjectCreationException ?
                 throw new ObjectCreationException(exceptionMessage, e);

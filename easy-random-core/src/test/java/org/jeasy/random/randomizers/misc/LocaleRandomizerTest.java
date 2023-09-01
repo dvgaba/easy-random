@@ -25,7 +25,6 @@ package org.jeasy.random.randomizers.misc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.math.BigDecimal;
 import java.util.Locale;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.junit.jupiter.api.Test;

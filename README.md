@@ -22,6 +22,7 @@
 Active
 
 ## Latest news
+* 9/1/2023 6.2.1 Minor release to initialize leaf nodes for Records [Breaking change].  
 * 8/10/2023 6.2.0 Minor release to add custom radomizer support for protobuf, 3PP and code refactoring.  
 * 5/23/2023 6.1.8 Patch release to fix [#26](https://github.com/dvgaba/easy-random/issues/26) and [#28](https://github.com/dvgaba/easy-random/issues/28), thanks @[carborgar](https://github.com/carborgar).
 * 5/12/2023 6.1.7 Patch release to improve record support, thanks @[mjureczko](https://github.com/mjureczko) and minor 3PP fixes.
