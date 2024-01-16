@@ -33,7 +33,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;

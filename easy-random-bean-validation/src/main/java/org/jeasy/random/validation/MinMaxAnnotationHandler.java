@@ -25,8 +25,8 @@ package org.jeasy.random.validation;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.util.ReflectionUtils;
 
