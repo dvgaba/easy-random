@@ -25,7 +25,7 @@ package org.jeasy.random.validation;
 
 import java.lang.reflect.Field;
 import java.util.Random;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.RegularExpressionRandomizer;
 import org.jeasy.random.util.ReflectionUtils;

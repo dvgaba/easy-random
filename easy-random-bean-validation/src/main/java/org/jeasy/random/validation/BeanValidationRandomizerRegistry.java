@@ -27,7 +27,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.annotation.Priority;
 import org.jeasy.random.api.Randomizer;
