@@ -23,12 +23,12 @@
  */
 package org.jeasy.random.util;
 
+import java.util.Collections;
+import java.util.List;
+
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Facade for {@link io.github.classgraph.ClassGraph}. It is a separate class from {@link ReflectionUtils},
@@ -36,29 +36,14 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
-abstract class ClassGraphFacade {
+class ClassGraphFacade {
 
-    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
-    private static final ScanResult scanResult = new ClassGraph().enableSystemJarsAndModules().enableClassInfo().scan();
+    private final static ScanResult scanResult = new ClassGraph().enableSystemJarsAndModules().enableClassInfo().scan();
 
-    /**
-     * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
-     *
-     * @param type to search concrete subtypes of
-     * @return a list of all concrete subtypes found
-     */
-    public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        return typeToConcreteSubTypes.computeIfAbsent(type, ClassGraphFacade::searchForPublicConcreteSubTypesOf);
-    }
-
-    private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
+    static List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<?> type) {
         String typeName = type.getName();
-        ClassInfoList subTypes = type.isInterface()
-            ? scanResult.getClassesImplementing(typeName)
-            : scanResult.getSubclasses(typeName);
-        List<Class<?>> loadedSubTypes = subTypes
-            .filter(subType -> subType.isPublic() && !subType.isAbstract())
-            .loadClasses(true);
+        ClassInfoList subTypes = type.isInterface() ? scanResult.getClassesImplementing(typeName) : scanResult.getSubclasses(typeName);
+        List<Class<?>> loadedSubTypes = subTypes.filter(subType -> subType.isPublic() && !subType.isAbstract()).loadClasses(true);
         return Collections.unmodifiableList(loadedSubTypes);
     }
 }
