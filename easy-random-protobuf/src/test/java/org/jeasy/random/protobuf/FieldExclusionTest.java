@@ -16,13 +16,12 @@ import org.junit.jupiter.api.Test;
 
 public class FieldExclusionTest {
 
-    private EasyRandomParameters easyRandomParameters = new EasyRandomParameters();
+    private EasyRandomParameters easyRandomParameters = new ProtobufEasyRandomParameters();
     private EasyRandom easyRandom;
 
     @BeforeEach
     void setup() {
-        easyRandomParameters = new EasyRandomParameters().collectionSizeRange(3, 3);
-        easyRandomParameters.setExclusionPolicy(new ProtobufExclusionPolicy());
+        easyRandomParameters.collectionSizeRange(3, 3);
         easyRandom = new EasyRandom(easyRandomParameters);
     }
 

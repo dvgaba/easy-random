@@ -1,30 +1,25 @@
 /*
- * The MIT License
+ *  Copyright © 2020 Aurélien Mino (aurelien.mino@gmail.com)
  *
- *   Copyright (c) 2020, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *   Permission is hereby granted, free of charge, to any person obtaining a copy
- *   of this software and associated documentation files (the "Software"), to deal
- *   in the Software without restriction, including without limitation the rights
- *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *   copies of the Software, and to permit persons to whom the Software is
- *   furnished to do so, subject to the following conditions:
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *   The above copyright notice and this permission notice shall be included in
- *   all copies or substantial portions of the Software.
- *
- *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *   THE SOFTWARE.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *  =====================================================================
+ *  Notice: Files are restructured and modified
  */
 package org.jeasy.random.protobuf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.google.protobuf.Int32Value;
 import com.google.protobuf.StringValue;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -35,11 +30,12 @@ import org.junit.jupiter.api.Test;
 
 class Protobuf3MessageGenerationTest {
 
+    EasyRandomParameters parameters = new ProtobufEasyRandomParameters();
+
     @Test
     void generatedValuesShouldBeValidAccordingToValidationConstraints() {
-        EasyRandom easyRandom = new EasyRandom();
+        EasyRandom easyRandom = new ProtoEasyRandom();
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
-
         assertThat(protoInstance.getDoubleField()).isNotZero();
         assertThat(protoInstance.getFloatField()).isNotZero();
         assertThat(protoInstance.getInt32Field()).isNotZero();
@@ -71,19 +67,17 @@ class Protobuf3MessageGenerationTest {
 
     @Test
     void shouldUseCollectionSizeRangeParameters() {
-        EasyRandomParameters parameters = new EasyRandomParameters().collectionSizeRange(3, 3);
-        EasyRandom easyRandom = new EasyRandom(parameters);
-
+        parameters.collectionSizeRange(3, 3);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
-
         assertThat(protoInstance.getRepeatedStringFieldList()).hasSize(3);
         assertThat(protoInstance.getMapFieldMap()).hasSize(3);
     }
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
-        EasyRandom easyRandom = new EasyRandom(parameters);
+        parameters.seed(123L).collectionSizeRange(3, 10);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
 
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
 
@@ -159,8 +153,8 @@ class Protobuf3MessageGenerationTest {
 
     @Test
     void shouldSequentiallyGenerateDifferentObjects() {
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).collectionSizeRange(3, 10);
-        EasyRandom easyRandom = new EasyRandom(parameters);
+        parameters.seed(123L).collectionSizeRange(3, 10);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
 
         Proto3Message firstInstance = easyRandom.nextObject(Proto3Message.class);
         Proto3Message secondInstance = easyRandom.nextObject(Proto3Message.class);
@@ -201,13 +195,32 @@ class Protobuf3MessageGenerationTest {
             .setStringField("custom string value")
             .setEnumField(Proto3Enum.FIRST_VALUE)
             .build();
-        EasyRandomParameters parameters = new EasyRandomParameters()
-            .randomize(EmbeddedProto3Message.class, () -> customEmbeddedMessage);
-        EasyRandom easyRandom = new EasyRandom(parameters);
+        parameters.randomize(EmbeddedProto3Message.class, () -> customEmbeddedMessage);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
 
         Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
 
         assertThat(protoInstance.hasEmbeddedMessage()).isTrue();
         assertThat(protoInstance.getEmbeddedMessage()).isEqualTo(customEmbeddedMessage);
+    }
+
+    @Test
+    void shouldUseCustomProviderRegistryToFillFieldsByName() {
+        parameters
+            .setCustomRandomizerRegistry(new ProtobufCustomRandomizerRegistry())
+            .randomize(ProtobufPredicates.named("int32Field"), () -> 42);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
+        Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
+        assertThat(protoInstance.getInt32Field()).isEqualTo(42);
+    }
+
+    @Test
+    void shouldUseCustomProviderRegistryToFillFieldByType() {
+        parameters
+            .setCustomRandomizerRegistry(new ProtobufCustomRandomizerRegistry())
+            .randomize(ProtobufPredicates.ofProtobufType(Int32Value.class), () -> 42);
+        EasyRandom easyRandom = new ProtoEasyRandom(parameters);
+        Proto3Message protoInstance = easyRandom.nextObject(Proto3Message.class);
+        assertThat(protoInstance.getInt32Field()).isEqualTo(42);
     }
 }
