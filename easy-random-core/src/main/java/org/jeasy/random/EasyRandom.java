@@ -113,6 +113,10 @@ public class EasyRandom extends Random {
         return type.isRecord();
     }
 
+    private static boolean isSealedInterface(Class<?> type) {
+        return type.isSealed() && type.isInterface();
+    }
+
     /**
      * Generate a stream of random instances of the given type.
      *
@@ -143,6 +147,12 @@ public class EasyRandom extends Random {
                     ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
                 }
                 return (T) randomizer.getRandomValue();
+            }
+
+            if (isSealedInterface(type)) {
+                Class<?>[] subclasses = type.getPermittedSubclasses();
+                Class<?> subclass = subclasses[nextInt(subclasses.length)];
+                return (T) nextObject(subclass);
             }
 
             if (isRecord(type)) {
