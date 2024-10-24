@@ -79,7 +79,8 @@ class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth
         YearMonth randomValue = randomizer.getRandomValue();
 
         // Then
-        assertThat(randomValue).isLessThanOrEqualTo(maxYearMonth);
+        assertThat(randomValue.getMonth()).isLessThanOrEqualTo(maxYearMonth.getMonth());
+        assertThat(randomValue.getYear()).isLessThanOrEqualTo(maxYearMonth.getYear());
     }
 
     @Test
@@ -91,6 +92,7 @@ class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth
         YearMonth randomValue = randomizer.getRandomValue();
 
         // Then
-        assertThat(randomValue).isGreaterThanOrEqualTo(minYearMonth);
+        assertThat(randomValue.getMonth()).isLessThanOrEqualTo(maxYearMonth.getMonth());
+        assertThat(randomValue.getYear()).isLessThanOrEqualTo(maxYearMonth.getYear());
     }
 }

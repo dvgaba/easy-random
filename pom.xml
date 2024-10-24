@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.dvgaba</groupId>
   <artifactId>easy-random</artifactId>
-  <version>7.0.1-SNAPSHOT</version>
+  <version>7.1.0</version>
   <packaging>pom</packaging>
 
   <build>
@@ -142,15 +142,16 @@
         <version>${expressly.version}</version>
       </dependency>
       <dependency>
+        <groupId>jakarta.el</groupId>
+        <artifactId>jakarta.el-api</artifactId>
+        <version>${jakarta.el-api.version}</version>
+      </dependency>
+      <dependency>
         <groupId>jakarta.validation</groupId>
         <artifactId>jakarta.validation-api</artifactId>
         <version>${jakarta.validation-api.version}</version>
       </dependency>
-      <dependency>
-        <artifactId>jakarta.el</artifactId>
-        <groupId>org.glassfish</groupId>
-        <version>${javax.el.version}</version>
-      </dependency>
+
       <dependency>
         <artifactId>datafaker</artifactId>
         <groupId>net.datafaker</groupId>
@@ -315,13 +316,13 @@
   </profiles>
 
   <properties>
-    <assertj.version>3.25.1</assertj.version>
-    <classgraph.version>4.8.165</classgraph.version>
+    <assertj.version>3.26.3</assertj.version>
+    <classgraph.version>4.8.177</classgraph.version>
     <datafaker.version>2.1.0</datafaker.version>
     <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
     <java.version>17</java.version>
     <javax.el.version>4.0.2</javax.el.version>
-    <junit.version>5.10.1</junit.version>
+    <junit.version>5.11.3</junit.version>
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
@@ -330,20 +331,21 @@
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <mockito.version>5.9.0</mockito.version>
+    <mockito.version>5.14.2</mockito.version>
     <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
-    <objenesis.version>3.3</objenesis.version>
+    <objenesis.version>3.4</objenesis.version>
     <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
     <prettier-java.version>1.6.2</prettier-java.version>
     <prettier.version>2.7.1</prettier.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
-    <protobuf.version>3.25.2</protobuf.version>
+    <protobuf.version>3.25.5</protobuf.version>
     <snakeyaml.version>2.2</snakeyaml.version>
     <spotless-maven-plugin.version>2.26.0</spotless-maven-plugin.version>
     <velocity-engine-core.version>2.3</velocity-engine-core.version>
     <expressly.version>5.0.0</expressly.version>
-    <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
+    <jakarta.validation-api.version>3.1.0</jakarta.validation-api.version>
+    <jakarta.el-api.version>4.0.0</jakarta.el-api.version>
   </properties>
 
   <scm>
