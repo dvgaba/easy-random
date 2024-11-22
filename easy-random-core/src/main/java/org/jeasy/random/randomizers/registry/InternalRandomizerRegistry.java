@@ -23,14 +23,13 @@
  */
 package org.jeasy.random.randomizers.registry;
 
-import static java.sql.Date.valueOf;
-
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -131,5 +130,9 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     @Override
     public Randomizer<?> getRandomizer(Class<?> type) {
         return randomizers.get(type);
+    }
+
+    private static Date valueOf(LocalDate date) {
+        return new Date(date.getYear() - 1900, date.getMonthValue() -1, date.getDayOfMonth());
     }
 }

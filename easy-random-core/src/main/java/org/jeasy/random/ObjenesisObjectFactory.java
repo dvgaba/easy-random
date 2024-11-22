@@ -75,7 +75,11 @@ public class ObjenesisObjectFactory implements ObjectFactory {
     private <T> T createNewInstance(final Class<T> type) {
         try {
             Constructor<T> noArgConstructor = type.getDeclaredConstructor();
-            noArgConstructor.trySetAccessible();
+            try {
+                noArgConstructor.trySetAccessible();
+            } catch(NoSuchMethodError e) {
+                noArgConstructor.setAccessible(true);
+            }
             return noArgConstructor.newInstance();
         } catch (Exception exception) {
             return objenesis.newInstance(type);

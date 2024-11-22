@@ -34,6 +34,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.api.Randomizer;
@@ -42,20 +43,22 @@ import org.objenesis.ObjenesisStd;
 /**
  * Reflection utility methods.
  *
- *  <strong>This class is intended for internal use only. All public methods
- *  (except {@link ReflectionUtils#asRandomizer(java.util.function.Supplier)}
- *  might change between minor versions without notice.</strong>
+ * <strong>This class is intended for internal use only. All public methods
+ * (except {@link ReflectionUtils#asRandomizer(java.util.function.Supplier)}
+ * might change between minor versions without notice.</strong>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public final class ReflectionUtils {
 
-    private ReflectionUtils() {}
+    private ReflectionUtils() {
+    }
 
     /**
      * Create a dynamic proxy that adapts the given {@link Supplier} to a {@link Randomizer}.
+     *
      * @param supplier to adapt
-     * @param <T> target type
+     * @param <T>      target type
      * @return the proxy randomizer
      */
     @SuppressWarnings("unchecked")
@@ -80,9 +83,9 @@ public final class ReflectionUtils {
         }
 
         return (Randomizer<T>) Proxy.newProxyInstance(
-            Randomizer.class.getClassLoader(),
-            new Class[] { Randomizer.class },
-            new RandomizerProxy(supplier)
+                Randomizer.class.getClassLoader(),
+                new Class[]{Randomizer.class},
+                new RandomizerProxy(supplier)
         );
     }
 
@@ -124,7 +127,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if the property cannot be set
      */
     public static void setProperty(final Object object, final Field field, final Object value)
-        throws IllegalAccessException, InvocationTargetException {
+            throws IllegalAccessException, InvocationTargetException {
         try {
             Optional<Method> setter = getWriteMethod(field);
             if (setter.isPresent()) {
@@ -147,7 +150,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if the property cannot be set
      */
     public static void setFieldValue(final Object object, final Field field, final Object value)
-        throws IllegalAccessException {
+            throws IllegalAccessException {
         boolean access = field.trySetAccessible();
         field.set(object, value);
         field.setAccessible(access);
@@ -162,10 +165,15 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if field cannot be accessed
      */
     public static Object getFieldValue(final Object object, final Field field) throws IllegalAccessException {
-        boolean access = field.trySetAccessible();
-        Object value = field.get(object);
-        field.setAccessible(access);
-        return value;
+        try {
+            boolean access = field.trySetAccessible();
+            Object value = field.get(object);
+            field.setAccessible(access);
+            return value;
+        } catch (NoSuchMethodError e) {
+            field.setAccessible(true);
+            return field.get(object);
+        }
     }
 
     /**
@@ -193,7 +201,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if field cannot be accessed
      */
     public static boolean isPrimitiveFieldWithDefaultValue(final Object object, final Field field)
-        throws IllegalAccessException {
+            throws IllegalAccessException {
         Class<?> fieldType = field.getType();
         if (!fieldType.isPrimitive()) {
             return false;
@@ -329,10 +337,10 @@ public final class ReflectionUtils {
      */
     public static boolean isIntrospectable(final Class<?> type) {
         return (
-            !isEnumType(type) &&
-            !isArrayType(type) &&
-            !(isCollectionType(type) && isJdkBuiltIn(type)) &&
-            !(isMapType(type) && isJdkBuiltIn(type))
+                !isEnumType(type) &&
+                        !isArrayType(type) &&
+                        !(isCollectionType(type) && isJdkBuiltIn(type)) &&
+                        !(isMapType(type) && isJdkBuiltIn(type))
         );
     }
 
@@ -421,11 +429,11 @@ public final class ReflectionUtils {
             for (Class<?> currentConcreteType : types) {
                 List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteType);
                 typesWithSameParameterizedTypes.addAll(
-                    actualTypeArguments
-                        .stream()
-                        .filter(currentTypeArguments -> Arrays.equals(fieldArugmentTypes, currentTypeArguments))
-                        .map(currentTypeArguments -> currentConcreteType)
-                        .toList()
+                        actualTypeArguments
+                                .stream()
+                                .filter(currentTypeArguments -> Arrays.equals(fieldArugmentTypes, currentTypeArguments))
+                                .map(currentTypeArguments -> currentConcreteType)
+                                .toList()
                 );
             }
             return typesWithSameParameterizedTypes;
@@ -436,29 +444,29 @@ public final class ReflectionUtils {
     /**
      * Looks for given annotationType on given field or read method for field.
      *
-     * @param field field to check
+     * @param field          field to check
      * @param annotationType Type of annotation you're looking for.
-     * @param <T> the actual type of annotation
+     * @param <T>            the actual type of annotation
      * @return given annotation if field or read method has this annotation or null.
      */
     public static <T extends Annotation> T getAnnotation(Field field, Class<T> annotationType) {
         return field.getAnnotation(annotationType) == null
-            ? getAnnotationFromReadMethod(getReadMethod(field).orElse(null), annotationType)
-            : field.getAnnotation(annotationType);
+                ? getAnnotationFromReadMethod(getReadMethod(field).orElse(null), annotationType)
+                : field.getAnnotation(annotationType);
     }
 
     /**
      * Checks if field or corresponding read method is annotated with given annotationType.
      *
-     * @param field Field to check
+     * @param field          Field to check
      * @param annotationType Annotation you're looking for.
      * @return true if field or read method it annotated with given annotationType or false.
      */
     public static boolean isAnnotationPresent(Field field, Class<? extends Annotation> annotationType) {
         final Optional<Method> readMethod = getReadMethod(field);
         return (
-            field.isAnnotationPresent(annotationType) ||
-            (readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType))
+                field.isAnnotationPresent(annotationType) ||
+                        (readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType))
         );
     }
 
@@ -494,7 +502,8 @@ public final class ReflectionUtils {
 
     /**
      * Create an empty collection for the given type.
-     * @param fieldType for which an empty collection should we created
+     *
+     * @param fieldType   for which an empty collection should we created
      * @param initialSize initial size of the collection
      * @return empty collection
      */
@@ -504,7 +513,7 @@ public final class ReflectionUtils {
         try {
             collection = (Collection<?>) fieldType.getDeclaredConstructor().newInstance();
         } catch (
-            InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e
+                InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e
         ) {
             if (fieldType.equals(ArrayBlockingQueue.class)) {
                 collection = new ArrayBlockingQueue<>(initialSize);
@@ -517,6 +526,7 @@ public final class ReflectionUtils {
 
     /**
      * Return an empty implementation for the given {@link Map} interface.
+     *
      * @param mapInterface for which an empty implementation should be returned
      * @return empty implementation for the given {@link Map} interface.
      */
@@ -557,6 +567,7 @@ public final class ReflectionUtils {
 
     /**
      * Get the read method for given field.
+     *
      * @param field field to get the read method for.
      * @return Optional of read method or empty if field has no read method
      */
@@ -605,27 +616,27 @@ public final class ReflectionUtils {
         try {
             if (notEmpty(randomizerArguments)) {
                 Optional<Constructor<?>> matchingConstructor = Stream
-                    .of(type.getConstructors())
-                    .filter(constructor ->
-                        hasSameArgumentNumber(constructor, randomizerArguments) &&
-                        hasSameArgumentTypes(constructor, randomizerArguments)
-                    )
-                    .findFirst();
+                        .of(type.getConstructors())
+                        .filter(constructor ->
+                                hasSameArgumentNumber(constructor, randomizerArguments) &&
+                                        hasSameArgumentTypes(constructor, randomizerArguments)
+                        )
+                        .findFirst();
                 if (matchingConstructor.isPresent()) {
                     return (Randomizer<T>) matchingConstructor.get().newInstance(convertArguments(randomizerArguments));
                 }
             }
             return (Randomizer<T>) type.getDeclaredConstructor().newInstance();
         } catch (
-            IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchMethodException e
+                IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchMethodException e
         ) {
             throw new ObjectCreationException(
-                format(
-                    "Could not create Randomizer of type: %s with constructor arguments: %s",
-                    type,
-                    Arrays.toString(randomizerArguments)
-                ),
-                e
+                    format(
+                            "Could not create Randomizer of type: %s with constructor arguments: %s",
+                            type,
+                            Arrays.toString(randomizerArguments)
+                    ),
+                    e
             );
         }
     }
@@ -635,15 +646,15 @@ public final class ReflectionUtils {
     }
 
     private static boolean hasSameArgumentNumber(
-        final Constructor<?> constructor,
-        final RandomizerArgument[] randomizerArguments
+            final Constructor<?> constructor,
+            final RandomizerArgument[] randomizerArguments
     ) {
         return constructor.getParameterCount() == randomizerArguments.length;
     }
 
     private static boolean hasSameArgumentTypes(
-        final Constructor<?> constructor,
-        final RandomizerArgument[] randomizerArguments
+            final Constructor<?> constructor,
+            final RandomizerArgument[] randomizerArguments
     ) {
         Class<?>[] constructorParameterTypes = constructor.getParameterTypes();
         for (int i = 0; i < randomizerArguments.length; i++) {
