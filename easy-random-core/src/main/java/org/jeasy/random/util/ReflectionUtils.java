@@ -151,9 +151,14 @@ public final class ReflectionUtils {
      */
     public static void setFieldValue(final Object object, final Field field, final Object value)
             throws IllegalAccessException {
-        boolean access = field.trySetAccessible();
-        field.set(object, value);
-        field.setAccessible(access);
+        try {
+            boolean access = field.trySetAccessible();
+            field.set(object, value);
+            field.setAccessible(access);
+        } catch (NoSuchMethodError e) {
+            field.setAccessible(true);
+            field.set(object, value);
+        }
     }
 
     /**
