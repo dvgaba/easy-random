@@ -23,21 +23,24 @@
  */
 package org.jeasy.random.util;
 
-import static java.lang.String.format;
-import static java.util.Arrays.asList;
-import static java.util.Locale.ENGLISH;
-import static org.jeasy.random.util.ConversionUtils.convertArguments;
+import org.jeasy.random.annotation.RandomizerArgument;
+import org.jeasy.random.ObjectCreationException;
+import org.jeasy.random.api.Randomizer;
+import org.objenesis.ObjenesisStd;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-import org.jeasy.random.ObjectCreationException;
-import org.jeasy.random.annotation.RandomizerArgument;
-import org.jeasy.random.api.Randomizer;
-import org.objenesis.ObjenesisStd;
+
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
+import static java.util.Locale.ENGLISH;
+import static java.util.stream.Collectors.toList;
+import static org.jeasy.random.util.ConversionUtils.convertArguments;
 
 /**
  * Reflection utility methods.
@@ -50,7 +53,13 @@ import org.objenesis.ObjenesisStd;
  */
 public final class ReflectionUtils {
 
-    private ReflectionUtils() {}
+    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
+
+    // NOTE: indirection to avoid loading ClassGraphFacade class too early
+    private static volatile Function<Class<?>, List<Class<?>>> typeToConcreteSubTypesProvider = ReflectionUtils::defaultTypeToConcreteSubTypesProvider;
+
+    private ReflectionUtils() {
+    }
 
     /**
      * Create a dynamic proxy that adapts the given {@link Supplier} to a {@link Randomizer}.
@@ -60,6 +69,7 @@ public final class ReflectionUtils {
      */
     @SuppressWarnings("unchecked")
     public static <T> Randomizer<T> asRandomizer(final Supplier<T> supplier) {
+
         class RandomizerProxy implements InvocationHandler {
 
             private final Supplier<?> target;
@@ -80,10 +90,9 @@ public final class ReflectionUtils {
         }
 
         return (Randomizer<T>) Proxy.newProxyInstance(
-            Randomizer.class.getClassLoader(),
-            new Class[] { Randomizer.class },
-            new RandomizerProxy(supplier)
-        );
+                Randomizer.class.getClassLoader(),
+                new Class[]{Randomizer.class},
+                new RandomizerProxy(supplier));
     }
 
     /**
@@ -114,7 +123,7 @@ public final class ReflectionUtils {
     }
 
     /**
-     * Set a value in a field of a target object. If the target object provides
+     * Set a value in a field of a target object. If the target object provides 
      * a setter for the field, this setter will be used. Otherwise, the field
      * will be set using reflection.
      *
@@ -123,8 +132,7 @@ public final class ReflectionUtils {
      * @param value  value to set
      * @throws IllegalAccessException if the property cannot be set
      */
-    public static void setProperty(final Object object, final Field field, final Object value)
-        throws IllegalAccessException, InvocationTargetException {
+    public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
         try {
             Optional<Method> setter = getWriteMethod(field);
             if (setter.isPresent()) {
@@ -146,8 +154,7 @@ public final class ReflectionUtils {
      * @param value  value to set
      * @throws IllegalAccessException if the property cannot be set
      */
-    public static void setFieldValue(final Object object, final Field field, final Object value)
-        throws IllegalAccessException {
+    public static void setFieldValue(final Object object, final Field field, final Object value) throws IllegalAccessException {
         boolean access = field.trySetAccessible();
         field.set(object, value);
         field.setAccessible(access);
@@ -175,8 +182,8 @@ public final class ReflectionUtils {
      * @return the wrapper type of the given primitive type
      */
     public static Class<?> getWrapperType(Class<?> primitiveType) {
-        for (PrimitiveEnum p : PrimitiveEnum.values()) {
-            if (p.getType().equals(primitiveType)) {
+        for(PrimitiveEnum p : PrimitiveEnum.values()) {
+            if(p.getType().equals(primitiveType)) {
                 return p.getClazz();
             }
         }
@@ -192,8 +199,7 @@ public final class ReflectionUtils {
      * @return true if the field is primitive and is set to the default value, false otherwise
      * @throws IllegalAccessException if field cannot be accessed
      */
-    public static boolean isPrimitiveFieldWithDefaultValue(final Object object, final Field field)
-        throws IllegalAccessException {
+    public static boolean isPrimitiveFieldWithDefaultValue(final Object object, final Field field) throws IllegalAccessException {
         Class<?> fieldType = field.getType();
         if (!fieldType.isPrimitive()) {
             return false;
@@ -202,14 +208,14 @@ public final class ReflectionUtils {
         if (fieldValue == null) {
             return false;
         }
-        if (fieldType.equals(boolean.class) && !((boolean) fieldValue)) {
+        if (fieldType.equals(boolean.class) && (boolean) fieldValue == false) {
             return true;
         }
         if (fieldType.equals(byte.class) && (byte) fieldValue == (byte) 0) {
             return true;
         }
         if (fieldType.equals(short.class) && (short) fieldValue == (short) 0) {
-            return true;
+          return true;
         }
         if (fieldType.equals(int.class) && (int) fieldValue == 0) {
             return true;
@@ -328,12 +334,10 @@ public final class ReflectionUtils {
      * @return true if the type should be introspected, false otherwise
      */
     public static boolean isIntrospectable(final Class<?> type) {
-        return (
-            !isEnumType(type) &&
-            !isArrayType(type) &&
-            !(isCollectionType(type) && isJdkBuiltIn(type)) &&
-            !(isMapType(type) && isJdkBuiltIn(type))
-        );
+        return !isEnumType(type)
+                && !isArrayType(type)
+                && !(isCollectionType(type) && isJdkBuiltIn(type))
+                && !(isMapType(type) && isJdkBuiltIn(type));
     }
 
     /**
@@ -373,7 +377,7 @@ public final class ReflectionUtils {
      * @return true if the type is parameterized, false otherwise
      */
     public static boolean isParameterizedType(final Type type) {
-        return (type instanceof ParameterizedType && ((ParameterizedType) type).getActualTypeArguments().length > 0);
+        return type != null && type instanceof ParameterizedType && ((ParameterizedType) type).getActualTypeArguments().length > 0;
     }
 
     /**
@@ -404,7 +408,25 @@ public final class ReflectionUtils {
      * @return a list of all concrete subtypes found
      */
     public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        return ClassGraphFacade.getPublicConcreteSubTypesOf(type);
+        return typeToConcreteSubTypes.computeIfAbsent(type, typeToConcreteSubTypesProvider);
+    }
+
+    /**
+     * Override the default implementation of ClassGraphFacade for searching the
+     * classpath for any concrete subtype of given interface or abstract class.
+     * 
+     * @param typeToConcreteSubTypesProvider custom implementation
+     */
+    public static void setPublicConcreteSubTypeProvider(
+            final Function<Class<?>, List<Class<?>>> typeToConcreteSubTypesProvider) {
+        if (typeToConcreteSubTypesProvider == null) {
+            throw new IllegalArgumentException();
+        }
+        ReflectionUtils.typeToConcreteSubTypesProvider = typeToConcreteSubTypesProvider;
+    }
+
+    private static List<Class<?>> defaultTypeToConcreteSubTypesProvider(final Class<?> cls) {
+        return ClassGraphFacade.searchForPublicConcreteSubTypesOf(cls);
     }
 
     /**
@@ -415,18 +437,12 @@ public final class ReflectionUtils {
      * @return a list of types having the same parameterized types as the given type
      */
     public static List<Class<?>> filterSameParameterizedTypes(final List<Class<?>> types, final Type type) {
-        if (type instanceof ParameterizedType parameterizedType) {
-            Type[] fieldArugmentTypes = parameterizedType.getActualTypeArguments();
+        if (type instanceof ParameterizedType) {
+            Type[] fieldArugmentTypes = ((ParameterizedType) type).getActualTypeArguments();
             List<Class<?>> typesWithSameParameterizedTypes = new ArrayList<>();
             for (Class<?> currentConcreteType : types) {
                 List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteType);
-                typesWithSameParameterizedTypes.addAll(
-                    actualTypeArguments
-                        .stream()
-                        .filter(currentTypeArguments -> Arrays.equals(fieldArugmentTypes, currentTypeArguments))
-                        .map(currentTypeArguments -> currentConcreteType)
-                        .toList()
-                );
+                typesWithSameParameterizedTypes.addAll(actualTypeArguments.stream().filter(currentTypeArguments -> Arrays.equals(fieldArugmentTypes, currentTypeArguments)).map(currentTypeArguments -> currentConcreteType).collect(toList()));
             }
             return typesWithSameParameterizedTypes;
         }
@@ -442,9 +458,8 @@ public final class ReflectionUtils {
      * @return given annotation if field or read method has this annotation or null.
      */
     public static <T extends Annotation> T getAnnotation(Field field, Class<T> annotationType) {
-        return field.getAnnotation(annotationType) == null
-            ? getAnnotationFromReadMethod(getReadMethod(field).orElse(null), annotationType)
-            : field.getAnnotation(annotationType);
+        return field.getAnnotation(annotationType) == null ? getAnnotationFromReadMethod(getReadMethod(field).orElse(null),
+                annotationType) : field.getAnnotation(annotationType);
     }
 
     /**
@@ -456,10 +471,7 @@ public final class ReflectionUtils {
      */
     public static boolean isAnnotationPresent(Field field, Class<? extends Annotation> annotationType) {
         final Optional<Method> readMethod = getReadMethod(field);
-        return (
-            field.isAnnotationPresent(annotationType) ||
-            (readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType))
-        );
+        return field.isAnnotationPresent(annotationType) || readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType);
     }
 
     /**
@@ -503,9 +515,7 @@ public final class ReflectionUtils {
         Collection<?> collection;
         try {
             collection = (Collection<?>) fieldType.getDeclaredConstructor().newInstance();
-        } catch (
-            InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e
-        ) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             if (fieldType.equals(ArrayBlockingQueue.class)) {
                 collection = new ArrayBlockingQueue<>(initialSize);
             } else {
@@ -593,8 +603,8 @@ public final class ReflectionUtils {
         List<Type[]> actualTypeArguments = new ArrayList<>();
         Type[] genericInterfaceTypes = type.getGenericInterfaces();
         for (Type currentGenericInterfaceType : genericInterfaceTypes) {
-            if (currentGenericInterfaceType instanceof ParameterizedType parameterizedType) {
-                actualTypeArguments.add((parameterizedType).getActualTypeArguments());
+            if (currentGenericInterfaceType instanceof ParameterizedType) {
+                actualTypeArguments.add(((ParameterizedType) currentGenericInterfaceType).getActualTypeArguments());
             }
         }
         return actualTypeArguments;
@@ -604,29 +614,17 @@ public final class ReflectionUtils {
     public static <T> Randomizer<T> newInstance(final Class<T> type, final RandomizerArgument[] randomizerArguments) {
         try {
             if (notEmpty(randomizerArguments)) {
-                Optional<Constructor<?>> matchingConstructor = Stream
-                    .of(type.getConstructors())
-                    .filter(constructor ->
-                        hasSameArgumentNumber(constructor, randomizerArguments) &&
-                        hasSameArgumentTypes(constructor, randomizerArguments)
-                    )
-                    .findFirst();
+                Optional<Constructor<?>> matchingConstructor = Stream.of(type.getConstructors())
+                        .filter(constructor -> hasSameArgumentNumber(constructor, randomizerArguments) &&
+                                hasSameArgumentTypes(constructor, randomizerArguments))
+                        .findFirst();
                 if (matchingConstructor.isPresent()) {
                     return (Randomizer<T>) matchingConstructor.get().newInstance(convertArguments(randomizerArguments));
                 }
             }
             return (Randomizer<T>) type.getDeclaredConstructor().newInstance();
-        } catch (
-            IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchMethodException e
-        ) {
-            throw new ObjectCreationException(
-                format(
-                    "Could not create Randomizer of type: %s with constructor arguments: %s",
-                    type,
-                    Arrays.toString(randomizerArguments)
-                ),
-                e
-            );
+        } catch (IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchMethodException e) {
+            throw new ObjectCreationException(format("Could not create Randomizer of type: %s with constructor arguments: %s", type, Arrays.toString(randomizerArguments)), e);
         }
     }
 
@@ -634,17 +632,11 @@ public final class ReflectionUtils {
         return randomizerArguments != null && randomizerArguments.length > 0;
     }
 
-    private static boolean hasSameArgumentNumber(
-        final Constructor<?> constructor,
-        final RandomizerArgument[] randomizerArguments
-    ) {
+    private static boolean hasSameArgumentNumber(final Constructor<?> constructor, final RandomizerArgument[] randomizerArguments) {
         return constructor.getParameterCount() == randomizerArguments.length;
     }
 
-    private static boolean hasSameArgumentTypes(
-        final Constructor<?> constructor,
-        final RandomizerArgument[] randomizerArguments
-    ) {
+    private static boolean hasSameArgumentTypes(final Constructor<?> constructor, final RandomizerArgument[] randomizerArguments) {
         Class<?>[] constructorParameterTypes = constructor.getParameterTypes();
         for (int i = 0; i < randomizerArguments.length; i++) {
             if (!constructorParameterTypes[i].isAssignableFrom(randomizerArguments[i].type())) {
@@ -654,4 +646,8 @@ public final class ReflectionUtils {
         }
         return true;
     }
+
+
+
+
 }
