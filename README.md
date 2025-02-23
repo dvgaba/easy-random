@@ -22,6 +22,7 @@
 Active
 
 ## Latest news
+* 2/22/2025 7.1.1 Minor release, made library compatible with Android, Thanks @[Marian Jureczko ](https://github.com/mjureczko).
 * 10/23/2024 7.1.0 Minor release, added support for sealed classes, Thanks @[Marian Jureczko ](https://github.com/mjureczko). Some minor 3PP updates.
 * 1/15/2024 7.0.0 Major release, default Java version bumped to 17 and other 3PP version bump. [Breaking changes].
 * 9/1/2023 6.2.1 Minor release to initialize leaf nodes for Records [Breaking change].  
